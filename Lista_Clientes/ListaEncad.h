@@ -12,6 +12,7 @@ typedef struct produtos {
     float VALOR;
     int CATEGORIA;
     int QUANTIDADE;
+    int QUANT_AVALIACAO;
     int NOTA_AVALIACAO;
 } produtos;
 
