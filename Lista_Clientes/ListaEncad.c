@@ -306,6 +306,98 @@ void mostrar_conta_cliente(lista_clientes *l, cadastro it)
     return;
 }
 
+void mostrar_carrinho(lista_clientes *l, cadastro it)
+{
+    if (l == NULL)
+    {
+        printf("Lista de clientes nao criada!\n");
+        return;
+    }
+    if (lista_clientes_vazia(l) == 0)
+    {
+        printf("Lista de clientes vazia!\n");
+        return;
+    }
+    no_clientes *no = l->inicio;
+    while (no != NULL)
+    {
+        // Procura cliente
+        if (strcmp(it.nome, no->valor.cadastro.nome) == 0)
+        {
+            int j = 1;
+            printf("\nProdutos no Carrinho: (total:%d)\n\n", no->valor.total_carrinho);
+            if (no->valor.carrinho_inicio == NULL)
+            {
+                printf("           Nenhum produto no carrinho!\n");
+                return;
+            }
+            no_produtos *prod = no->valor.carrinho_inicio;
+            while (prod != NULL)
+            {
+                printf("{Produto %d:", j);
+                printf("        Nome: %s\t", prod->produto.NOME);
+                printf("        Categoria: %d\t", prod->produto.CATEGORIA);
+                printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
+                printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
+                printf("        Valor: %.2f\t", prod->produto.VALOR);
+                printf("        Descricao: %s}\n", prod->produto.DESCRICAO);
+                j++;
+                prod = prod->prox;
+            }
+            return;
+        }
+        no = no->prox;
+    }
+    // Cliente nao encontrado
+    return;
+}
+
+void mostra_comprados(lista_clientes *l, cadastro it)
+{
+    if (l == NULL)
+    {
+        printf("Lista de clientes nao criada!\n");
+        return;
+    }
+    if (lista_clientes_vazia(l) == 0)
+    {
+        printf("Lista de clientes vazia!\n");
+        return;
+    }
+    no_clientes *no = l->inicio;
+    while (no != NULL)
+    {
+        // Procura cliente
+        if (strcmp(it.nome, no->valor.cadastro.nome) == 0)
+        {
+            int j = 1;
+            printf("\nHistorico de Produtos Comprados: (total:%d)\n\n", no->valor.total_comprados);
+            if (no->valor.comprados_inicio == NULL)
+            {
+                printf("           Nenhum produto foi comprado!\n");
+                return;
+            }
+            no_produtos *prod = no->valor.comprados_inicio;
+            while (prod != NULL)
+            {
+                printf("{Produto %d:", j);
+                printf("        Nome: %s\t", prod->produto.NOME);
+                printf("        Categoria: %d\t", prod->produto.CATEGORIA);
+                printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
+                printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
+                printf("        Valor: %.2f\t", prod->produto.VALOR);
+                printf("        Descricao: %s}\n", prod->produto.DESCRICAO);
+                j++;
+                prod = prod->prox;
+            }
+            return;
+        }
+        no = no->prox;
+    }
+    // Cliente nao encontrado
+    return;
+}
+
 int excluir_conta_cliente(lista_clientes *l, cadastro it)
 {
     if (l == NULL)
