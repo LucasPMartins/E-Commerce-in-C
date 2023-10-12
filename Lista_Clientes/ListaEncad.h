@@ -62,6 +62,10 @@ void mostra_lista_clientes(lista_clientes *l);
 
 void mostrar_conta_cliente(lista_clientes *l, cadastro it);
 
+void mostra_comprados(lista_clientes *l,cadastro it);
+
+void mostrar_carrinho(lista_clientes *l, cadastro it);
+
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 
 int limpa_lista_clientes(lista_clientes *l);
