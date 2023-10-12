@@ -210,6 +210,7 @@ void mostra_lista_clientes(lista_clientes *l)
             printf("{Produto %d:", j);
             printf("        Nome: %s\t", prod->produto.NOME);
             printf("        Categoria: %d\t", prod->produto.CATEGORIA);
+            printf("        Quantidade de Avaliacoes: %d\t",prod->produto.QUANT_AVALIACAO);
             printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
             printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
             printf("        Valor: %.2f\t", prod->produto.VALOR);
@@ -227,6 +228,7 @@ void mostra_lista_clientes(lista_clientes *l)
             printf("{Produto %d:", j);
             printf("        Nome: %s\t", prod->produto.NOME);
             printf("        Categoria: %d\t", prod->produto.CATEGORIA);
+            printf("        Quantidade de Avaliacoes: %d\t",prod->produto.QUANT_AVALIACAO);
             printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
             printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
             printf("        Valor: %.2f\t", prod->produto.VALOR);
