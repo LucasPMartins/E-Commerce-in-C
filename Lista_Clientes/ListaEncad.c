@@ -60,7 +60,7 @@ int verifica_cliente(lista_clientes *l, cadastro it)
     // Cliente não existe
     return 3;
 }
-
+// jiyiyiy
 int insere_novo_cliente(lista_clientes *l, cadastro it)
 {
     if (l == NULL)
