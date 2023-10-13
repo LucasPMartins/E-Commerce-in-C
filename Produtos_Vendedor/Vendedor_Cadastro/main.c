@@ -15,7 +15,7 @@ int main() {
     printf("Salario: ");
     scanf("%f", &vendedor.salario);
 
-    printf("\n");
+    printf("\n"); // oi
 
     if (adicionarVendedor(lista, vendedor) == 0) {
         printf("Cadastrado");
