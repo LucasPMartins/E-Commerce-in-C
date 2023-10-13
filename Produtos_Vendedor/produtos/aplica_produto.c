@@ -44,7 +44,7 @@ void mostrar_produto_aleatorio(Lista *l)
     {
         printf("[");
         no_produtos *no_Lista = l->inicio;
-        int j;
+        int j=0;
         while (no_Lista != NULL)
         {
             printf("{Produto %d:", j);

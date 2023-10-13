@@ -49,11 +49,10 @@ int insere_novo_vendedor(lista_vendedores *l, vendedor v)
     no_vendedores *novo_no = (no_vendedores *)malloc(sizeof(no_vendedores));
     if (novo_no == NULL)
     {
-        return 0;
+        return 2;
     }
 
     novo_no->valor = v;
-
     novo_no->prox = l->inicio;
     novo_no->ant = NULL;
 
@@ -66,7 +65,7 @@ int insere_novo_vendedor(lista_vendedores *l, vendedor v)
     l->inicio = novo_no;
 
     l->total_vendedores++;
-    return 2;
+    return 0;
 }
 
 void libera_lista_vendedores(lista_vendedores *l)
@@ -84,29 +83,27 @@ void libera_lista_vendedores(lista_vendedores *l)
 
 void mostrar_lista_vendedores(lista_vendedores *l)
 {
-    if (l == NULL)
+    if (l != NULL)
+    {
+        no_vendedores *search = l->inicio;
+        int cont = 1;
+        printf("{");
+        while (search != NULL)
+        {
+            printf("Vendedor %d:\n", cont);
+            printf("Nome: %s\n", search->valor.cadastro.nome);
+            printf("NomeLoja: %s\n", search->valor.nomeloja);
+            printf("Senha: %s\n", search->valor.cadastro.senha);
+            printf("\n");
+
+            search = search->prox;
+            cont++;
+        }
+        printf("}");
+    }
+    /*if (l == NULL)
     {
         printf("Lista de vendedores nao criada!\n");
         return;
-    }
-    if (lista_vendedores_vazia(l) == 1)
-    {
-        printf("Lista de vendedores vazia!\n");
-        return;
-    }
-
-    no_vendedores *search = l->inicio;
-    int cont = 1;
-
-    while (search != NULL)
-    {
-        printf("Vendedor %d:\n", cont);
-        printf("Nome: %s\n", search->valor.cadastro.nome);
-        printf("NomeLoja: %s\n", search->valor.nomeloja);
-        printf("Senha: %s\n", search->valor.cadastro.senha);
-        printf("\n");
-
-        search = search->prox;
-        cont++;
-    }
+    }*/
 }
