@@ -30,7 +30,7 @@ int verifica_vendedor(lista_vendedores *l, cadastro it, vendedor v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, it.nome) == 0)
+        if (strcmp(atual->valor.lol.nome, it.nome) == 0)
         {
             return 1;
         }
@@ -91,9 +91,9 @@ void mostrar_lista_vendedores(lista_vendedores *l)
         while (search != NULL)
         {
             printf("Vendedor %d:\n", cont);
-            printf("Nome: %s\n", search->valor.cadastro.nome);
+            printf("Nome: %s\n", search->valor.lol.nome);
             printf("NomeLoja: %s\n", search->valor.nomeloja);
-            printf("Senha: %s\n", search->valor.cadastro.senha);
+            printf("Senha: %s\n", search->valor.lol.senha);
             printf("\n");
 
             search = search->prox;

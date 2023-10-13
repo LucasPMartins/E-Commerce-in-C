@@ -17,7 +17,7 @@ typedef struct produtos {
 
 typedef struct vendedor{
     char nomeloja[30];
-    cadastro cadastro;
+    cadastro lol;
 }vendedor;
 
 typedef struct no_vendedores {
