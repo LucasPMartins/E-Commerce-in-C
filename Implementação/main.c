@@ -25,7 +25,7 @@ int main()
     {
         system("cls");
         print_logo();
-        printf("\nBem-vindo a Powerful Machine - Sua Loja de Eletronicos de Excelencia\n");
+        printf("\n\tBem-vindo a Powerful Machine - Sua Loja de Eletronicos de Excelencia\n");
         printf("\n-- O QUE DESEJA FAZER? --\n");
         printf("   1- Cadastrar/Login \n");
         printf("   2- Sobre a loja\n");

@@ -13,5 +13,5 @@ Trabalho final de AED1 desenvolvido em C, com uso constante de GIT, por:
 </p>
 <br/>
 <p align="center">
-<img src="https://img.olhardigital.com.br/wp-content/uploads/2021/03/E-commerce-1.jpg" />
+<img src="https://cdn.discordapp.com/attachments/1154793024396742656/1157893098081357894/POWERFUL.png?ex=6534a17b&is=65222c7b&hm=2e6149a7e4b3e50870c6a58a5d9e83d2131b233e5fe49fa0e85171501bc55bda&" />
 </p>
