@@ -9,34 +9,26 @@
    --
 */
 
-typedef struct no{
-    struct no* ant;
-    Produto valor;
-    struct no* prox;
-}No;
-
-typedef struct lista{
-    No* inicio;
-}Lista;
-
-Lista* criar(){
-    Lista* l = (Lista*) malloc(sizeof(Lista));
+Lista *criar_lista_produtos()
+{
+    Lista *l = (Lista *)malloc(sizeof(Lista));
     l->inicio = NULL;
     return l;
 }
 
-void limpar(Lista *l){
-    while(listaVazia(l) != 0)
+void limpar_lista_produtos(Lista *l)
+{
+    while (listaVazia(l) != 0)
         removerInicio(l);
     free(l);
     l = NULL;
 }
 
-int tamanho(Lista *l)
+int tamanho_lista_produtos(Lista *l)
 {
     if (l == NULL)
         return -1;
-    No *no = l->inicio;
+    no_produtos *no = l->inicio;
     int cont = 0;
     while (no != NULL)
     {
@@ -46,24 +38,30 @@ int tamanho(Lista *l)
     return cont;
 }
 
-void mostrar(Lista *l)
+void mostrar_produto_aleatorio(Lista *l)
 {
     if (l != NULL)
     {
         printf("[");
-        No *noLista = l->inicio;
-        while (noLista != NULL)
+        no_produtos *no_Lista = l->inicio;
+        int j;
+        while (no_Lista != NULL)
         {
-            printf(" {%d, ", noLista->valor.);
-            printf("%s, ", noLista->valor.);
-            printf("%.2f} ", noLista->valor.);
-            noLista = noLista->prox;
+            printf("{Produto %d:", j);
+            printf("        Nome: %s\t", no_Lista->produto.NOME);
+            printf("        Categoria: %d\t", no_Lista->produto.CATEGORIA);
+            printf("        Nota de Avalicao: %d\t", no_Lista->produto.NOTA_AVALIACAO);
+            printf("        Quantidade: %d\t", no_Lista->produto.QUANTIDADE);
+            printf("        Valor: %.2f\t", no_Lista->produto.VALOR);
+            printf("        Descricao: %s}\n", no_Lista->produto.DESCRICAO);
+            j++;
+            no_Lista = no_Lista->prox;
         }
         printf("]\n");
     }
 }
 
-int listaVazia(Lista *l)
+int listaVazia_produtos(Lista *l)
 {
     if (l == NULL)
         return 2;
@@ -73,17 +71,12 @@ int listaVazia(Lista *l)
         return 1;
 }
 
-int listaCheia(Lista *l)
-{
-    return 1;
-}
-
-int inserirInicio(Lista *l, Produto it)
+int inserirInicio_produtos(Lista *l, produtos it)
 {
     if (l == NULL)
         return 2;
-    No *no = (No *)malloc(sizeof(No));
-    no->valor = it;
+    no_produtos *no = (no_produtos *)malloc(sizeof(no_produtos));
+    no->produto = it;
     no->prox = l->inicio;
     no->ant = NULL;
     if (l->inicio != NULL)
@@ -92,18 +85,17 @@ int inserirInicio(Lista *l, Produto it)
     return 0;
 }
 
-int removerInicio(Lista *l)
+int removerInicio_produtos(Lista *l)
 {
     if (l == NULL)
         return 2;
     if (listaVazia(l) == 0)
         return 1;
-    No *noLista = l->inicio;
-    l->inicio = noLista->prox;
+    no_produtos *no_Lista = l->inicio;
+    l->inicio = no_Lista->prox;
     if (l->inicio != NULL)
         l->inicio->ant = NULL;
-    free(noLista);
+    free(no_Lista);
 
     return 0;
 }
-

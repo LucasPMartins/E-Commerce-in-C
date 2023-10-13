@@ -1,33 +1,37 @@
-typedef struct produto{
-    int categoria;
-    char nome[30];
-    float preco;
-    int qtd_estoque;
-    int avaliacao;
-    char descricao[100];
-}Produto;
-// redundante esse typedef?? lista
-typedef struct lista Lista;
+
+typedef struct produtos {
+    char NOME[30];
+    char DESCRICAO[100];
+    float VALOR;
+    int CATEGORIA;
+    int QUANTIDADE;
+    int QUANT_AVALIACAO;
+    int NOTA_AVALIACAO;
+} produtos;
+
+typedef struct no_produtos {
+    produtos produto;
+    struct no_produtos *prox;
+    struct no_produtos *ant;
+} no_produtos;
+
+typedef struct lista
+{
+    no_produtos *inicio;
+} Lista;
 
 Lista *criar();
-void limpar(Lista *l);
-int tamanho(Lista *l);
-void mostrar(Lista *l);
+void limpar_lista_produtos(Lista *l);
+int tamanho_lista_produtos(Lista *l);
+void mostrar_produto_aleatorio(Lista *l);
 
-int inserirInicio(Lista *l,struct produto it);
-int inserirFim(Lista *l,struct produto it);
-int inserirPosicao(Lista *l,struct produto it,int pos);
+int inserirInicio_produtos(Lista *l, produtos it);
 
-int removerInicio(Lista *l);
-int removerFim(Lista *l);
-int removerPosicao(Lista *l,int pos);
-int removerItem(Lista *l,int it);
+int removerInicio_produtos(Lista *l);
 
-int buscarItemChave(Lista *l,int chave,struct produto *retorno);
+int buscarItemChave(Lista *l,int chave,struct produtos *retorno);
 int buscarPosicao(Lista *l,int posicao,int *retorno);
-int listaVazia(Lista *l);
-int listaCheia(Lista *l);
-
+int listaVazia_produtos(Lista *l);
 
 
 /* O produto tem todas as operações basicas de lista*/

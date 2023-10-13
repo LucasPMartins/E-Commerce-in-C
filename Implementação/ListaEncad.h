@@ -77,4 +77,25 @@ lista_clientes *ler_clientes();
 
 int salvar_clientes(lista_clientes *l);
 
+
+// produtos
+typedef struct lista
+{
+    no_produtos *inicio;
+} Lista;
+
+Lista *criar();
+
+void limpar_lista_produtos(Lista *l);
+int tamanho_lista_produtos(Lista *l);
+void mostrar_produto_aleatorio(Lista *l);
+
+int inserirInicio_produtos(Lista *l, produtos it);
+
+int removerInicio_produtos(Lista *l);
+
+int buscarItemChave(Lista *l,int chave,struct produtos *retorno);
+int buscarPosicao(Lista *l,int posicao,int *retorno);
+int listaVazia_produtos(Lista *l);
+
 #endif
