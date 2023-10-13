@@ -619,8 +619,8 @@ Lista *criar_lista_produtos()
 
 void limpar_lista_produtos(Lista *l)
 {
-    while (listaVazia(l) != 0)
-        removerInicio(l);
+    while (listaVazia_produtos(l) != 0)
+        removerInicio_produtos(l);
     free(l);
     l = NULL;
 }
@@ -690,7 +690,7 @@ int removerInicio_produtos(Lista *l)
 {
     if (l == NULL)
         return 2;
-    if (listaVazia(l) == 0)
+    if (listaVazia_produtos(l) == 0)
         return 1;
     no_produtos *no_Lista = l->inicio;
     l->inicio = no_Lista->prox;
