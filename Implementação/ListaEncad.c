@@ -330,7 +330,7 @@ void mostrar_carrinho(lista_clientes *l, cadastro it)
             printf("\nProdutos no Carrinho: (total:%d)\n\n", no->valor.total_carrinho);
             if (no->valor.carrinho_inicio == NULL)
             {
-                printf("           Nenhum produto no carrinho!\n");
+                printf("Nenhum produto no carrinho!\n");
                 return;
             }
             no_produtos *prod = no->valor.carrinho_inicio;
@@ -354,7 +354,7 @@ void mostrar_carrinho(lista_clientes *l, cadastro it)
     return;
 }
 
-void mostra_comprados(lista_clientes *l, cadastro it)
+void mostrar_comprados(lista_clientes *l, cadastro it)
 {
     if (l == NULL)
     {
@@ -376,7 +376,7 @@ void mostra_comprados(lista_clientes *l, cadastro it)
             printf("\nHistorico de Produtos Comprados: (total:%d)\n\n", no->valor.total_comprados);
             if (no->valor.comprados_inicio == NULL)
             {
-                printf("           Nenhum produto foi comprado!\n");
+                printf("Nenhum produto foi comprado!\n");
                 return;
             }
             no_produtos *prod = no->valor.comprados_inicio;
@@ -607,6 +607,78 @@ lista_clientes *ler_clientes()
     fclose(arquivo);
     return lista;
 }
+
+int insere_carrinho_comprados(lista_clientes *l,cadastro it){
+    if(l == NULL) return 1;
+    if(lista_clientes_vazia(l) == 0) return 2;
+    no_clientes *no = l->inicio;
+    while(no != NULL){
+        if(strcmp(it.nome,no->valor.cadastro.nome) == 0){
+            no_produtos *no2 = no->valor.carrinho_inicio;
+            while(no2 != NULL){
+                insere_nova_compra(l,it,no2->produto);
+                no2 = no2->prox;
+            }
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
+int limpa_carrinho(lista_clientes *l,cadastro it){
+    if(l == NULL) return 1;
+    if(lista_clientes_vazia(l) == 0) return 2;
+    no_clientes *no = l->inicio;
+    while(no != NULL){
+        if(strcmp(it.nome,no->valor.cadastro.nome) == 0){
+            no_produtos *no2 = no->valor.carrinho_inicio;
+            while(no2 != NULL){
+                no_produtos *temp = no2;
+                no->valor.carrinho_inicio = no2->prox;
+                no2 = no2->prox;
+                free(temp);
+            }
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
+int avaliar_produto(lista_clientes *l,lista_vendedores *l2,cadastro it, int pos,int num){
+    if(l == NULL || l2 == NULL) return 1;
+    if(lista_clientes_vazia(l) == 0) return 2; // falta lista vazia dos vendedores
+    no_clientes *no = l->inicio;
+    while(no != NULL){
+        if(strcmp(it.nome,no->valor.cadastro.nome) == 0){
+            no_produtos *no2 = no->valor.carrinho_inicio;
+            while(no2 != NULL && pos > 0){
+                pos--;
+                no2 = no2->prox;
+            }
+            int nova_avaliacao = no2->produto.NOTA_AVALIACAO;
+            nova_avaliacao = ((nova_avaliacao + num)/(no2->produto.QUANT_AVALIACAO + 1));
+            no_vendedores *no3 = l2->inicio;
+            while(no3 != NULL){
+                no_produtos *no4 = no3->valor.inicio;
+                while(no4 != NULL){
+                    if(strcmp(no2->produto.NOME,no4->produto.NOME) == 0){
+                        no4->produto.NOTA_AVALIACAO = nova_avaliacao;
+                        no4->produto.QUANT_AVALIACAO++;
+                        return 0;
+                    }
+                    no4 = no4->prox;
+                }
+                no3 = no3->prox;
+            }
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
 
 // Produtos
 
