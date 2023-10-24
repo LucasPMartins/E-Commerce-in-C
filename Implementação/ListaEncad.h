@@ -103,25 +103,39 @@ lista_clientes *ler_clientes();
 
 int salvar_clientes(lista_clientes *l);
 
-
-// produtos
-typedef struct lista
+//                               TAD PRODUTOS
+typedef struct lista_prod
 {
     no_produtos *inicio;
-} Lista;
+} Lista_prod;
 
 Lista *criar();
 
-void limpar_lista_produtos(Lista *l);
-int tamanho_lista_produtos(Lista *l);
-void mostrar_produto_aleatorio(Lista *l);
+void limpar_lista_produtos(Lista_prod *l);
+int tamanho_lista_produtos(Lista_prod *l);
+void mostrar_produto_aleatorio(Lista_prod *l);
 
-int inserirInicio_produtos(Lista *l, produtos it);
+int inserirInicio_produtos(Lista_prod *l, produtos it);
 
-int removerInicio_produtos(Lista *l);
+int removerInicio_produtos(Lista_prod *l);
 
-int buscarItemChave(Lista *l,int chave,struct produtos *retorno);
-int buscarPosicao(Lista *l,int posicao,int *retorno);
-int listaVazia_produtos(Lista *l);
+int buscarItemChave(Lista_prod *l,int chave,struct produtos *retorno);
+int buscarPosicao(Lista_prod *l,int posicao,int *retorno);
+int listaVazia_produtos(Lista_prod *l);
+
+
+//                              TAD VENDEDOR
+
+
+lista_vendedores *criar_lista_vendedores();
+
+int lista_vendedores_vazia(lista_vendedores *l);
+
+int verifica_vendedor(lista_vendedores *l,cadastro it, vendedor v);
+
+int insere_novo_vendedor(lista_vendedores *l,vendedor v);
+
+void mostrar_lista_vendedores(lista_vendedores *l);
+
 
 #endif

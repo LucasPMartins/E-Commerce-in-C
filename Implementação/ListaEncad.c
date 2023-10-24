@@ -680,16 +680,18 @@ int avaliar_produto(lista_clientes *l,lista_vendedores *l2,cadastro it, int pos,
 }
 
 
-// Produtos
+/*                                  PRODUTOS   */
+/*                                  PRODUTOS   */
+/*                                  PRODUTOS   */
 
-Lista *criar_lista_produtos()
+Lista_prod *criar_lista_produtos()
 {
-    Lista *l = (Lista *)malloc(sizeof(Lista));
+    Lista_prod *l = (Lista_prod *)malloc(sizeof(Lista_prod));
     l->inicio = NULL;
     return l;
 }
 
-void limpar_lista_produtos(Lista *l)
+void limpar_lista_produtos(Lista_prod *l)
 {
     while (listaVazia_produtos(l) != 0)
         removerInicio_produtos(l);
@@ -697,7 +699,7 @@ void limpar_lista_produtos(Lista *l)
     l = NULL;
 }
 
-int tamanho_lista_produtos(Lista *l)
+int tamanho_lista_produtos(Lista_prod *l)
 {
     if (l == NULL)
         return -1;
@@ -711,7 +713,7 @@ int tamanho_lista_produtos(Lista *l)
     return cont;
 }
 
-void mostrar_produto_aleatorio(Lista *l)
+void mostrar_produto_aleatorio(Lista_prod *l)
 {
     if (l != NULL)
     {
@@ -734,7 +736,7 @@ void mostrar_produto_aleatorio(Lista *l)
     }
 }
 
-int listaVazia_produtos(Lista *l)
+int listaVazia_produtos(Lista_prod *l)
 {
     if (l == NULL)
         return 2;
@@ -744,7 +746,7 @@ int listaVazia_produtos(Lista *l)
         return 1;
 }
 
-int inserirInicio_produtos(Lista *l, produtos it)
+int inserirInicio_produtos(Lista_prod *l, produtos it)
 {
     if (l == NULL)
         return 2;
@@ -758,7 +760,7 @@ int inserirInicio_produtos(Lista *l, produtos it)
     return 0;
 }
 
-int removerInicio_produtos(Lista *l)
+int removerInicio_produtos(Lista_prod *l)
 {
     if (l == NULL)
         return 2;
@@ -772,3 +774,8 @@ int removerInicio_produtos(Lista *l)
 
     return 0;
 }
+
+
+/*                                  VENDEDOR   */
+/*                                  VENDEDOR   */
+

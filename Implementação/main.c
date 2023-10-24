@@ -22,6 +22,7 @@ int main()
     cadastro it;
     lista_clientes *l = criar_lista_clientes();
     lista_vendedores *l2;
+    
     do
     {
         system("cls");
@@ -52,7 +53,7 @@ int main()
                 scanf("%d", &opcao2);
                 switch (opcao2)
                 {
-                case 1:
+                case 1: // CADASTRO CLIENTE
                     do
                     {
                         system("cls");
@@ -378,8 +379,9 @@ int main()
                             break;
                         }
                     } while (opcao3 != 0);
+                    // SEPARAÇÃO
                 case 2:
-                    /*            O mesmo sistema para os vendedores... implementes suas funções aqui Jamal
+                    /*            CADASTRO VENDEDOR
                      do{
                         printf("Digite seu nome:");
                         setbuf(stdin,NULL);
@@ -391,8 +393,10 @@ int main()
                         it.senha[strcspn(it.senha,"\n")] = '\0';
                     // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
                     }while(verifica_vendedor(l2,it) == 0);
+
                     // Se sair do loop significa que é um novo usuario com um nome diferente
                     insere_novo_vendedor(l2,it);
+
                     printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
                     opcao2 = 0; // Volta direto para o menu inicial
                     */
@@ -414,7 +418,7 @@ int main()
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
                 case 4:
-                    /*              O mesmo sistema para os vendedores... implementes suas funções aqui Jamal
+                    /*              LOGIN COMO VENDEDOR
                     do
                     {
                         printf("Digite seu nome:");
