@@ -30,6 +30,19 @@ typedef struct cliente {
     cadastro cadastro;
 } cliente;
 
+typedef struct vendedor{
+    int total_produtos;
+    no_produtos *inicio;
+    cadastro cadastro;
+    char nome_loja[30];
+}vendedor;
+
+typedef struct no_vendedores{
+    vendedor valor;
+    struct no_vendedores *prox;
+    struct no_vendedores *ant;
+}no_vendedores;
+
 typedef struct no_clientes {
     cliente valor;
     struct no_clientes *prox;
@@ -40,6 +53,11 @@ typedef struct lista_clientes {
     int total_clientes;
     no_clientes *inicio;
 } lista_clientes;
+
+typedef struct lista_vendedores{
+    int total_vendedores;
+    no_vendedores *inicio;
+}lista_vendedores;
 
 lista_clientes *criar_lista_clientes();
 
@@ -57,15 +75,23 @@ int insere_nova_compra(lista_clientes *l,cadastro it,produtos p);
 
 int insere_novo_carrinho(lista_clientes *l,cadastro it,produtos p);
 
+int insere_carrinho_comprados(lista_clientes *l,cadastro it);
+
 int remove_do_carrinho(lista_clientes *l,cadastro it,int pos);
+
+int limpa_carrinho(lista_clientes *l,cadastro it);
 
 void mostra_lista_clientes(lista_clientes *l);
 
+void mostrar_comprados(lista_clientes *l,cadastro it);
+
 void mostrar_conta_cliente(lista_clientes *l, cadastro it);
 
-void mostra_comprados(lista_clientes *l,cadastro it);
+void mostrar_comprados(lista_clientes *l,cadastro it);
 
 void mostrar_carrinho(lista_clientes *l, cadastro it);
+
+int avaliar_produto(lista_clientes *l,lista_vendedores *l2,cadastro it, int pos,int num);
 
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 
