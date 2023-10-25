@@ -401,7 +401,7 @@ int main()
                     opcao2 = 0; // Volta direto para o menu inicial
                     */
                     break;
-                case 3:
+                case 3: //LOGIN CLIENTE
                     do
                     {
                         printf("Digite seu nome:");
