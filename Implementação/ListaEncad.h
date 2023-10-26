@@ -59,6 +59,12 @@ typedef struct lista_vendedores{
     no_vendedores *inicio;
 }lista_vendedores;
 
+typedef struct lista_produtos
+{
+    no_produtos *inicio;
+}lista_produtos;
+
+
 lista_clientes *criar_lista_clientes();
 
 int lista_clientes_vazia(lista_clientes *l);
@@ -104,24 +110,24 @@ lista_clientes *ler_clientes();
 int salvar_clientes(lista_clientes *l);
 
 //                               TAD PRODUTOS
-typedef struct lista_prod
-{
-    no_produtos *inicio;
-} Lista_prod;
 
-Lista_prod *criar();
+lista_produtos *criar();
 
-void limpar_lista_produtos(Lista_prod *l);
-int tamanho_lista_produtos(Lista_prod *l);
-void mostrar_produto_aleatorio(Lista_prod *l);
+void limpar_lista_produtos(lista_produtos *l);
+int tamanho_lista_produtos(lista_produtos *l);
+void mostrar_produtos(lista_produtos *l);
 
-int inserirInicio_produtos(Lista_prod *l, produtos it);
+int inserirInicio_produtos(lista_produtos *l, produtos it);
 
-int removerInicio_produtos(Lista_prod *l);
+int removerInicio_produtos(lista_produtos *l);
 
-int buscarItemChave(Lista_prod *l,int chave,struct produtos *retorno);
-int buscarPosicao(Lista_prod *l,int posicao,int *retorno);
-int listaVazia_produtos(Lista_prod *l);
+int buscarItemChave(lista_produtos *l,int chave,struct produtos *retorno);
+int buscarPosicao(lista_produtos *l,int posicao,int *retorno);
+int listaVazia_produtos(lista_produtos *l);
+
+int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p);
+
+int mostrar_5_produtos(lista_vendedores *v, cliente *it, lista_produtos *p);
 
 
 //                              TAD VENDEDOR
@@ -136,6 +142,7 @@ int verifica_vendedor(lista_vendedores *l, vendedor v);
 int insere_novo_vendedor(lista_vendedores *l,vendedor v);
 
 void mostrar_lista_vendedores(lista_vendedores *l);
+
 
 
 #endif
