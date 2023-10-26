@@ -22,6 +22,7 @@ int main()
     cadastro it;
     lista_clientes *l = criar_lista_clientes();
     lista_vendedores *l2;
+    vendedor v;
     
     do
     {
@@ -381,27 +382,30 @@ int main()
                     } while (opcao3 != 0);
                     // SEPARAÇÃO
                 case 2:
-                    /*            CADASTRO VENDEDOR
+                    /*            CADASTRO VENDEDOR */
                      do{
                         printf("Digite seu nome:");
                         setbuf(stdin,NULL);
-                        fgets(it.nome,30,stdin);
-                        it.nome[strcspn(it.nome,"\n")] = '\0';
+                        fgets(v.cadastro.nome,30,stdin);
+                        v.cadastro.nome[strcspn(v.cadastro.nome,"\n")] = '\0';
                         printf("Digite sua senha:");
                         setbuf(stdin,NULL);
-                        fgets(it.senha,10,stdin);
-                        it.senha[strcspn(it.senha,"\n")] = '\0';
+                        fgets(v.cadastro.senha,10,stdin);
+                        printf("Digite o nome da loja:");
+                        setbuf(stdin,NULL);
+                        fgets(v.nome_loja,30,stdin);
+                        v.nome_loja[strcspn(v.nome_loja,"\n")] = '\0';
                     // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
-                    }while(verifica_vendedor(l2,it) == 0);
+                    }while(verifica_vendedor(l2,v) == 0);
 
                     // Se sair do loop significa que é um novo usuario com um nome diferente
-                    insere_novo_vendedor(l2,it);
+                    insere_novo_vendedor(l2,v);
 
                     printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
                     opcao2 = 0; // Volta direto para o menu inicial
-                    */
+    
                     break;
-                case 3: //LOGIN CLIENTE
+                case 3:       /*       LOGIN COMO CLIENTE           */
                     do
                     {
                         printf("Digite seu nome:");
@@ -417,24 +421,26 @@ int main()
                     printf("\nSeja Bem vindo de volta %s!\n\n", it.nome);
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
+                                /*       LOGIN COMO CLIENTE           */
+                                
+
                 case 4:
-                    /*              LOGIN COMO VENDEDOR
+                                 /*       LOGIN COMO VENDEDOR           */
                     do
                     {
                         printf("Digite seu nome:");
                         setbuf(stdin, NULL);
-                        fgets(it.nome, 30, stdin);
-                        it.nome[strcspn(it.nome, "\n")] = '\0';
+                        fgets(v.cadastro.nome,30,stdin);
+                        v.cadastro.nome[strcspn(v.cadastro.nome,"\n")] = '\0';
                         printf("Digite sua senha:");
                         setbuf(stdin, NULL);
-                        fgets(it.senha, 10, stdin);
-                        it.senha[strcspn(it.senha, "\n")] = '\0';
+                        fgets(v.cadastro.senha,10,stdin);
                         // Se o nome já existir na lista de vendedores sairá do loop, usuario existe
-                    } while (verifica_vendedor(l, it) != 0);
+                    } while (verifica_vendedor(l, v) != 0);
                     printf("\nSeja Bem vindo de volta %s!\n\n", it.nome);
                     opcao2 = 0; // Volta direto para o menu inicial
-                    */
                     break;
+                                    /*       LOGIN COMO VENDEDOR           */
                 default:
                     break;
                 }

@@ -109,7 +109,7 @@ typedef struct lista_prod
     no_produtos *inicio;
 } Lista_prod;
 
-Lista *criar();
+Lista_prod *criar();
 
 void limpar_lista_produtos(Lista_prod *l);
 int tamanho_lista_produtos(Lista_prod *l);
@@ -131,7 +131,7 @@ lista_vendedores *criar_lista_vendedores();
 
 int lista_vendedores_vazia(lista_vendedores *l);
 
-int verifica_vendedor(lista_vendedores *l,cadastro it, vendedor v);
+int verifica_vendedor(lista_vendedores *l, vendedor v);
 
 int insere_novo_vendedor(lista_vendedores *l,vendedor v);
 
