@@ -20,12 +20,13 @@ int main()
     int opcao, opcao2, opcao3, categoria, num, pos, i = 0;
     char tecla, *pesquisa = (char *)malloc(30 * sizeof(char));
     lista_clientes *l = criar_lista_clientes();
-    lista_vendedores *l2;
-    cliente* it = (cliente*) calloc(1,sizeof(cliente)); // Para zerar os campos, e NULL nos ponteiros
-    vendedor* v = (vendedor*) calloc(1,sizeof(vendedor));
-    
+    lista_vendedores *l_vendedores;
+    cliente *it = (cliente *) calloc(1, sizeof(cliente)); // Para zerar os campos, e NULL nos ponteiros
+    vendedor *v = (vendedor *) calloc(1, sizeof(vendedor));
+    lista_produtos *retorno_lista = NULL;// Lista temporaria de produtos para printar
 
     /*    -----      DECLARAÇÕES    ----   */
+
     do
     {
         system("cls");
@@ -92,10 +93,19 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it->cadastro.nome);
                         printf(ANSI_COLOR_RESET);
-                        // lista_produtos *retorno_lista;
-                        /*Faz uma funcao que printa 5 produtos diferentes de vendedores diferentes
-                        e salva em uma lista de produtos, tem que salvar em uma lista pois se o usuario
-                        quiser adcionar no carrinho os produtos inicias temos que saber quais são!*/
+
+                        
+        
+                        /*
+                            Faz uma funcao que printa 5 produtos diferentes de vendedores diferentes
+                            e salva em uma lista de produtos, tem que salvar em uma lista pois se o usuario
+                            quiser adicionar no carrinho os produtos inicias temos que saber quais são!
+                        
+                        retorno_lista = criar_lista_produtos();
+                        mostrar_5_produtos(l_vendedores, it, retorno_lista);
+                        mostrar_produtos(retorno_lista);
+                        //Limpar a lista depois de usa-la
+                        */
                         printf("   Produto 1................................................\n");
                         printf("   Produto 2................................................\n");
                         printf("   Produto 3................................................\n");
@@ -127,45 +137,17 @@ int main()
                             switch (opcao2)
                             {
                             case 1: // por nome
-                                printf("\n\nDigite o nome do Produto:");
+                                printf("\n\n--- Digite o nome do Produto: ---\n");
                                 printf(ANSI_COLOR_YELLOW);
                                 setbuf(stdin, NULL);
                                 fgets(pesquisa, 30, stdin);
+                                pesquisa[strlen(pesquisa)-1] = '\0';
                                 printf(ANSI_COLOR_RESET);
                                 produtos retorno;
-                                /* Faz um função que procura um produto passando por todos os vendedores
-                                ex: void search_produto(lista_vendedores *l,char *pesquisa, produtos *retorno){
-                                        verifições padroes de lista;
-                                        int teste = 0;
-                                        no_vendedor *no = l->inicio; // vendedor inicial
-                                        while(no != NULL) // procura em todos os vendedores
-                                        {
-                                            no_produtos *no2 = no->vendedor.inicio;
-                                            while(no != NULL) // procura em todos os produtos do vendedor
-                                            {
-                                                if(strcmp(pesquisa,no2->produto.nome) == 0) // produto pesquisado com nome igual
-                                                {
-                                                    printf("Nome: %s", no2->produto.NOME);
-                                                    printf("        Categoria: %d\t", no2->produto.CATEGORIA);
-                                                    printf("        Quantidade de Avaliacoes: %d\t",no2->produto.QUANT_AVALIACAO);
-                                                    printf("        Nota de Avalicao: %d\t", no2->produto.NOTA_AVALIACAO);
-                                                    printf("        Quantidade: %d\t", no2->produto.QUANTIDADE);
-                                                    printf("        Valor: %.2f\t", no2->produto.VALOR);
-                                                    printf("        Descricao: %s}\n", no2->produto.DESCRICAO);
-                                                    retorno = no2->produto; // retorna um produto
-                                                    teste = 1;
-                                                    break;
-                                                }
-                                                no2 = no2->prox;
-                                            }
-                                            no = no->prox;
-                                        }
-                                    if(teste == 0)
-                                    {
-                                        printf("Produto inexistente ou nome errado!\n");
-                                    }
-                                    return;
-                                    }
+                                /* FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE NOME X
+                                            retorno_lista = criar_lista_produtos();
+                                            produtos_de_nome(l_vendedores,pesquisa, retorno_lista);
+                                            mostrar_produtos(retorno_lista);
                                 */
                                 printf("Adicionar o Produto (%s) ao carrinho?\n", retorno.NOME);
                                 printf("Pressione Enter para Adicionar ou Esc para Voltar...\n");
@@ -201,40 +183,10 @@ int main()
                                 scanf("%d", &categoria);
                                 printf(ANSI_COLOR_RESET);
                                 // lista_produtos *retorno_lista;
-                                /* Faz um função que procura um produto passando por todos os vendedores
-                                ex: void search_categoria(lista_vendedores *l,int categoria,lista_produtos *retorno){
-                                        verifições padroes de lista;
-                                        int teste = 0,j = 0;
-                                        no_vendedor *no = l->inicio; // vendedor inicial
-                                        while(no != NULL) // procura em todos os vendedores
-                                        {
-                                            no_produtos *no2 = no->vendedor.inicio;
-                                            while(no != NULL) // procura em todos os produtos do vendedor
-                                            {
-                                                if(categoria == no2->produto.CATEGORIA ) // produto pesquisado com categoria igual
-                                                {
-                                                    prinft("Produto %d: ",j);
-                                                    printf("Nome: %s", no2->produto.NOME);
-                                                    printf("        Categoria: %d\t", no2->produto.CATEGORIA);
-                                                    printf("        Quantidade de Avaliacoes: %d\t",no2->produto.QUANT_AVALIACAO);
-                                                    printf("        Nota de Avalicao: %d\t", no2->produto.NOTA_AVALIACAO);
-                                                    printf("        Quantidade: %d\t", no2->produto.QUANTIDADE);
-                                                    printf("        Valor: %.2f\t", no2->produto.VALOR);
-                                                    printf("        Descricao: %s}\n", no2->produto.DESCRICAO);
-                                                    insere_lista_produtos(retorno,no2->produto); //funcao que insere um produto na lista de produtos
-                                                    teste = 1;
-                                                    j++;
-                                                }
-                                                no2 = no2->prox;
-                                            }
-                                            no = no->prox;
-                                        }
-                                    if(teste == 0)
-                                    {
-                                        printf("Nenhum produto na categoria! :( \n");
-                                    }
-                                    return;
-                                    }
+                                /* FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE CATEGORIA X
+
+                                            produtos_de_categoria(l_vendedores,categoria, retorno_lista);
+                                            mostrar_produtos(retorno_lista);
                                 */
                                 do
                                 {
@@ -250,9 +202,11 @@ int main()
                                     printf(ANSI_COLOR_RESET);
                                 } while (num != -1);
                                 break;
+
                             default:
                                 break;
                             }
+
                             break;
                         case 2: // Adicionar no carrinho
                             do
@@ -343,9 +297,9 @@ int main()
                                     setbuf(stdin, NULL);
                                     scanf("%d", &pos);
                                     printf("\nDigite sua Avaliacao:");
-                                    setbuf(stdin,NULL);
-                                    scanf("%d",&num);
-                                    avaliar_produto(l,l2, it->cadastro, pos,num);
+                                    setbuf(stdin, NULL);
+                                    scanf("%d", &num);
+                                    avaliar_produto(l, l_vendedores, it->cadastro, pos, num);
                                     printf("Obrigado por Avaliar!\n\n");
                                 }
                                 if (opcao2 == 0)
@@ -385,29 +339,32 @@ int main()
                     // SEPARAÇÃO
                 case 2:
                     /*            CADASTRO VENDEDOR */
-                     do{
+                    do
+                    {
                         printf("Digite seu nome:");
-                        setbuf(stdin,NULL);
-                        fgets(v->cadastro.nome,30,stdin);
-                        v->cadastro.nome[strcspn(v->cadastro.nome,"\n")] = '\0';
+                        setbuf(stdin, NULL);
+                        fgets(v->cadastro.nome, 30, stdin);
+                        v->cadastro.nome[strcspn(v->cadastro.nome, "\n")] = '\0';
                         printf("Digite sua senha:");
-                        setbuf(stdin,NULL);
-                        fgets(v->cadastro.senha,10,stdin);
+                        setbuf(stdin, NULL);
+                        fgets(v->cadastro.senha, 10, stdin);
                         printf("Digite o nome da loja:");
-                        setbuf(stdin,NULL);
-                        fgets(v->nome_loja,30,stdin);
-                        v->nome_loja[strcspn(v->nome_loja,"\n")] = '\0';
-                    // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
-                    }while(verifica_vendedor(l2,*v) == 0);
+                        setbuf(stdin, NULL);
+                        fgets(v->nome_loja, 30, stdin);
+                        v->nome_loja[strcspn(v->nome_loja, "\n")] = '\0';
+                        // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
+                    } while (verifica_vendedor(l_vendedores, *v) == 0);
+                    // Quando vendedor é criado a lista dele aponta pra NULL
+                    v->inicio = NULL;
 
                     // Se sair do loop significa que é um novo usuario com um nome diferente
-                    insere_novo_vendedor(l2,*v);
+                    insere_novo_vendedor(l_vendedores, *v);
 
                     printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
                     opcao2 = 0; // Volta direto para o menu inicial
-    
+
                     break;
-                case 3:       /*       LOGIN COMO CLIENTE           */
+                case 3: /*       LOGIN COMO CLIENTE           */
                     do
                     {
                         printf("Digite seu nome:");
@@ -423,33 +380,37 @@ int main()
                     printf("\nSeja Bem vindo de volta %s!\n\n", it->cadastro.nome);
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
-                                /*       LOGIN COMO CLIENTE           */
-                                
+                    /*       LOGIN COMO CLIENTE           */
 
                 case 4:
-                                 /*       LOGIN COMO VENDEDOR           */
+                    /*       LOGIN COMO VENDEDOR           */
                     do
                     {
                         printf("Digite seu nome:");
                         setbuf(stdin, NULL);
-                        fgets(v->cadastro.nome,30,stdin);
-                        v->cadastro.nome[strcspn(v->cadastro.nome,"\n")] = '\0';
+                        fgets(v->cadastro.nome, 30, stdin);
+                        v->cadastro.nome[strcspn(v->cadastro.nome, "\n")] = '\0';
                         printf("Digite sua senha:");
                         setbuf(stdin, NULL);
-                        fgets(v->cadastro.senha,10,stdin);
+                        fgets(v->cadastro.senha, 10, stdin);
                         // Se o nome já existir na lista de vendedores sairá do loop, usuario existe
                     } while (verifica_vendedor(l, *v) != 0);
                     printf("\nSeja Bem vindo de volta %s!\n\n", v->cadastro.nome);
+                    /* FUNÇÕES DO VENDEDOR: 
+                        - CADASTRAR UM PRODUTO
+                        
+                    */
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
-                                    /*       LOGIN COMO VENDEDOR           */
+    
                 default:
                     break;
                 }
             } while (opcao2 != 0);
             break;
+        /*=========================================================================  SOBRE  =========================================================================*/
         case 2:
-            /* SOBRE */
+            
             system("cls");
             printf("\n");
             printf("=========================================================================\n");

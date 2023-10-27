@@ -797,118 +797,6 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
-//
-
-/*                                  VENDEDOR   */
-/*                                  VENDEDOR   */
-/*                                  VENDEDOR   */
-
-lista_vendedores *criar_lista_vendedores()
-{
-    lista_vendedores *l = (lista_vendedores *)malloc(sizeof(lista_vendedores));
-    l->inicio = NULL;
-    l->total_vendedores = 0;
-    return l;
-}
-
-int lista_vendedores_vazia(lista_vendedores *l)
-{
-    if (l == NULL)
-        return 1;
-    if (l->inicio == NULL && l->total_vendedores == 0)
-        return 1;
-    else
-        return 0;
-}
-
-int verifica_vendedor(lista_vendedores *l, vendedor v)
-{
-    if (l == NULL)
-        return 1;
-    if (lista_vendedores_vazia(l) == 0)
-        return 2;
-    no_vendedores *atual = l->inicio;
-    while (atual != NULL)
-    {
-        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
-        {
-            return 0;
-        }
-        atual = atual->prox;
-    }
-    return 3;
-}
-
-int insere_novo_vendedor(lista_vendedores *l, vendedor v)
-{
-    if (l == NULL)
-    {
-        return 1;
-    }
-    // a função insere no inicio
-    no_vendedores *novo_no = (no_vendedores *)malloc(sizeof(no_vendedores));
-    if (novo_no == NULL)
-    {
-        return 2;
-    }
-
-    novo_no->valor = v;
-    novo_no->prox = l->inicio;
-    novo_no->ant = NULL;
-
-    if (l->inicio != NULL)
-    {
-
-        l->inicio->ant = novo_no;
-    }
-
-    l->inicio = novo_no;
-
-    l->total_vendedores++;
-    return 0;
-}
-
-void mostrar_lista_vendedores(lista_vendedores *l)
-{
-    if (l != NULL)
-    {
-        no_vendedores *search = l->inicio;
-        int cont = 1;
-        printf("{");
-        while (search != NULL)
-        {
-            printf("Vendedor %d:\n", cont);
-            printf("Nome: %s\n", search->valor.cadastro.nome);
-            printf("NomeLoja: %s\n", search->valor.nome_loja);
-            printf("Senha: %s\n", search->valor.cadastro.senha);
-            printf("\n");
-
-            search = search->prox;
-            cont++;
-        }
-        printf("}");
-    }
-    /*if (l == NULL)
-    {
-        printf("Lista de vendedores nao criada!\n");
-        return;
-    }*/
-}
-
-void libera_lista_vendedores(lista_vendedores *l)
-{
-    no_vendedores *atual = l->inicio;
-    while (atual != NULL)
-    {
-        no_vendedores *temp = atual;
-        atual = atual->prox;
-        free(temp);
-    }
-    l->inicio = NULL;
-    l->total_vendedores = 0;
-}
-
-//              FUNÇÃO DE PRINTAR 5 PRODUTOS DA ULTIMA COMPRA E ALEATORIO
 int mostrar_5_produtos(lista_vendedores *v, cliente *it, lista_produtos *p)
 {
     if (v == NULL || it == NULL)
@@ -965,8 +853,6 @@ int mostrar_5_produtos(lista_vendedores *v, cliente *it, lista_produtos *p)
     return 0;
 }
 
-//                  MOSTRAR PRODUTOS DE CATEGORIA
-
 int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 {
     if (v == NULL || (categoria < 0 || categoria > 12))
@@ -975,6 +861,7 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
         return 1;
     no_vendedores *no = v->inicio;
     no_produtos *nl = NULL;
+    
     while (no != NULL)
     {
         nl = no->valor.inicio;
@@ -991,4 +878,124 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
     return 0;
 }
 
+int produtos_de_nome(lista_vendedores *v, char* pesquisa, lista_produtos*p){
+    if(v == NULL) return 2;
+    if(lista_vendedores_vazia == 0) return 1;
+    no_vendedores *no = v->inicio;
+    no_produtos *nl = NULL;
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            if(strcmp(nl->produto.NOME,pesquisa) == 0)
+                inserirInicio_produtos(p,nl->produto);
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return 0;
+}
+/*                                  VENDEDOR   */
+/*                                  VENDEDOR   */
+/*                                  VENDEDOR   */
+
+lista_vendedores *criar_lista_vendedores()
+{
+    lista_vendedores *l = (lista_vendedores *)malloc(sizeof(lista_vendedores));
+    l->inicio = NULL;
+    l->total_vendedores = 0;
+    return l;
+}
+
+int lista_vendedores_vazia(lista_vendedores *l)
+{
+    if (l == NULL)
+        return 1;
+    if (l->inicio == NULL && l->total_vendedores == 0)
+        return 1;
+    else
+        return 0;
+}
+
+int verifica_vendedor(lista_vendedores *l, vendedor v)
+{
+    if (l == NULL)
+        return 1;
+    if (lista_vendedores_vazia(l) == 0)
+        return 2;
+    no_vendedores *atual = l->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
+        {
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
+}
+
+int insere_novo_vendedor(lista_vendedores *l, vendedor v)
+{
+    if (l == NULL)
+        return 1;
+    // a função insere no inicio
+    no_vendedores *novo_no = (no_vendedores *)malloc(sizeof(no_vendedores));
+    if (novo_no == NULL)
+        return 2;
+    novo_no->valor = v;
+    novo_no->prox = l->inicio;
+    novo_no->ant = NULL;
+
+    if (l->inicio != NULL)
+        l->inicio->ant = novo_no;
+
+    l->inicio = novo_no;
+
+    l->total_vendedores++;
+    return 0;
+}
+
+void mostrar_lista_vendedores(lista_vendedores *l)
+{
+    if (l != NULL)
+    {
+        no_vendedores *search = l->inicio;
+        int cont = 1;
+        printf("{");
+        while (search != NULL)
+        {
+            printf("Vendedor %d:\n", cont);
+            printf("Nome: %s\n", search->valor.cadastro.nome);
+            printf("NomeLoja: %s\n", search->valor.nome_loja);
+            printf("Senha: %s\n", search->valor.cadastro.senha);
+            printf("\n");
+
+            search = search->prox;
+            cont++;
+        }
+        printf("}");
+    }
+    /*if (l == NULL)
+    {
+        printf("Lista de vendedores nao criada!\n");
+        return;
+    }*/
+}
+
+void libera_lista_vendedores(lista_vendedores *l)
+{
+    no_vendedores *atual = l->inicio;
+    while (atual != NULL)
+    {
+        no_vendedores *temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+    l->inicio = NULL;
+    l->total_vendedores = 0;
+}
+
+//int vendedor_adiciona_produtos(vendedor v)
 

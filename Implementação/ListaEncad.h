@@ -32,7 +32,7 @@ typedef struct cliente {
 
 typedef struct vendedor{
     int total_produtos;
-    no_produtos *inicio;
+    no_produtos *inicio;  // o vendedor armazena o inicio do nó, ou seja é como se vendedor fosse a lista l q tem l->inicio
     cadastro cadastro;
     char nome_loja[30];
 }vendedor;
@@ -127,6 +127,8 @@ int listaVazia_produtos(lista_produtos *l);
 
 int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p);
 
+int produtos_de_nome(lista_vendedores *v, char* pesquisa, lista_produtos*p);
+
 int mostrar_5_produtos(lista_vendedores *v, cliente *it, lista_produtos *p);
 
 
@@ -143,6 +145,8 @@ int insere_novo_vendedor(lista_vendedores *l,vendedor v);
 
 void mostrar_lista_vendedores(lista_vendedores *l);
 
+
+//int vendedor_adiciona_produtos(vendedor v,);
 
 
 #endif
