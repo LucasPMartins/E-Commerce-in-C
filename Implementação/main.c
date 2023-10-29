@@ -1284,7 +1284,7 @@ void print_logo()
     printf("              |_|  |_|\\__,_|\\___|_| |_|_|_| |_|\\___|   \n");
     printf(ANSI_COLOR_RESET);
 }
-//k
+
 void imprimelento(char *p, int N)
 {
     int i;
@@ -1295,5 +1295,3 @@ void imprimelento(char *p, int N)
         Sleep(N);
     }
 }
-
-//cu
