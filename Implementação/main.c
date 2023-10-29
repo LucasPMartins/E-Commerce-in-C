@@ -25,7 +25,7 @@ int main()
     vendedor *v = (vendedor *) calloc(1, sizeof(vendedor));
     lista_produtos *retorno_lista = NULL;// Lista temporaria de produtos para printar
 
-    /*    -----      DECLARAÇÕES    ----   */
+                /*    -----      DECLARAÇÕES    ----   */
 
     do
     {
@@ -104,6 +104,7 @@ int main()
                         retorno_lista = criar_lista_produtos();
                         mostrar_5_produtos(l_vendedores, it, retorno_lista);
                         mostrar_produtos(retorno_lista);
+                        limpar(retorno_lista);
                         //Limpar a lista depois de usa-la
                         */
                         printf("   Produto 1................................................\n");
@@ -148,6 +149,7 @@ int main()
                                             retorno_lista = criar_lista_produtos();
                                             produtos_de_nome(l_vendedores,pesquisa, retorno_lista);
                                             mostrar_produtos(retorno_lista);
+                                            limpar(retorno_lista);
                                 */
                                 printf("Adicionar o Produto (%s) ao carrinho?\n", retorno.NOME);
                                 printf("Pressione Enter para Adicionar ou Esc para Voltar...\n");
@@ -398,7 +400,6 @@ int main()
                     printf("\nSeja Bem vindo de volta %s!\n\n", v->cadastro.nome);
                     /* FUNÇÕES DO VENDEDOR: 
                         - CADASTRAR UM PRODUTO
-                        
                     */
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
