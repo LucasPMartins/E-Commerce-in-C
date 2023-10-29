@@ -54,7 +54,9 @@ int insere_novo_cliente(lista_clientes *l, cadastro it)
     no_clientes *user = (no_clientes *)malloc(sizeof(no_clientes));
     user->valor.cadastro = it;
     user->valor.carrinho_inicio = NULL;
+    user->valor.total_carrinho = 0;
     user->valor.comprados_inicio = NULL;
+    user->valor.total_comprados = 0;
     user->prox = l->inicio;
     user->ant = NULL;
     if (l->inicio != NULL)
@@ -348,9 +350,9 @@ void mostrar_conta_cliente(lista_clientes *l, cadastro it)
 void mostrar_carrinho(lista_clientes *l, cadastro it)
 {
     if (l == NULL)
-        return 1;
+        return ;
     if (lista_clientes_vazia(l) == 0)
-        return 2;
+        return ;
     no_clientes *search = l->inicio;
     while (search != NULL)
     {
