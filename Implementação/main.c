@@ -24,7 +24,8 @@ int main()
     lista_clientes *l = criar_lista_clientes();           // Lista dos Clientes
     lista_vendedores *l_vendedores;   // Lista dos Vendedores
     cadastro it;                    
-    vendedor *v = (vendedor *)calloc(1, sizeof(vendedor));
+    //vendedor *v = (vendedor *)calloc(1, sizeof(vendedor));
+    vendedor v;
     produtos p; // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
     lista_produtos *retorno_lista2 = criar_lista_produtos();
@@ -583,22 +584,21 @@ int main()
                     {
                         printf("Digite seu nome:");
                         setbuf(stdin, NULL);
-                        fgets(v->cadastro.nome, 30, stdin);
-                        v->cadastro.nome[strcspn(v->cadastro.nome, "\n")] = '\0';
+                        fgets(v.cadastro.nome, 30, stdin);
+                        v.cadastro.nome[strcspn(v.cadastro.nome, "\n")] = '\0';
                         printf("Digite sua senha:");
                         setbuf(stdin, NULL);
-                        fgets(v->cadastro.senha, 10, stdin);
+                        fgets(v.cadastro.senha, 10, stdin);
                         printf("Digite o nome da loja:");
                         setbuf(stdin, NULL);
-                        fgets(v->nome_loja, 30, stdin);
-                        v->nome_loja[strcspn(v->nome_loja, "\n")] = '\0';
+                        fgets(v.nome_loja, 30, stdin);
+                        v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
                         // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
-                    } while (verifica_vendedor(l_vendedores, *v) == 0);
+                    } while (verifica_vendedor(l_vendedores, v) == 0);
                     // Quando vendedor é criado a lista dele aponta pra NULL
-                    v->inicio = NULL;
-
+                    //v->inicio = NULL;
                     // Se sair do loop significa que é um novo usuario com um nome diferente
-                    insere_novo_vendedor(l_vendedores, *v);
+                    insere_novo_vendedor(l_vendedores, v);
 
                     printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
                     opcao2 = 0; // Volta direto para o menu inicial
