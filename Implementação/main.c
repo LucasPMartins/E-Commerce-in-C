@@ -20,7 +20,7 @@ int main()
 {
     int opcao, opcao2, opcao3, categoria, num, pos, qtd, ret, sair, i = 0;
     char tecla, *pesquisa = (char *)malloc(30 * sizeof(char));
-    char *senha = (char *)malloc(sizeof(char));
+    char *senha = (char *)malloc(30*sizeof(char)); // Usado para verificar a senha do it.senha
     lista_clientes *l = criar_lista_clientes();           // Lista dos Clientes
     lista_vendedores *l_vendedores;   // Lista dos Vendedores
     cadastro it;                    
