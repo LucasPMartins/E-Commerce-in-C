@@ -117,19 +117,8 @@ int main()
                             printf(ANSI_COLOR_YELLOW);
                             printf("%s!\n\n", it->cadastro.nome);
                             printf(ANSI_COLOR_RESET);
-                            /*
-                                Faz uma funcao que printa 5 produtos diferentes de vendedores diferentes
-                                e salva em uma lista de produtos, tem que salvar em uma lista pois se o usuario
-                                quiser adicionar no carrinho os produtos inicias temos que saber quais são!
                             mostrar_5_produtos(l_vendedores, it, retorno_lista);
                             mostrar_produtos(retorno_lista);
-                            //Limpar a lista depois de usa-la
-                            */
-                            printf("   Produto 1................................................\n");
-                            printf("   Produto 2................................................\n");
-                            printf("   Produto 3................................................\n");
-                            printf("   Produto 2................................................\n");
-                            printf("   Produto 5................................................\n");
                             printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                             printf("                   1- Procurar  por  um  Produto\n");
                             printf("                   2- Adicionar Produto ao Carrinho\n");
@@ -172,14 +161,14 @@ int main()
                                         i--;
                                     }
                                     printf(ANSI_COLOR_RESET);
-                                    // produtos_de_nome(l_vendedores, pesquisa, retorno_lista);
+                                    produtos_de_nome(l_vendedores, pesquisa, retorno_lista);
                                     sair = 0;
                                     do
                                     {
                                         system("cls");
                                         print_logo();
                                         printf("\n\nProdutos encontrados para %s:\n\n", pesquisa);
-                                        // mostrar_produtos(retorno_lista);
+                                        mostrar_produtos(retorno_lista);
                                         printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                         while (1)
                                         {
@@ -207,7 +196,7 @@ int main()
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
                                                     } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    // insere_novo_carrinho(it, p, qtd);
+                                                    insere_novo_carrinho(it, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -239,8 +228,8 @@ int main()
                                     scanf("%d", &categoria);
                                     printf(ANSI_COLOR_RESET);
                                     // FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE CATEGORIA X
-                                    // produtos_de_categoria(l_vendedores, categoria, retorno_lista);
-                                    // mostrar_produtos(retorno_lista);
+                                    produtos_de_categoria(l_vendedores, categoria, retorno_lista);
+                                    mostrar_produtos(retorno_lista);
                                     printf(ANSI_COLOR_YELLOW);
                                     printf("\nPesquisando pela Categoria %d ", categoria);
                                     i = 3;
@@ -309,7 +298,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    // mostrar_produtos(retorno_lista2); // Mostra a lista do 5 produtos iniciais
+                                    mostrar_produtos(retorno_lista2); // Mostra a lista do 5 produtos iniciais
                                     printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                     while (1)
                                     {
@@ -670,19 +659,8 @@ int main()
                             printf(ANSI_COLOR_YELLOW);
                             printf("%s!\n\n", it2->cadastro.nome);
                             printf(ANSI_COLOR_RESET);
-                            /*
-                                Faz uma funcao que printa 5 produtos diferentes de vendedores diferentes
-                                e salva em uma lista de produtos, tem que salvar em uma lista pois se o usuario
-                                quiser adicionar no carrinho os produtos inicias temos que saber quais são!
                             mostrar_5_produtos(l_vendedores, it, retorno_lista);
                             mostrar_produtos(retorno_lista);
-                            //Limpar a lista depois de usa-la
-                            */
-                            printf("   Produto 1................................................\n");
-                            printf("   Produto 2................................................\n");
-                            printf("   Produto 3................................................\n");
-                            printf("   Produto 2................................................\n");
-                            printf("   Produto 5................................................\n");
                             printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                             printf("                   1- Procurar  por  um  Produto\n");
                             printf("                   2- Adicionar Produto ao Carrinho\n");
@@ -725,14 +703,14 @@ int main()
                                         i--;
                                     }
                                     printf(ANSI_COLOR_RESET);
-                                    // produtos_de_nome(l_vendedores, pesquisa, retorno_lista);
+                                    produtos_de_nome(l_vendedores, pesquisa, retorno_lista);
                                     sair = 0;
                                     do
                                     {
                                         system("cls");
                                         print_logo();
                                         printf("\n\nProdutos encontrados para %s:\n\n", pesquisa);
-                                        // mostrar_produtos(retorno_lista);
+                                        mostrar_produtos(retorno_lista);
                                         printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                         while (1)
                                         {
@@ -760,7 +738,7 @@ int main()
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
                                                     } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    // insere_novo_carrinho(it2, p, qtd);
+                                                    insere_novo_carrinho(it2, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -792,8 +770,7 @@ int main()
                                     scanf("%d", &categoria);
                                     printf(ANSI_COLOR_RESET);
                                     // FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE CATEGORIA X
-                                    // produtos_de_categoria(l_vendedores, categoria, retorno_lista);
-                                    // mostrar_produtos(retorno_lista);
+                                    produtos_de_categoria(l_vendedores, categoria, retorno_lista);
                                     printf(ANSI_COLOR_YELLOW);
                                     printf("\nPesquisando pela Categoria %d ", categoria);
                                     i = 3;
@@ -862,7 +839,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    // mostrar_produtos(retorno_lista2); // Mostra a lista do 5 produtos iniciais
+                                    mostrar_produtos(retorno_lista2); // Mostra a lista do 5 produtos iniciais
                                     printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                     while (1)
                                     {
