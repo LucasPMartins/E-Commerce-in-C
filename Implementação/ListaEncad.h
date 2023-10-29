@@ -74,50 +74,25 @@ typedef struct lista_produtos
 } lista_produtos;
 
 lista_clientes *criar_lista_clientes();
-
 int lista_clientes_vazia(lista_clientes *l);
-
-int lista_carrinho_vazia(cliente *l);
-
-int lista_comprados_vazia(cliente *l);
-
-int verifica_cliente(lista_clientes *l, cliente *it);
-
-int insere_novo_cliente(lista_clientes *l, cliente *it);
-
-int insere_nova_compra(cliente *it, produtos p);
-
-int insere_novo_carrinho(cliente *it, produtos *p, int qtd);
-
-int insere_do_carrinho_para_comprados(cliente *it);
-
-int remove_do_carrinho(cliente *it, int pos);
-
-int remove_do_comprados(cliente *it, int pos);
-
-int limpa_carrinho(cliente *it);
-
+int verifica_cliente(lista_clientes *l, cadastro it);
+int insere_novo_cliente(lista_clientes *l, cadastro it);
+int insere_nova_compra(lista_clientes *l, cadastro it, produtos p);
+int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p, int qtd);
+int remove_do_carrinho(lista_clientes *l, cadastro it, int pos);
 void mostra_lista_clientes(lista_clientes *l);
-
-void mostrar_comprados(cliente *it);
-
-void mostrar_conta_cliente(cliente *it);
-
-void mostrar_comprados(cliente *it);
-
-void mostrar_carrinho(cliente *it);
-
-int avaliar_produto(lista_vendedores *l2, cliente *it, int pos, int num);
-
-int excluir_conta_cliente(lista_clientes *l, cliente *it);
-
+int remove_do_comprados(lista_clientes *l, cadastro it, int pos);
+void mostrar_carrinho(lista_clientes *l, cadastro it);
+void mostrar_conta_cliente(lista_clientes *l, cadastro it);
+void mostrar_comprados(lista_clientes *l, cadastro it);
+int excluir_conta_cliente(lista_clientes *l, cadastro it);
 int limpa_lista_clientes(lista_clientes *l);
-
-int limpa_compra_carrinho(cliente *it);
-
-lista_clientes *ler_clientes();
-
+int limpa_compra_carrinho(lista_clientes *l, cadastro it);
 int salvar_clientes(lista_clientes *l);
+lista_clientes *ler_clientes();
+int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it);
+int limpa_carrinho(lista_clientes *l, cadastro it);
+int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 
 //                               TAD PRODUTOS
 

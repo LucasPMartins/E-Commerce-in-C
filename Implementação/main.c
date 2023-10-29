@@ -22,11 +22,10 @@ int main()
     char tecla, *pesquisa = (char *)malloc(30 * sizeof(char));
     char *senha = (char *)malloc(sizeof(char));
     lista_clientes *l = criar_lista_clientes();           // Lista dos Clientes
-    lista_vendedores *l_vendedores;                       // Lista dos Vendedores
-    cliente *it = (cliente *)calloc(1, sizeof(cliente));  // Para zerar os campos, e NULL nos ponteiros
-    cliente *it2 = (cliente *)calloc(1, sizeof(cliente)); // Cliente aux para nao sobrescrever o principal
+    lista_vendedores *l_vendedores;   // Lista dos Vendedores
+    cadastro it;                    
     vendedor *v = (vendedor *)calloc(1, sizeof(vendedor));
-    produtos *p;                                            // Necessario uma função que retorna um produto de uma lista de produtos;
+    produtos p; // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
     lista_produtos *retorno_lista2 = criar_lista_produtos();
     // Necessario para salvar os 5 produtos iniciais, se usarmos as op. de pesquisa de produtos perderemos esses 5 pordutos (utilizar outra lista)
@@ -74,15 +73,15 @@ int main()
                         printf("                     Digite seu nome:");
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
-                        fgets(it->cadastro.nome, 30, stdin);
+                        fgets(it.nome, 30, stdin);
                         printf(ANSI_COLOR_RESET);
-                        it->cadastro.nome[strcspn(it->cadastro.nome, "\n")] = '\0'; // Remove o \n da string
+                        it.nome[strcspn(it.nome, "\n")] = '\0'; // Remove o \n da string
                         printf("                     Digite sua senha:");
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
-                        fgets(it->cadastro.senha, 10, stdin);
+                        fgets(it.senha, 10, stdin);
                         printf(ANSI_COLOR_RESET);
-                        it->cadastro.senha[strcspn(it->cadastro.senha, "\n")] = '\0';
+                        it.senha[strcspn(it.senha, "\n")] = '\0';
                         // Se o nome já existir na lista de clientes, não será criado um novo cliente
                         if (verifica_cliente(l, it) == 0)
                         {
@@ -115,7 +114,7 @@ int main()
                             printf("\n\n");
                             printf("                        Bem vindo, ");
                             printf(ANSI_COLOR_YELLOW);
-                            printf("%s!\n\n", it->cadastro.nome);
+                            printf("%s!\n\n", it.nome);
                             printf(ANSI_COLOR_RESET);
                             mostrar_5_produtos(l_vendedores, it, retorno_lista);
                             mostrar_produtos(retorno_lista);
@@ -195,8 +194,8 @@ int main()
                                                         scanf("%d", &qtd);
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
-                                                    } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    insere_novo_carrinho(it, p, qtd);
+                                                    } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                    insere_novo_carrinho(l,it, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -272,8 +271,8 @@ int main()
                                                         scanf("%d", &qtd);
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
-                                                    } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    insere_novo_carrinho(it, p, qtd);
+                                                    } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                    insere_novo_carrinho(l,it, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -324,8 +323,8 @@ int main()
                                                     scanf("%d", &qtd);
                                                     printf(ANSI_COLOR_RESET);
                                                     printf("\n");
-                                                } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                insere_novo_carrinho(it, p, qtd);
+                                                } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                insere_novo_carrinho(l,it, p, qtd);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 imprimelento("Adicionando ao Carrinho...\n", 100);
                                                 printf(ANSI_COLOR_RESET);
@@ -346,7 +345,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    mostrar_carrinho(it);
+                                    mostrar_carrinho(l,it);
                                     printf("\n                   -- O QUE DESEJA FAZER? --\n\n");
                                     printf("                     1- Confirmar Compra\n");
                                     printf("                     2- Remover do carrinho\n");
@@ -392,8 +391,7 @@ int main()
                                                 }
                                             }
                                         }
-                                        insere_do_carrinho_para_comprados(it);
-                                        limpa_carrinho(it);
+                                        insere_do_carrinho_para_comprados(l,it);
                                     }
                                     else if (opcao2 == 2)
                                     {
@@ -401,7 +399,7 @@ int main()
                                         setbuf(stdin, NULL);
                                         printf(ANSI_COLOR_YELLOW);
                                         scanf("%d", &num);
-                                        ret = remove_do_carrinho(it, num);
+                                        ret = remove_do_carrinho(l,it, num);
                                         imprimelento("\nRemovendo", 100);
                                         i = 3;
                                         while (i > 0)
@@ -424,7 +422,7 @@ int main()
                                     }
                                     else if (opcao2 == 3)
                                     {
-                                        ret = limpa_carrinho(it);
+                                        ret = limpa_carrinho(l,it);
                                         printf(ANSI_COLOR_YELLOW);
                                         printf("\nLimpando carrinho");
                                         i = 3;
@@ -459,7 +457,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    mostrar_comprados(it);
+                                    mostrar_comprados(l,it);
                                     printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...\n");
                                     while (1)
                                     {
@@ -480,8 +478,8 @@ int main()
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
-                                                } while (pos > it->total_comprados || pos < 0);
-                                                avaliar_produto(l_vendedores, it, pos, num);
+                                                } while (pos < 0);
+                                                avaliar_produto(l_vendedores,l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 printf("\nObrigado por Avaliar!\n\n");
                                                 printf(ANSI_COLOR_RESET);
@@ -501,7 +499,7 @@ int main()
                                 system("cls");
                                 print_logo();
                                 printf("\n\n");
-                                mostrar_conta_cliente(it);
+                                mostrar_conta_cliente(l,it);
                                 printf("Pressione Backspace para Deletar a Conta ou Esc para Voltar...\n");
                                 while (1)
                                 {
@@ -533,7 +531,7 @@ int main()
                                                             fgets(senha, 30, stdin);
                                                             printf(ANSI_COLOR_RESET);
                                                             senha[strcspn(senha, "\n")] = '\0';
-                                                        } while (strcmp(it->cadastro.senha, senha) != 0);
+                                                        } while (strcmp(it.senha, senha) != 0);
                                                         printf(ANSI_COLOR_YELLOW);
                                                         printf("\nExcluindo conta");
                                                         i = 3;
@@ -617,16 +615,16 @@ int main()
                         printf("                     Digite seu nome:");
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
-                        fgets(it2->cadastro.nome, 30, stdin);
+                        fgets(it.nome, 30, stdin);
                         printf(ANSI_COLOR_RESET);
-                        it2->cadastro.nome[strcspn(it2->cadastro.nome, "\n")] = '\0'; // Remove o \n da string
+                        it.nome[strcspn(it.nome, "\n")] = '\0'; // Remove o \n da string
                         printf("                     Digite sua senha:");
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
-                        fgets(it2->cadastro.senha, 10, stdin);
+                        fgets(it.senha, 10, stdin);
                         printf(ANSI_COLOR_RESET);
-                        it2->cadastro.senha[strcspn(it2->cadastro.senha, "\n")] = '\0';
-                        if (verifica_cliente(l, it2) != 0)
+                        it.senha[strcspn(it.senha, "\n")] = '\0';
+                        if (verifica_cliente(l, it) != 0)
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ou Senha Incorretos!\n");
@@ -641,9 +639,9 @@ int main()
                                 break;
                             }
                         }
-                    } while (verifica_cliente(l, it2) != 0);
+                    } while (verifica_cliente(l, it) != 0);
                     // Se sair do loop significa que é um usuario antigo
-                    if (verifica_cliente(l, it2) == 0)
+                    if (verifica_cliente(l, it) == 0)
                     {
                         printf(ANSI_COLOR_YELLOW);
                         printf("\n");
@@ -657,7 +655,7 @@ int main()
                             printf("\n\n");
                             printf("                    Bem vindo de Volta, ");
                             printf(ANSI_COLOR_YELLOW);
-                            printf("%s!\n\n", it2->cadastro.nome);
+                            printf("%s!\n\n", it.nome);
                             printf(ANSI_COLOR_RESET);
                             mostrar_5_produtos(l_vendedores, it, retorno_lista);
                             mostrar_produtos(retorno_lista);
@@ -737,8 +735,8 @@ int main()
                                                         scanf("%d", &qtd);
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
-                                                    } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    insere_novo_carrinho(it2, p, qtd);
+                                                    } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                    insere_novo_carrinho(l,it, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -813,8 +811,8 @@ int main()
                                                         scanf("%d", &qtd);
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
-                                                    } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                    insere_novo_carrinho(it2, p, qtd);
+                                                    } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                    insere_novo_carrinho(l,it, p, qtd);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
                                                     printf(ANSI_COLOR_RESET);
@@ -865,8 +863,8 @@ int main()
                                                     scanf("%d", &qtd);
                                                     printf(ANSI_COLOR_RESET);
                                                     printf("\n");
-                                                } while (qtd < 0 || qtd > p->QUANTIDADE);
-                                                insere_novo_carrinho(it2, p, qtd);
+                                                } while (qtd < 0 || qtd > p.QUANTIDADE);
+                                                insere_novo_carrinho(l,it, p, qtd);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 imprimelento("Adicionando ao Carrinho...\n", 100);
                                                 printf(ANSI_COLOR_RESET);
@@ -887,7 +885,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    mostrar_carrinho(it);
+                                    mostrar_carrinho(l,it);
                                     printf("\n                   -- O QUE DESEJA FAZER? --\n\n");
                                     printf("                     1- Confirmar Compra\n");
                                     printf("                     2- Remover do carrinho\n");
@@ -933,8 +931,7 @@ int main()
                                                 }
                                             }
                                         }
-                                        insere_do_carrinho_para_comprados(it2);
-                                        limpa_carrinho(it2);
+                                        insere_do_carrinho_para_comprados(l,it);
                                     }
                                     else if (opcao2 == 2)
                                     {
@@ -942,7 +939,7 @@ int main()
                                         setbuf(stdin, NULL);
                                         printf(ANSI_COLOR_YELLOW);
                                         scanf("%d", &num);
-                                        ret = remove_do_carrinho(it2, num);
+                                        ret = remove_do_carrinho(l,it, num);
                                         imprimelento("\nRemovendo", 100);
                                         i = 3;
                                         while (i > 0)
@@ -965,7 +962,7 @@ int main()
                                     }
                                     else if (opcao2 == 3)
                                     {
-                                        ret = limpa_carrinho(it);
+                                        ret = limpa_carrinho(l,it);
                                         printf(ANSI_COLOR_YELLOW);
                                         printf("\nLimpando carrinho");
                                         i = 3;
@@ -1000,7 +997,7 @@ int main()
                                 {
                                     system("cls");
                                     print_logo();
-                                    mostrar_comprados(it);
+                                    mostrar_comprados(l,it);
                                     printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...\n");
                                     while (1)
                                     {
@@ -1021,8 +1018,8 @@ int main()
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
-                                                } while (pos > it->total_comprados || pos < 0);
-                                                avaliar_produto(l_vendedores, it2, pos, num);
+                                                } while (pos < 0);
+                                                avaliar_produto(l_vendedores,l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 printf("\nObrigado por Avaliar!\n\n");
                                                 printf(ANSI_COLOR_RESET);
@@ -1042,7 +1039,7 @@ int main()
                                 system("cls");
                                 print_logo();
                                 printf("\n\n");
-                                mostrar_conta_cliente(it);
+                                mostrar_conta_cliente(l,it);
                                 printf("Pressione Backspace para Deletar a Conta ou Esc para Voltar...\n");
                                 while (1)
                                 {
@@ -1074,7 +1071,7 @@ int main()
                                                             fgets(senha, 30, stdin);
                                                             printf(ANSI_COLOR_RESET);
                                                             senha[strcspn(senha, "\n")] = '\0';
-                                                        } while (strcmp(it2->cadastro.senha, senha) != 0);
+                                                        } while (strcmp(it.senha, senha) != 0);
                                                         printf(ANSI_COLOR_YELLOW);
                                                         printf("\nExcluindo conta");
                                                         i = 3;
@@ -1084,7 +1081,7 @@ int main()
                                                             printf("\b\b\b   \b\b\b");
                                                             i--;
                                                         }
-                                                        ret = excluir_conta_cliente(l, it2);
+                                                        ret = excluir_conta_cliente(l, it);
                                                         if (ret == 0)
                                                             printf("\n\nConta excluida com sucesso! :( \n\n");
                                                         else
