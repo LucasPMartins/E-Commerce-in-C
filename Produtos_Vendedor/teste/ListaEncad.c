@@ -5,7 +5,6 @@
 #include <windows.h>
 #include "ListaEncad.h"
 
-
 /*                                  PRODUTOS   */
 /*                                  PRODUTOS   */
 /*                                  PRODUTOS   */
@@ -128,9 +127,9 @@ int lista_vendedores_vazia(lista_vendedores *l)
     if (l == NULL)
         return 1;
     if (l->inicio == NULL && l->total_vendedores == 0)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }
 
 int verifica_vendedor(lista_vendedores *l, vendedor v)
@@ -143,6 +142,24 @@ int verifica_vendedor(lista_vendedores *l, vendedor v)
     while (atual != NULL)
     {
         if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
+        {
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
+}
+
+int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
+{
+    if (l == NULL)
+        return 1;
+    if (lista_vendedores_vazia(l) == 0)
+        return 2;
+    no_vendedores *atual = l->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0)
         {
             return 0;
         }
@@ -199,5 +216,89 @@ void mostrar_lista_vendedores(lista_vendedores *l)
     }*/
 }
 
+int vendedor_adiciona_produtos(vendedor *v, produtos p)
+{
+    if (v->total_produtos == 0)
+    {
+        // Nao tem produtos ainda
+        v->inicio = (no_produtos *)malloc(sizeof(no_produtos));
+        v->inicio->ant = NULL;
+        v->inicio->produto = p;
+        v->inicio->prox = NULL;
+        v->total_produtos++;
+        return 0;
+    }
+    no_produtos *temp = (no_produtos *)malloc(sizeof(no_produtos));
+    temp->ant = NULL;
+    temp->produto = p;
+    temp->prox = v->inicio;
+    v->inicio->ant = temp;
+    v->total_produtos++;
 
-// int vendedor_adiciona_produtos(vendedor v)
+    return 0;
+}
+
+void mostra_produtos_vendedor(vendedor v)
+{
+    if (v.inicio == NULL)
+    {
+        printf("O vendedor nao possui produtos.\n");
+    }
+    else
+    {
+        printf("Produtos do vendedor:\n");
+        no_produtos *temp = v.inicio;
+        int j = 0;
+        while (temp != NULL)
+        {
+            printf("  Produto [%d]:\n", j);
+            printf("  Nome: %s\n", temp->produto.NOME);
+            printf("  Categoria: %d\n", temp->produto.CATEGORIA);
+            printf("  Nota de Avaliacao: %d\n", temp->produto.NOTA_AVALIACAO);
+            printf("  Quantidade: %d\n", temp->produto.QUANTIDADE);
+            printf("  Valor: %.2f\n", temp->produto.VALOR);
+            printf("  Descricao: %s\n", temp->produto.DESCRICAO);
+            j++;
+            temp = temp->prox;
+        }
+    }
+}
+
+int removerPosicao_produto_do_vendedor(vendedor *v, int pos)
+{
+    if (v == NULL)
+        return 1;
+    no_produtos *no = v->inicio;
+    while ((no->prox != NULL) && (pos > 0))
+    {
+        no = no->prox;
+        pos--;
+    }
+    if (no->ant == NULL)
+    {
+        // Ele é o primeiro
+        v->inicio = v->inicio->prox;
+        if (v->inicio != NULL)
+            v->inicio->ant = NULL;
+        free(no);
+        v->total_produtos--;
+        return 0;
+    }
+
+    if (no->prox == NULL)
+    {
+        if (no->ant == NULL)
+            v->inicio = NULL;
+        else
+            no->ant->prox = NULL;
+        free(no);
+        v->total_produtos--;
+        return 0;
+    }
+
+    no->ant->prox = no->prox;
+    no->prox->ant = no->ant;
+    free(no);
+    v->total_produtos--;
+    return 0;
+}
