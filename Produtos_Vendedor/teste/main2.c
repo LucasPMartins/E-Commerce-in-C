@@ -7,7 +7,7 @@
 
 int main()
 {
-    int opcao2, opcao3,indice;
+    int opcao2, opcao3, indice;
     lista_vendedores *l_vendedores = criar_lista_vendedores();
     vendedor v;
     produtos p;
@@ -64,15 +64,15 @@ int main()
                 setbuf(stdin, NULL);
                 fgets(v.cadastro.senha, 10, stdin);
             } while (verifica_vendedor_e_retorna(l_vendedores, &v) != 0);
-            
+
             printf("Nome: %s\n", v.cadastro.nome);
             printf("NomeLoja: %s\n", v.nome_loja);
             printf("Senha: %s\n", v.cadastro.senha);
-            printf("%d\n",v.total_produtos);
+            printf("%d\n", v.total_produtos);
             printf("\n");
 
             printf("\nSeja Bem vindo de volta %s!\n\n", v.cadastro.nome);
-            
+
             do
             {
                 printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
@@ -87,26 +87,34 @@ int main()
 
                 case 1:
                     /*  cadastrar produto */
-                    p.CATEGORIA = rand() %15;
-                    strcpy(p.DESCRICAO, "kaka");
-                    strcpy(p.NOME, "kekel");
-                    p.NOTA_AVALIACAO = 1;
-                    p.QUANT_AVALIACAO = 2;
-                    p.QUANTIDADE = 10;
-                    p.VALOR = 200.50;
-    
-                    vendedor_adiciona_produtos(&v, p);
-                    
-                    printf("Cadastro de produto realizado com sucesso!\n");
+                    printf("Insira categoria:\n");
+                    scanf("%d", &p.CATEGORIA);
+                    setbuf(stdin, NULL);
+                    fgets(p.DESCRICAO, 100, stdin);
+                    setbuf(stdin, NULL);
+                    fgets(p.NOME, 30, stdin);
+                    printf("INsira quantidade:\n");
+                    scanf("%d", &p.QUANTIDADE);
+                    printf("INsira Valor:\n");
+                    scanf("%f", &p.VALOR);
+                    p.NOTA_AVALIACAO = 0;
+                    p.QUANT_AVALIACAO = 0;
+                    if (vendedor_adiciona_produtos(&v, p) == 0)
+                        printf("Cadastro de produto realizado com sucesso!\n");
+                    else
+                        printf("Cadastro de produto falhou!\n");
+
                     break;
 
                 case 2:
                     /*       remover produtos           */
                     printf("Qual produto quer remover? por indice [i]");
                     mostra_produtos_vendedor(v);
-                    scanf("%d",&indice);
-                    removerPosicao_produto_do_vendedor(&v,indice);
-
+                    scanf("%d", &indice);
+                    if (removerPosicao_produto_do_vendedor(&v, indice) == 0)
+                        printf("Remocao concluida!\n");
+                    else
+                        printf("Remocao falha\n");
                     break;
                 case 3:
                     /*       Mostrar produtos           */

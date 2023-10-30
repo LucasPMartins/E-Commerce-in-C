@@ -18,11 +18,11 @@ void imprimelento(char *p, int N);
 
 int main()
 {
-    int opcao, opcao2, opcao3, categoria, num, pos, qtd, ret, sair, i = 0;
+    int opcao, opcao2, opcao3, categoria, num, pos, qtd, ret, sair, i = 0,indice;
     char tecla, *pesquisa = (char *)malloc(30 * sizeof(char));
     char *senha = (char *)malloc(30*sizeof(char)); // Usado para verificar a senha do it.senha
     lista_clientes *l = criar_lista_clientes();           // Lista dos Clientes
-    lista_vendedores *l_vendedores;   // Lista dos Vendedores
+    lista_vendedores *l_vendedores = criar_lista_vendedores();   // Lista dos Vendedores
     cadastro it;                    
     //vendedor *v = (vendedor *)calloc(1, sizeof(vendedor));
     vendedor v;
@@ -580,27 +580,27 @@ int main()
                     // SEPARAÇÃO
                 case 2:
                     /*            CADASTRO VENDEDOR */
-                    do
-                    {
-                        printf("Digite seu nome:");
-                        setbuf(stdin, NULL);
-                        fgets(v.cadastro.nome, 30, stdin);
-                        v.cadastro.nome[strcspn(v.cadastro.nome, "\n")] = '\0';
-                        printf("Digite sua senha:");
-                        setbuf(stdin, NULL);
-                        fgets(v.cadastro.senha, 10, stdin);
-                        printf("Digite o nome da loja:");
-                        setbuf(stdin, NULL);
-                        fgets(v.nome_loja, 30, stdin);
-                        v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
-                        // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
-                    } while (verifica_vendedor(l_vendedores, v) == 0);
-                    // Quando vendedor é criado a lista dele aponta pra NULL
-                    //v->inicio = NULL;
-                    // Se sair do loop significa que é um novo usuario com um nome diferente
-                    insere_novo_vendedor(l_vendedores, v);
+                   do
+            {
+                printf("Digite seu nome:");
+                setbuf(stdin, NULL);
+                fgets(v.cadastro.nome, 30, stdin);
+                v.cadastro.nome[strcspn(v.cadastro.nome, "\n")] = '\0';
+                printf("Digite sua senha:");
+                setbuf(stdin, NULL);
+                fgets(v.cadastro.senha, 10, stdin);
+                printf("Digite o nome da loja:");
+                setbuf(stdin, NULL);
+                fgets(v.nome_loja, 30, stdin);
+                v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
+                // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
+            } while (verifica_vendedor(l_vendedores, v) == 0);
+            v.total_produtos = 0;
+            v.inicio = NULL;
+            insere_novo_vendedor(l_vendedores, v);
 
-                    printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
+            printf("Cadastro realizado com sucesso!      Seja Bem vindo!\n");
+
                     opcao2 = 0; // Volta direto para o menu inicial
 
                     break;
@@ -1120,21 +1120,77 @@ int main()
                 case 4:
                     /*       LOGIN COMO VENDEDOR           */
                     do
-                    {
-                        printf("Digite seu nome:");
-                        setbuf(stdin, NULL);
-                        fgets(v->cadastro.nome, 30, stdin);
-                        v->cadastro.nome[strcspn(v->cadastro.nome, "\n")] = '\0';
-                        printf("Digite sua senha:");
-                        setbuf(stdin, NULL);
-                        fgets(v->cadastro.senha, 10, stdin);
-                        // Se o nome já existir na lista de vendedores sairá do loop, usuario existe
-                    } while (verifica_vendedor(l, *v) != 0);
-                    printf("\nSeja Bem vindo de volta %s!\n\n", v->cadastro.nome);
-                    /* FUNÇÕES DO VENDEDOR:
-                        - CADASTRAR UM PRODUTO
+            {
+                printf("Digite seu nome:");
+                setbuf(stdin, NULL);
+                fgets(v.cadastro.nome, 30, stdin);
+                v.cadastro.nome[strcspn(v.cadastro.nome, "\n")] = '\0';
+                printf("Digite sua senha:");
+                setbuf(stdin, NULL);
+                fgets(v.cadastro.senha, 10, stdin);
+            } while (verifica_vendedor_e_retorna(l_vendedores, &v) != 0);
 
-                    */
+            printf("Nome: %s\n", v.cadastro.nome);
+            printf("NomeLoja: %s\n", v.nome_loja);
+            printf("Senha: %s\n", v.cadastro.senha);
+            printf("%d\n", v.total_produtos);
+            printf("\n");
+
+            printf("\nSeja Bem vindo de volta %s!\n\n", v.cadastro.nome);
+
+            do
+            {
+                printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
+                printf("                    1- Cadastrar Produto\n");
+                printf("                    2- Remover produto\n");
+                printf("                    3- Ver produtos\n");
+                printf("                    0- SAIR\n");
+                printf("                      Digite sua opcao:");
+                scanf("%d", &opcao3);
+                switch (opcao3)
+                {
+
+                case 1:
+                    /*  cadastrar produto */
+                    printf("Insira categoria:\n");
+                    scanf("%d", &p.CATEGORIA);
+                    setbuf(stdin, NULL);
+                    fgets(p.DESCRICAO, 100, stdin);
+                    setbuf(stdin, NULL);
+                    fgets(p.NOME, 30, stdin);
+                    printf("INsira quantidade:\n");
+                    scanf("%d", &p.QUANTIDADE);
+                    printf("INsira Valor:\n");
+                    scanf("%f", &p.VALOR);
+                    p.NOTA_AVALIACAO = 0;
+                    p.QUANT_AVALIACAO = 0;
+                    if (vendedor_adiciona_produtos(&v, p) == 0)
+                        printf("Cadastro de produto realizado com sucesso!\n");
+                    else
+                        printf("Cadastro de produto falhou!\n");
+
+                    break;
+
+                case 2:
+                    /*       remover produtos           */
+                    printf("Qual produto quer remover? por indice [i]");
+                    mostra_produtos_vendedor(v);
+                    scanf("%d", &indice);
+                    if (removerPosicao_produto_do_vendedor(&v, indice) == 0)
+                        printf("Remocao concluida!\n");
+                    else
+                        printf("Remocao falha\n");
+                    break;
+                case 3:
+                    /*       Mostrar produtos           */
+                    mostra_produtos_vendedor(v);
+                    break;
+
+                default:
+                    break;
+                }
+            } while (opcao3 != 0);
+                        
                     opcao2 = 0; // Volta direto para o menu inicial
                     break;
 
