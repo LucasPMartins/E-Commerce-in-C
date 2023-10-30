@@ -233,6 +233,7 @@ int vendedor_adiciona_produtos(vendedor *v, produtos p)
     temp->produto = p;
     temp->prox = v->inicio;
     v->inicio->ant = temp;
+    v->inicio = temp;
     v->total_produtos++;
 
     return 0;

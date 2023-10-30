@@ -87,7 +87,7 @@ int main()
 
                 case 1:
                     /*  cadastrar produto */
-                    p.CATEGORIA = 1;
+                    p.CATEGORIA = rand() %15;
                     strcpy(p.DESCRICAO, "kaka");
                     strcpy(p.NOME, "kekel");
                     p.NOTA_AVALIACAO = 1;
