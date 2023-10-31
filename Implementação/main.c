@@ -622,7 +622,7 @@ int main()
                 if (opcao2 == 2 || opcao2 == 4) // Login e Cadastro de Vendedor
                 {
                     /*            CADASTRO/LOGIN VENDEDOR */
-                    num = 3; //     Tentativas
+                    num = 3;
                     do
                     {
                         system("cls");
@@ -663,6 +663,7 @@ int main()
                         }
                         if (ret == 3 && opcao2 == 4)
                         {
+                            
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ou Senha Incorretos!\n");
                             printf(ANSI_COLOR_RESET);
@@ -673,7 +674,12 @@ int main()
                                 break;
                             }
                         }
+                        
                     } while ((opcao2 == 2 && ret == 0) || (opcao2 == 4 && ret == 3));
+                    if(ret == 0 && opcao2 == 4){
+                        verifica_vendedor_e_retorna(l_vendedores,&v);
+                    }
+                            
                     if (num == 0)
                     {
                         opcao = 10;
@@ -791,6 +797,7 @@ int main()
                             print_logo();
                             printf("\n\n");
                             mostra_produtos_vendedor(v);
+                            system("pause");
                             break;
 
                         default:

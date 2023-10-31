@@ -687,6 +687,7 @@ no_clientes *buscar_cliente(lista_clientes *l, cadastro it)
 /*                                  PRODUTOS   */
 /*                                  PRODUTOS   */
 
+
 lista_produtos *criar_lista_produtos()
 {
     lista_produtos *l = (lista_produtos *)malloc(sizeof(lista_produtos));
@@ -787,6 +788,7 @@ int removerInicio_produtos(lista_produtos *l)
 
     return 0;
 }
+
 
 int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
 {
@@ -894,6 +896,11 @@ int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p)
     return 0;
 }
 
+void zerar_produtos(lista_produtos* l){
+    while (listaVazia_produtos(l) != 0)
+        removerInicio_produtos(l);
+}
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
@@ -945,6 +952,7 @@ int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
     {
         if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0)
         {
+            *v = atual->valor;
             return 0;
         }
         atual = atual->prox;
@@ -986,6 +994,7 @@ void mostrar_lista_vendedores(lista_vendedores *l)
             printf("Nome: %s\n", search->valor.cadastro.nome);
             printf("NomeLoja: %s\n", search->valor.nome_loja);
             printf("Senha: %s\n", search->valor.cadastro.senha);
+            printf("Total produtos: [%d]\n", search->valor.total_produtos);
             printf("\n");
 
             search = search->prox;
@@ -1086,4 +1095,22 @@ int removerPosicao_produto_do_vendedor(vendedor *v, int pos)
     free(no);
     v->total_produtos--;
     return 0;
+}
+
+int atualiza_lista_vendedores(vendedor v,lista_vendedores *l){
+    if (l == NULL)
+        return 1;
+    if (lista_vendedores_vazia(l) == 0)
+        return 2;
+    no_vendedores *atual = l->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
+        {
+            atual->valor = v;
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
 }
