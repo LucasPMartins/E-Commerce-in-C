@@ -110,6 +110,61 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
+
+int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
+{
+    if (v == NULL || (categoria < 0 || categoria > 12))
+        return 2;
+    if (lista_vendedores_vazia(v) == 0)
+        return 1;
+    no_vendedores *no = v->inicio;
+    no_produtos *nl = NULL;
+
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            if (nl->produto.CATEGORIA == categoria)
+            {
+                inserirInicio_produtos(p, nl->produto);
+            }
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return 0;
+}
+
+int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p)
+{
+    if (v == NULL)
+        return 2;
+    if (lista_vendedores_vazia(v) == 0)
+        return 1;
+    no_vendedores *no = v->inicio;
+    no_produtos *nl = NULL;
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            if (strcmp(nl->produto.NOME, pesquisa) == 0)
+                inserirInicio_produtos(p, nl->produto);
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return 0;
+}
+
+void zerar_produtos(lista_produtos* l){
+    while (listaVazia_produtos(l) != 0)
+        removerInicio_produtos(l);
+}
+
+
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
