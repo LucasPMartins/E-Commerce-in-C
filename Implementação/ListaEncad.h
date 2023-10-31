@@ -116,7 +116,7 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 
 int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p);
 
-int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
+int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
 
 //                              TAD VENDEDOR
 

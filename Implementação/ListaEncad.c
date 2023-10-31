@@ -790,7 +790,7 @@ int removerInicio_produtos(lista_produtos *l)
 }
 
 
-int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
+int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
 {
     if (v == NULL)
         return 2;
@@ -932,7 +932,7 @@ int verifica_vendedor(lista_vendedores *l, vendedor v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0 && strcmp(atual->valor.nome_loja, v.nome_loja) == 0 && strcmp(atual->valor.cadastro.senha, v.cadastro.senha) == 0)
         {
             return 0;
         }
@@ -950,7 +950,7 @@ int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v->cadastro.senha) == 0)
         {
             *v = atual->valor;
             return 0;

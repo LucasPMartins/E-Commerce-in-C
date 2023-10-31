@@ -140,7 +140,7 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
-                        // mostrar_5_produtos(l_vendedores,l, it, retorno_lista);
+                        // retorna_5_produtos(l_vendedores,l, it, retorno_lista);
                         // mostrar_produtos(retorno_lista);
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                         printf("                   1- Procurar  por  um  Produto\n");
@@ -193,7 +193,7 @@ int main()
                                         system("cls");
                                         print_logo();
                                         printf("\n\nProdutos encontrados para %s:\n\n", pesquisa);
-                                        mostrar_produtos(retorno_lista);
+                                        mostrar_produtos(retorno_lista2);
                                         printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                         while (1)
                                         {
@@ -244,6 +244,7 @@ int main()
                                     printf(ANSI_COLOR_RESET);
                                     break;
                                 }
+                                zerar_produtos(retorno_lista2);
                                 break;
                             case 2: // por categoria
                                 system("cls");
@@ -261,13 +262,12 @@ int main()
                                 printf(ANSI_COLOR_RESET);
                                 // FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE CATEGORIA X
                                 produtos_de_categoria(l_vendedores, categoria, retorno_lista2);
-                                mostrar_produtos(retorno_lista2);
                                 printf(ANSI_COLOR_YELLOW);
                                 printf("\nPesquisando pela Categoria %d ", categoria);
                                 i = 3;
                                 while (i > 0)
                                 {
-                                    imprimelento("...", 500);
+                                    imprimelento("...", 200);
                                     printf("\b\b\b   \b\b\b");
                                     i--;
                                 }
@@ -330,6 +330,7 @@ int main()
                                     printf(ANSI_COLOR_RESET);
                                     break;
                                 }
+                                zerar_produtos(retorno_lista2);
                                 break;
                             default:
                                 break;
@@ -617,6 +618,7 @@ int main()
                             break;
                         }
                     } while (opcao3 != 0);
+                    zerar_produtos(retorno_lista);
                     break;
                 }
                 if (opcao2 == 2 || opcao2 == 4) // Login e Cadastro de Vendedor
@@ -640,14 +642,14 @@ int main()
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
                         fgets(v.cadastro.senha, 10, stdin);
-                        if (opcao2 == 2)
-                        {
-                            printf(ANSI_COLOR_RESET);
-                            printf("                     Digite o nome da loja:");
-                            setbuf(stdin, NULL);
-                            fgets(v.nome_loja, 30, stdin);
-                            v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
-                        }
+                        // if (opcao2 == 2)
+                        //{
+                        printf(ANSI_COLOR_RESET);
+                        printf("                     Digite o nome da loja:");
+                        setbuf(stdin, NULL);
+                        fgets(v.nome_loja, 30, stdin);
+                        v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
+                        //}
                         ret = verifica_vendedor(l_vendedores, v);
                         if (ret == 0 && opcao2 == 2)
                         {
@@ -663,7 +665,7 @@ int main()
                         }
                         if (ret == 3 && opcao2 == 4)
                         {
-                            
+
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ou Senha Incorretos!\n");
                             printf(ANSI_COLOR_RESET);
@@ -674,12 +676,13 @@ int main()
                                 break;
                             }
                         }
-                        
+
                     } while ((opcao2 == 2 && ret == 0) || (opcao2 == 4 && ret == 3));
-                    if(ret == 0 && opcao2 == 4){
-                        verifica_vendedor_e_retorna(l_vendedores,&v);
+                    if (ret == 0 && opcao2 == 4)
+                    {
+                        verifica_vendedor_e_retorna(l_vendedores, &v);
                     }
-                            
+
                     if (num == 0)
                     {
                         opcao = 10;
@@ -735,27 +738,36 @@ int main()
                             setbuf(stdin, NULL);
                             fgets(p.NOME, 30, stdin);
                             p.NOME[strcspn(p.NOME, "\n")] = '\0';
-                            printf("Insira a Categoria do Produto:");
-                            setbuf(stdin, NULL);
-                            scanf("%d", &p.CATEGORIA);
+                            do
+                            {
+                                printf("Insira a Categoria do Produto:(1 ao 12)");
+                                setbuf(stdin, NULL);
+                                scanf("%d", &p.CATEGORIA);
+                            } while (p.CATEGORIA < 0 || p.CATEGORIA > 12);
+
                             printf("Insira a Descricao do Produto:");
                             setbuf(stdin, NULL);
                             fgets(p.DESCRICAO, 100, stdin);
                             p.DESCRICAO[strcspn(p.DESCRICAO, "\n")] = '\0';
+                            do{
                             printf("Insira a Quantidade do Produto:");
                             setbuf(stdin, NULL);
                             scanf("%d", &p.QUANTIDADE);
+                            } while (p.QUANTIDADE <= 0);
+                            do{
                             printf("Insira o Valor do Produto:\n");
-                            setbuf(stdin, NULL);
                             scanf("%f", &p.VALOR);
+                            } while (p.VALOR <= 0);
                             p.NOTA_AVALIACAO = 0;
                             p.QUANT_AVALIACAO = 0;
                             strcpy(p.nome_loja, v.nome_loja);
-                            if (vendedor_adiciona_produtos(&v, p) == 0)
+                            if (vendedor_adiciona_produtos(&v, p) == 0){
+                                atualiza_lista_vendedores(v, l_vendedores);
                                 printf("Cadastro de Produto Realizado com Sucesso!\n");
+                            }
                             else
                                 printf("Cadastro de Produto Falhou!\n");
-                            atualiza_lista_vendedores(v, l_vendedores);
+                            
                             break;
                         case 2:
                             /*       remover produtos           */
@@ -763,6 +775,8 @@ int main()
                             print_logo();
                             printf("\n\n");
                             mostra_produtos_vendedor(v);
+                            if (v.total_produtos == 0)
+                                break;
                             printf("Qual Produto deseja Remover? por Indice [i]\n");
                             printf(ANSI_COLOR_RED);
                             printf("Remover Produto:");
