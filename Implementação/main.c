@@ -608,7 +608,7 @@ int main()
                 }
                 if (opcao2 == 2 || opcao2 == 4) // Login e Cadastro de Vendedor
                 {
-                    /*            CADASTRO VENDEDOR */
+                    /*            CADASTRO/LOGIN VENDEDOR */
 
                     num = 3; //     Tentativas 
                     do
@@ -739,96 +739,14 @@ int main()
                 default:
                     break;
                 }
-<<<<<<< HEAD
+
             } while (opcao3 != 0);
             
                     }
 
-
-
-
-
-
-    /*
-    do
-            
-            
-            printf("===============\n");
-            mostrar_lista_vendedores(l_vendedores);
-            printf("===============\n");
-
-            printf("-----------\n");
-            printf("Nome: %s\n", v.cadastro.nome);
-            printf("NomeLoja: %s\n", v.nome_loja);
-            printf("Senha: %s\n", v.cadastro.senha);
-            printf("TOTAL PRODUTO [%d]\n", v.total_produtos);
-            printf("\n");
-
-            printf("\nSeja Bem vindo de volta %s!\n\n", v.cadastro.nome);
-
-            do
-            {
-                printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
-                printf("                    1- Cadastrar Produto\n");
-                printf("                    2- Remover produto\n");
-                printf("                    3- Ver produtos\n");
-                printf("                    0- SAIR\n");
-                printf("                      Digite sua opcao:");
-                scanf("%d", &opcao3);
-                switch (opcao3)
-                {
-
-                case 1:
-                    /*  cadastrar produto 
-                    printf("==========\n");
-                    mostrar_lista_vendedores(l_vendedores);
-                    printf("==========\n");
-                    printf("Insira categoria:\n");
-                    scanf("%d", &p.CATEGORIA);
-                    setbuf(stdin, NULL);
-                    fgets(p.DESCRICAO, 100, stdin);
-                    setbuf(stdin, NULL);
-                    fgets(p.NOME, 30, stdin);
-                    printf("INsira quantidade:\n");
-                    scanf("%d", &p.QUANTIDADE);
-                    printf("INsira Valor:\n");
-                    scanf("%f", &p.VALOR);
-                    p.NOTA_AVALIACAO = 0;
-                    p.QUANT_AVALIACAO = 0;
-                    strcpy(p.nome_loja,v.nome_loja);
-                    if (vendedor_adiciona_produtos(&v, p) == 0)
-                        printf("Cadastro de produto realizado com sucesso!\n");
-                    else
-                        printf("Cadastro de produto falhou!\n");
-                    atualiza_lista_vendedores(v,l_vendedores);
-                    break;
-
-                case 2:
-                    /*       remover produtos           
-                    printf("Qual produto quer remover? por indice [i]");
-                    mostra_produtos_vendedor(v);
-                    scanf("%d", &indice);
-                    if (removerPosicao_produto_do_vendedor(&v, indice) == 0)
-                        printf("Remocao concluida!\n");
-                    else
-                        printf("Remocao falha\n");
-                    atualiza_lista_vendedores(v,l_vendedores);
-                    break;
-                case 3:
-                    /*       Mostrar produtos           
-                    mostra_produtos_vendedor(v);
-                    break;
-
-                default:
-                    break;
-                }
-            } while (opcao3 != 0);
-    */
-=======
-                // SEPARAÇÃO
             } while (opcao2 != 0);
             break;
->>>>>>> b98acd254c73b2f439dcfc276de2bb0dc854b0eb
+
         case 2:
             system("cls");
             printf("\n");
