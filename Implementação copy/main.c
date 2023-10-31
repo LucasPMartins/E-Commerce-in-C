@@ -654,13 +654,11 @@ int main()
                                 break;
                             }
                         }
-                        if(ret == 0 && opcao2 == 4){
-                        //LOGIN
-                        verifica_vendedor_e_retorna(l_vendedores,&v);
-                        atualiza_lista_vendedores(v,l_vendedores);
-                    }
+                        
                     } while ((opcao2 == 2 && ret == 0) || (opcao2 == 4 && ret == 3));
-                    
+                    if(ret == 0 && opcao2 == 4){
+                        verifica_vendedor_e_retorna(l_vendedores,&v);
+                    }
                             
                     if (num == 0)
                     {

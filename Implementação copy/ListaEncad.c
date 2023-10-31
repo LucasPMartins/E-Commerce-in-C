@@ -784,6 +784,7 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
+
 int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
 {
     if (v == NULL)
@@ -946,6 +947,7 @@ int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
     {
         if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0)
         {
+            *v = atual->valor;
             return 0;
         }
         atual = atual->prox;
@@ -987,6 +989,7 @@ void mostrar_lista_vendedores(lista_vendedores *l)
             printf("Nome: %s\n", search->valor.cadastro.nome);
             printf("NomeLoja: %s\n", search->valor.nome_loja);
             printf("Senha: %s\n", search->valor.cadastro.senha);
+            printf("Total produtos: [%d]\n", search->valor.total_produtos);
             printf("\n");
 
             search = search->prox;
