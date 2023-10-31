@@ -79,7 +79,7 @@ int lista_clientes_vazia(lista_clientes *l);
 int verifica_cliente(lista_clientes *l, cadastro it);
 int insere_novo_cliente(lista_clientes *l, cadastro it);
 int insere_nova_compra(lista_clientes *l, cadastro it, produtos p);
-int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p, int qtd);
+int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p);
 int remove_do_carrinho(lista_clientes *l, cadastro it, int pos);
 void mostra_lista_clientes(lista_clientes *l);
 int remove_do_comprados(lista_clientes *l, cadastro it, int pos);

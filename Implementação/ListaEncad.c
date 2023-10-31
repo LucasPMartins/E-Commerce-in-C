@@ -88,7 +88,7 @@ int insere_nova_compra(lista_clientes *l, cadastro it, produtos p)
     return 2;
 }
 
-int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p, int qtd)
+int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p)
 {
     if (l == NULL)
         return 1;
@@ -97,7 +97,6 @@ int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p, int qtd)
     {
         no_produtos *no = (no_produtos *)malloc(sizeof(no_produtos));
         no->produto = p;
-        no->produto.QUANTIDADE = qtd;
         no->prox = search->valor.carrinho_inicio;
         no->ant = NULL;
         if (search->valor.carrinho_inicio != NULL)
