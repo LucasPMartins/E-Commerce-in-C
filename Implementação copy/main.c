@@ -643,6 +643,7 @@ int main()
                         }
                         if (ret == 3 && opcao2 == 4)
                         {
+                            
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ou Senha Incorretos!\n");
                             printf(ANSI_COLOR_RESET);
@@ -653,7 +654,14 @@ int main()
                                 break;
                             }
                         }
+                        if(ret == 0 && opcao2 == 4){
+                        //LOGIN
+                        verifica_vendedor_e_retorna(l_vendedores,&v);
+                        atualiza_lista_vendedores(v,l_vendedores);
+                    }
                     } while ((opcao2 == 2 && ret == 0) || (opcao2 == 4 && ret == 3));
+                    
+                            
                     if (num == 0)
                     {
                         opcao = 10;
@@ -739,7 +747,7 @@ int main()
                             mostra_produtos_vendedor(v);
                             printf("Qual Produto deseja Remover? por Indice [i]\n");
                             printf(ANSI_COLOR_RED);
-                            prinft("Remover Produto:");
+                            printf("Remover Produto:");
                             printf(ANSI_COLOR_RESET);
                             scanf("%d", &indice);
                             if (removerPosicao_produto_do_vendedor(&v, indice) == 0)
@@ -771,6 +779,7 @@ int main()
                             print_logo();
                             printf("\n\n");
                             mostra_produtos_vendedor(v);
+                            system("pause");
                             break;
 
                         default:

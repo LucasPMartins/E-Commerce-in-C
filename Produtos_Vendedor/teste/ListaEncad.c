@@ -110,7 +110,6 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
-
 int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 {
     if (v == NULL || (categoria < 0 || categoria > 12))

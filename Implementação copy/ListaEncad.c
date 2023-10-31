@@ -890,6 +890,11 @@ int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p)
     return 0;
 }
 
+void zerar_produtos(lista_produtos* l){
+    while (listaVazia_produtos(l) != 0)
+        removerInicio_produtos(l);
+}
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
@@ -1082,4 +1087,22 @@ int removerPosicao_produto_do_vendedor(vendedor *v, int pos)
     free(no);
     v->total_produtos--;
     return 0;
+}
+
+int atualiza_lista_vendedores(vendedor v,lista_vendedores *l){
+    if (l == NULL)
+        return 1;
+    if (lista_vendedores_vazia(l) == 0)
+        return 2;
+    no_vendedores *atual = l->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0)
+        {
+            atual->valor = v;
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
 }
