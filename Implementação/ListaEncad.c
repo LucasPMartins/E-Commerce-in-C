@@ -323,36 +323,36 @@ void mostrar_conta_cliente(lista_clientes *l, cadastro it)
 
 void mostrar_carrinho(lista_clientes *l, cadastro it)
 {
-    if (l == NULL)
-        return;
-    if (lista_clientes_vazia(l) == 0)
-        return;
-    no_clientes *search = buscar_cliente(l, it);
-    if (search != NULL)
-    {
-        int j = 1;
-        printf("\nProdutos no Carrinho: (total:%d)\n\n", search->valor.total_carrinho);
-        if (search->valor.carrinho_inicio == NULL)
+    if (l != NULL)
+        if (lista_clientes_vazia(l) != 0)
         {
-            printf("Nenhum produto no carrinho!\n");
-            return;
+            no_clientes *search = buscar_cliente(l, it);
+            if (search != NULL)
+            {
+                int j = 1;
+                printf("\nProdutos no Carrinho: (total:%d)\n\n", search->valor.total_carrinho);
+                if (search->valor.carrinho_inicio == NULL)
+                {
+                    printf("Nenhum produto no carrinho!\n");
+                }
+                else
+                {
+                    no_produtos *prod = search->valor.carrinho_inicio;
+                    while (prod != NULL)
+                    {
+                        printf("{Produto %d:", j);
+                        printf("        Nome: %s\t", prod->produto.NOME);
+                        printf("        Categoria: %d\t", prod->produto.CATEGORIA);
+                        printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
+                        printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
+                        printf("        Valor: %.2f\t", prod->produto.VALOR);
+                        printf("        Descricao: %s}\n", prod->produto.DESCRICAO);
+                        j++;
+                        prod = prod->prox;
+                    }
+                }
+            }
         }
-        no_produtos *prod = search->valor.carrinho_inicio;
-        while (prod != NULL)
-        {
-            printf("{Produto %d:", j);
-            printf("        Nome: %s\t", prod->produto.NOME);
-            printf("        Categoria: %d\t", prod->produto.CATEGORIA);
-            printf("        Nota de Avalicao: %d\t", prod->produto.NOTA_AVALIACAO);
-            printf("        Quantidade: %d\t", prod->produto.QUANTIDADE);
-            printf("        Valor: %.2f\t", prod->produto.VALOR);
-            printf("        Descricao: %s}\n", prod->produto.DESCRICAO);
-            j++;
-            prod = prod->prox;
-        }
-        return;
-    }
-    return;
 }
 
 void mostrar_comprados(lista_clientes *l, cadastro it)
@@ -591,12 +591,16 @@ int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         no_produtos *no = search->valor.carrinho_inicio;
-        while (no != NULL)
+        if (no != NULL)
         {
-            insere_nova_compra(l, it, no->produto);
-            no = no->prox;
+            while (no != NULL)
+            {
+                insere_nova_compra(l, it, no->produto);
+                no = no->prox;
+            }
+            limpa_carrinho(l, it);
+            return 0;
         }
-        limpa_carrinho(l, it);
         return 0;
     }
     return 3;
