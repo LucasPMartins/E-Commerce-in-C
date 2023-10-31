@@ -147,7 +147,7 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
-                        mostrar_5_produtos(l_vendedores, NULL, retorno_lista);
+                        mostrar_5_produtos(l_vendedores,l, it, retorno_lista);
                         mostrar_produtos(retorno_lista);
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                         printf("                   1- Procurar  por  um  Produto\n");
