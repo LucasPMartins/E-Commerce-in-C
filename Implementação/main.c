@@ -24,7 +24,6 @@ int main()
     lista_clientes *l = criar_lista_clientes();                // Lista dos Clientes
     lista_vendedores *l_vendedores = criar_lista_vendedores(); // Lista dos Vendedores
     cadastro it;
-    // vendedor *v = (vendedor *)calloc(1, sizeof(vendedor));
     vendedor v;
     produtos p;                                             // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
@@ -83,7 +82,7 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         it.senha[strcspn(it.senha, "\n")] = '\0';
                         ret = verifica_cliente(l, it);
-                        if (verifica_cliente(l, it) == 0 && opcao2 == 1)
+                        if (ret == 0 && opcao2 == 1)
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ja Exite, Tente Outro!\n");
@@ -98,7 +97,7 @@ int main()
                                 break;
                             }
                         }
-                        if (verifica_cliente(l, it) == 3 && opcao2 == 3)
+                        if (ret == 3 && opcao2 == 3)
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\nNome de Usuario ou Senha Incorretos!\n");
