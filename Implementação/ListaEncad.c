@@ -399,27 +399,27 @@ int excluir_conta_cliente(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         if (search->ant == NULL) // Primeiro cliente da lista
-        {
+        {   
+            limpa_compra_carrinho(l, search->valor.cadastro);
             l->inicio = search->prox;
             if (l->inicio != NULL)
                 l->inicio->prox->ant = NULL;
             l->total_clientes--;
-            limpa_compra_carrinho(l, search->valor.cadastro);
             free(search);
             return 0;
         }
         if (search->prox == NULL) // Ultimo cliente da lista
         {
+            limpa_compra_carrinho(l, search->valor.cadastro);
             search->ant->prox = NULL;
             l->total_clientes--;
-            limpa_compra_carrinho(l, search->valor.cadastro);
             free(search);
             return 0;
         } // Cliente no meio
+        limpa_compra_carrinho(l, search->valor.cadastro);
         search->prox->ant = search->ant;
         search->ant->prox = search->prox;
         l->total_clientes--;
-        limpa_compra_carrinho(l, search->valor.cadastro);
         free(search);
         return 0;
     }

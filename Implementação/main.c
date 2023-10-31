@@ -24,6 +24,7 @@ int main()
     lista_clientes *l = criar_lista_clientes();                // Lista dos Clientes
     lista_vendedores *l_vendedores = criar_lista_vendedores(); // Lista dos Vendedores
     cadastro it;
+    no_clientes *c;
     vendedor v;
     produtos p;                                             // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
@@ -82,6 +83,10 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         it.senha[strcspn(it.senha, "\n")] = '\0';
                         ret = verifica_cliente(l, it);
+                        if(opcao2 == 3 &&(ret == 1|| ret == 2)) {
+                            num = 0;
+                            break;
+                        }
                         if (ret == 0 && opcao2 == 1)
                         {
                             printf(ANSI_COLOR_RED);
@@ -140,6 +145,7 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
+                        c = buscar_cliente(l, it);
                         // retorna_5_produtos(l_vendedores,l, it, retorno_lista);
                         // mostrar_produtos(retorno_lista);
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
@@ -342,7 +348,6 @@ int main()
                                 system("cls");
                                 print_logo();
                                 mostrar_produtos(retorno_lista); // Mostra a lista do 5 produtos iniciais
-                                printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                 if (listaVazia_produtos(retorno_lista) != 0)
                                 {
                                     while (1)
@@ -352,6 +357,7 @@ int main()
                                             tecla = _getch();
                                             if (tecla == 13)
                                             { // Verifica se a tecla pressionada é o código ASCII do "Enter"
+                                                printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                                 do
                                                 {
                                                     printf("\nDigite o qual Produto deseja Adicionar:");
@@ -390,6 +396,7 @@ int main()
                                     printf(ANSI_COLOR_RED);
                                     printf("\nNenhum Produto Encontrado :(\n");
                                     printf(ANSI_COLOR_RESET);
+                                    system("pause");
                                     break;
                                 }
                             } while (sair != 1);
@@ -408,90 +415,101 @@ int main()
                                 printf("                      Digite sua opcao:");
                                 setbuf(stdin, NULL);
                                 scanf("%d", &opcao2);
-                                if (opcao2 == 1)
+                                if (c->valor.total_carrinho != 0 && opcao2 != 0)
                                 {
-                                    system("cls");
-                                    print_logo();
-                                    printf("\n\n                      ---- Pagamento via PIX ----\n\n");
-                                    printf("                           # ## ## # ### # #\n");
-                                    printf("                           ### ## # # ##  ##\n");
-                                    printf("                           ####  ## ## #####\n");
-                                    printf("                           ### ### # ##### #\n");
-                                    printf("                           ####  #### ##### \n");
-                                    printf("                           ### ##  ##### ###\n");
-                                    printf("                           # # # ##### ### #\n");
-                                    printf("                           ## ##  #### ## ##\n");
-                                    printf("\n\nPressione Enter para finalizar pagamento...\n");
-                                    while (1)
+                                    if (opcao2 == 1)
                                     {
-                                        if (_kbhit())
+                                        system("cls");
+                                        print_logo();
+                                        printf("\n\n                      ---- Pagamento via PIX ----\n\n");
+                                        printf("                           # ## ## # ### # #\n");
+                                        printf("                           ### ## # # ##  ##\n");
+                                        printf("                           ####  ## ## #####\n");
+                                        printf("                           ### ### # ##### #\n");
+                                        printf("                           ####  #### ##### \n");
+                                        printf("                           ### ##  ##### ###\n");
+                                        printf("                           # # # ##### ### #\n");
+                                        printf("                           ## ##  #### ## ##\n");
+                                        printf("\n\nPressione Enter para finalizar pagamento...\n");
+                                        while (1)
                                         {
-                                            tecla = _getch();
-                                            if (tecla == 13)
-                                            { // Verifica se a tecla pressionada é o código ASCII do "Enter"
-                                                printf(ANSI_COLOR_YELLOW);
-                                                printf("\nConfirmando Pagamento");
-                                                i = 3;
-                                                while (i > 0)
-                                                {
-                                                    imprimelento("...", 500);
-                                                    printf("\b\b\b   \b\b\b");
-                                                    i--;
+                                            if (_kbhit())
+                                            {
+                                                tecla = _getch();
+                                                if (tecla == 13)
+                                                { // Verifica se a tecla pressionada é o código ASCII do "Enter"
+                                                    printf(ANSI_COLOR_YELLOW);
+                                                    printf("\nConfirmando Pagamento");
+                                                    i = 3;
+                                                    while (i > 0)
+                                                    {
+                                                        imprimelento("...", 500);
+                                                        printf("\b\b\b   \b\b\b");
+                                                        i--;
+                                                    }
+                                                    printf("\n\nPagamento Realizado com Sucesso! Obrigado por Comprar :)\n\n");
+                                                    printf(ANSI_COLOR_RESET);
+                                                    system("pause");
+                                                    break;
+                                                    // Retorna ao menu anterior
                                                 }
-                                                printf("\n\nPagamento Realizado com Sucesso! Obrigado por Comprar :)\n\n");
-                                                printf(ANSI_COLOR_RESET);
-                                                system("pause");
-                                                break;
-                                                // Retorna ao menu anterior
                                             }
                                         }
+                                        insere_do_carrinho_para_comprados(l, it);
                                     }
-                                    insere_do_carrinho_para_comprados(l, it);
-                                }
-                                else if (opcao2 == 2)
-                                {
-                                    printf("\nDigite o Numero do Produto de deseja Remover:");
-                                    setbuf(stdin, NULL);
-                                    printf(ANSI_COLOR_YELLOW);
-                                    scanf("%d", &num);
-                                    ret = remove_do_carrinho(l, it, num);
-                                    imprimelento("\nRemovendo", 100);
-                                    i = 3;
-                                    while (i > 0)
+                                    else if (opcao2 == 2)
                                     {
-                                        imprimelento("...", 500);
-                                        printf("\b\b\b   \b\b\b");
-                                        i--;
+                                        printf("\nDigite o Numero do Produto de deseja Remover:");
+                                        setbuf(stdin, NULL);
+                                        printf(ANSI_COLOR_YELLOW);
+                                        scanf("%d", &num);
+                                        ret = remove_do_carrinho(l, it, num);
+                                        imprimelento("\nRemovendo", 100);
+                                        i = 3;
+                                        while (i > 0)
+                                        {
+                                            imprimelento("...", 500);
+                                            printf("\b\b\b   \b\b\b");
+                                            i--;
+                                        }
+                                        if (ret == 0)
+                                            printf("\n\nRemovido com Sucesso!\n\n");
+                                        else
+                                            printf("\n\nErro! :(\n\n");
+                                        printf(ANSI_COLOR_RESET);
+                                        system("pause");
                                     }
-                                    if (ret == 0)
-                                        printf("\n\nRemovido com Sucesso!\n\n");
-                                    else
-                                        printf("\n\nErro! :(\n\n");
-                                    printf(ANSI_COLOR_RESET);
-                                    system("pause");
-                                }
-                                else if (opcao2 == 3)
-                                {
-                                    ret = limpa_carrinho(l, it);
-                                    printf(ANSI_COLOR_YELLOW);
-                                    printf("\nLimpando carrinho");
-                                    i = 3;
-                                    while (i > 0)
+                                    else if (opcao2 == 3)
                                     {
-                                        imprimelento("...", 500);
-                                        printf("\b\b\b   \b\b\b");
-                                        i--;
+                                        ret = limpa_carrinho(l, it);
+                                        printf(ANSI_COLOR_YELLOW);
+                                        printf("\nLimpando carrinho");
+                                        i = 3;
+                                        while (i > 0)
+                                        {
+                                            imprimelento("...", 500);
+                                            printf("\b\b\b   \b\b\b");
+                                            i--;
+                                        }
+                                        if (ret == 0)
+                                            printf("Todos os Produtos Removidos com Sucesso!\n\n");
+                                        else
+                                            printf("\n\nErro! :(\n\n");
+                                        printf(ANSI_COLOR_RESET);
+                                        system("pause");
                                     }
-                                    if (ret == 0)
-                                        printf("Todos os Produtos Removidos com Sucesso!\n\n");
-                                    else
-                                        printf("\n\nErro! :(\n\n");
-                                    printf(ANSI_COLOR_RESET);
-                                    system("pause");
                                 }
                                 else if (opcao2 == 0)
                                 {
                                     opcao3 = 10;
+                                    break;
+                                }
+                                else
+                                {
+                                    printf(ANSI_COLOR_RED);
+                                    printf("\n\nNao eh Possivel Realizar Nenhuma Operacao, pois o Carrinho esta Vazio!\n\n");
+                                    printf(ANSI_COLOR_RESET);
+                                    system("pause");
                                     break;
                                 }
                             } while (opcao2 != 0);
@@ -503,40 +521,51 @@ int main()
                                 system("cls");
                                 print_logo();
                                 mostrar_comprados(l, it);
-                                printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...\n");
-                                while (1)
+                                if (c->valor.total_comprados != 0)
                                 {
-                                    if (_kbhit())
+                                    while (1)
                                     {
-                                        tecla = _getch();
-                                        if (tecla == 13)
-                                        { // Verifica se a tecla pressionada é o código ASCII do "Enter"
-                                            do
-                                            {
-                                                printf("\nDigite Numero do Produto que deseja Avaliar:");
-                                                setbuf(stdin, NULL);
+                                        if (_kbhit())
+                                        {
+                                            tecla = _getch();
+                                            if (tecla == 13)
+                                            { // Verifica se a tecla pressionada é o código ASCII do "Enter"
+                                                do
+                                                {
+                                                    printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...\n");
+                                                    printf("\nDigite Numero do Produto que deseja Avaliar:");
+                                                    setbuf(stdin, NULL);
+                                                    printf(ANSI_COLOR_YELLOW);
+                                                    scanf("%d", &pos);
+                                                    printf(ANSI_COLOR_RESET);
+                                                    printf("\nDigite sua Avaliacao:");
+                                                    setbuf(stdin, NULL);
+                                                    printf(ANSI_COLOR_YELLOW);
+                                                    scanf("%d", &num);
+                                                    printf(ANSI_COLOR_RESET);
+                                                } while (pos < 0);
+                                                avaliar_produto(l_vendedores, l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
-                                                scanf("%d", &pos);
+                                                printf("\nObrigado por Avaliar!\n\n");
                                                 printf(ANSI_COLOR_RESET);
-                                                printf("\nDigite sua Avaliacao:");
-                                                setbuf(stdin, NULL);
-                                                printf(ANSI_COLOR_YELLOW);
-                                                scanf("%d", &num);
-                                                printf(ANSI_COLOR_RESET);
-                                            } while (pos < 0);
-                                            avaliar_produto(l_vendedores, l, it, pos, num);
-                                            printf(ANSI_COLOR_YELLOW);
-                                            printf("\nObrigado por Avaliar!\n\n");
-                                            printf(ANSI_COLOR_RESET);
-                                            system("pause");
-                                            break;
-                                        }
-                                        if (tecla == 27)
-                                        { // Verifica se a tecla pressionada é o código ASCII do "Esc"
-                                            sair = 1;
-                                            break;
+                                                system("pause");
+                                                break;
+                                            }
+                                            if (tecla == 27)
+                                            { // Verifica se a tecla pressionada é o código ASCII do "Esc"
+                                                sair = 1;
+                                                break;
+                                            }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    printf(ANSI_COLOR_RED);
+                                    printf("\n\nNao eh Possivel Realizar Nenhuma Operacao, pois o Historico esta Vazio!\n\n");
+                                    printf(ANSI_COLOR_RESET);
+                                    system("pause");
+                                    break;
                                 }
                             } while (sair != 1);
                             break;
@@ -634,7 +663,6 @@ int main()
                         printf("                     Digite seu nome:");
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
-                        // fgets(it.nome, 30, stdin);
                         fgets(v.cadastro.nome, 30, stdin);
                         printf(ANSI_COLOR_RESET);
                         v.cadastro.nome[strcspn(v.cadastro.nome, "\n")] = '\0';
@@ -642,14 +670,11 @@ int main()
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
                         fgets(v.cadastro.senha, 10, stdin);
-                        // if (opcao2 == 2)
-                        //{
                         printf(ANSI_COLOR_RESET);
                         printf("                     Digite o nome da loja:");
                         setbuf(stdin, NULL);
                         fgets(v.nome_loja, 30, stdin);
                         v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
-                        //}
                         ret = verifica_vendedor(l_vendedores, v);
                         if (ret == 0 && opcao2 == 2)
                         {
@@ -749,25 +774,28 @@ int main()
                             setbuf(stdin, NULL);
                             fgets(p.DESCRICAO, 100, stdin);
                             p.DESCRICAO[strcspn(p.DESCRICAO, "\n")] = '\0';
-                            do{
-                            printf("Insira a Quantidade do Produto:");
-                            setbuf(stdin, NULL);
-                            scanf("%d", &p.QUANTIDADE);
+                            do
+                            {
+                                printf("Insira a Quantidade do Produto:");
+                                setbuf(stdin, NULL);
+                                scanf("%d", &p.QUANTIDADE);
                             } while (p.QUANTIDADE <= 0);
-                            do{
-                            printf("Insira o Valor do Produto:\n");
-                            scanf("%f", &p.VALOR);
+                            do
+                            {
+                                printf("Insira o Valor do Produto:\n");
+                                scanf("%f", &p.VALOR);
                             } while (p.VALOR <= 0);
                             p.NOTA_AVALIACAO = 0;
                             p.QUANT_AVALIACAO = 0;
                             strcpy(p.nome_loja, v.nome_loja);
-                            if (vendedor_adiciona_produtos(&v, p) == 0){
+                            if (vendedor_adiciona_produtos(&v, p) == 0)
+                            {
                                 atualiza_lista_vendedores(v, l_vendedores);
                                 printf("Cadastro de Produto Realizado com Sucesso!\n");
                             }
                             else
                                 printf("Cadastro de Produto Falhou!\n");
-                            
+
                             break;
                         case 2:
                             /*       remover produtos           */
