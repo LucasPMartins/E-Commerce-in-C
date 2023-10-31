@@ -784,61 +784,62 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
-
-int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
+int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
 {
     if (v == NULL)
         return 2;
-    p = (lista_produtos *)malloc(sizeof(lista_produtos));
-    if (p == NULL)
-        return 1;
     srand(time(NULL));
     no_clientes *no = buscar_cliente(l, it);
+    vendedor temp;
+    produtos aux;
     if (no != NULL)
     {
-        int t = 0, x;
-        if (no->valor.total_comprados == 0)
-        {
-            while (t < 5)
-            {
-                x = rand() % v->total_vendedores;
-                no_vendedores *no3 = v->inicio;
-                while (x > 0 && no3->prox != NULL)
-                {
-                    no3 = no3->prox;
-                    x--;
-                }
-                no_produtos *no2 = no3->valor.inicio;
-                x = rand() % no3->valor.total_produtos;
-                while (x > 0 && no2->prox != NULL)
-                {
-                    no2 = no2->prox;
-                    x--;
-                }
-                inserirInicio_produtos(p, no2->produto);
-                t++;
-            }
-            mostrar_produtos(p);
+        srand(time(NULL));
+        int t = 0, x,total;
+        total = conta_produtos_total(v);
+        if(v->total_vendedores == 0 || total == 0)
             return 0;
+        if (no->valor.total_comprados == 0)
+        {   
+                if(total > 5)
+                    total = 5;
+
+               while(t<total){
+                 x = rand() % v->total_vendedores;
+                 printf("[X1 = [%d]]\n",x);
+                 buscar_por_posicao_vendedor(v,x,&temp);
+               // printf("[[%d]]\n",t);
+                 x = rand() % temp.total_produtos;
+                 printf("[X2 = [%d]]\n",x);
+                 if(buscar_produto_no_vendedor_posicao(temp,x,&aux) == 0){
+                    if(verifica_produto(p,aux) == 0)
+                        continue;
+                    inserirInicio_produtos(p, aux);
+                    t++;
+                    
+                 }
+               }
+               return 0;
         }
+            
         // Mostrar relacionado as compras do cliente
-        int y = no->valor.comprados_inicio->produto.CATEGORIA;
-        lista_produtos *p2 = (lista_produtos *)malloc(sizeof(lista_produtos));
-        produtos_de_categoria(v, y, p2);
-        no_produtos *prod = p2->inicio;
-        t = 5;
-        while (t > 0)
-        {
-            x = rand() % tamanho_lista_produtos(p2);
-            while (prod->prox != NULL && x > 0)
-            {
-                x--;
-                prod = prod->prox;
+        int cat = no->valor.comprados_inicio->produto.CATEGORIA;
+        lista_produtos *p2 = criar_lista_produtos();
+        produtos_de_categoria(v,cat,p2);
+        total = tamanho_lista_produtos(p2);
+        while(t<total){
+            x = rand() % total;
+
+            if(buscar_produto_posicao(p2,&aux,x) == 0){
+                if(verifica_produto(p,aux) == 0){
+                    continue;
+                }
+                inserirInicio_produtos(p, aux);
+                t++;
+                
             }
-            inserirInicio_produtos(p, prod->produto);
-            t--;
         }
-        mostrar_produtos(p);
+       
         return 0;
     }
     return 3;
@@ -896,6 +897,71 @@ void zerar_produtos(lista_produtos* l){
         removerInicio_produtos(l);
 }
 
+int buscar_produto_no_vendedor_posicao(vendedor v,int pos,produtos *p){
+    if(v.total_produtos == 0)
+        return 1;
+    if(p == NULL)
+        return 2;
+    if(pos < 0)
+        return 3;
+    no_produtos* no = v.inicio;
+    while(no->prox != NULL && pos > 0){
+        no = no->prox;
+    }
+    *p = no->produto;
+    return 0;
+}
+
+int conta_produtos_total(lista_vendedores* l){
+     if (l == NULL)
+        return -2;
+    if (lista_vendedores_vazia(l) == 0)
+        return -1;
+    no_vendedores *no = l->inicio;
+    no_produtos *nl = NULL;
+    int cont = 0;
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            cont++;
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return cont;
+}
+
+int verifica_produto(lista_produtos*p, produtos it){
+if (p == NULL)
+        return 1;
+    no_produtos *atual = p->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->produto.NOME, it.NOME) == 0)
+        {
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
+}
+
+int buscar_produto_posicao(lista_produtos*p, produtos* it, int pos){
+if (p == NULL)
+        return 1;
+    if (listaVazia_produtos(p) == 0)
+        return 2;
+    no_produtos *atual = p->inicio;
+    while (atual->prox != NULL && pos > 0)
+    {
+        atual = atual->prox;
+        pos--;
+    }
+    *it = atual->produto;
+    return 0;
+}
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
@@ -997,11 +1063,7 @@ void mostrar_lista_vendedores(lista_vendedores *l)
         }
         printf("}");
     }
-    /*if (l == NULL)
-    {
-        printf("Lista de vendedores nao criada!\n");
-        return;
-    }*/
+    
 }
 
 int vendedor_adiciona_produtos(vendedor *v, produtos p)
@@ -1049,6 +1111,7 @@ void mostra_produtos_vendedor(vendedor v)
             printf("  Descricao: %s\n", temp->produto.DESCRICAO);
             j++;
             temp = temp->prox;
+            printf("------------\n");
         }
     }
 }
@@ -1108,4 +1171,17 @@ int atualiza_lista_vendedores(vendedor v,lista_vendedores *l){
         atual = atual->prox;
     }
     return 3;
+}
+
+int buscar_por_posicao_vendedor(lista_vendedores* l, int pos, vendedor *v){
+    if(l == NULL) return 2;
+    if(lista_vendedores_vazia(l) == 0) return 1;
+    if(pos < 0 ) return 3;
+    no_vendedores* no = l->inicio;
+    while(no->prox != NULL && pos > 0){
+        no = no->prox;
+        pos--;
+    }
+    *v = no->valor;
+    return 0;
 }
