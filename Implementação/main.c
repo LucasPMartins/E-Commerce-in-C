@@ -61,7 +61,7 @@ int main()
                 printf("                      Digite sua opcao:");
                 setbuf(stdin, NULL);
                 scanf("%d", &opcao2);
-                if (opcao2 == 1 || opcao2 == 3)
+                if (opcao2 == 1 || opcao2 == 3) // Login e Cadastro de Cliente
                 {
                     num = 3;
                     do
@@ -83,7 +83,7 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         it.senha[strcspn(it.senha, "\n")] = '\0';
                         ret = verifica_cliente(l, it);
-                        if (verifica_cliente(l, it) == 0)
+                        if (verifica_cliente(l, it) == 0 && opcao2 == 1)
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\nNome ja Exite, Tente Outro!\n");
@@ -98,7 +98,22 @@ int main()
                                 break;
                             }
                         }
-                    } while ((opcao2 == 1 && ret == 0) || (opcao2 == 3 && ret != 0));
+                        if (verifica_cliente(l, it) == 3 && opcao2 == 3)
+                        {
+                            printf(ANSI_COLOR_RED);
+                            printf("\nNome de Usuario ou Senha Incorretos!\n");
+                            printf(ANSI_COLOR_RESET);
+                            Sleep(1000);
+                            num--;
+                            if (num == 0)
+                            {
+                                opcao = 10;
+                                opcao2 = 0;
+                                opcao3 = 0;
+                                break;
+                            }
+                        }
+                    } while ((opcao2 == 1 && ret == 0) || (opcao2 == 3 && ret == 3));
                     if (num == 0)
                     {
                         opcao = 10;
@@ -132,8 +147,8 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
-                        mostrar_5_produtos(l_vendedores, NULL, retorno_lista);
-                        mostrar_produtos(retorno_lista);
+                        //mostrar_5_produtos(l_vendedores,l, it, retorno_lista);
+                        //mostrar_produtos(retorno_lista);
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                         printf("                   1- Procurar  por  um  Produto\n");
                         printf("                   2- Adicionar Produto ao Carrinho\n");
@@ -591,7 +606,7 @@ int main()
                     } while (opcao3 != 0);
                     break;
                 }
-                if (opcao2 == 2 || opcao2 == 4)
+                if (opcao2 == 2 || opcao2 == 4) // Login e Cadastro de Vendedor
                 {
                     /*            CADASTRO VENDEDOR */
 
@@ -724,6 +739,7 @@ int main()
                 default:
                     break;
                 }
+<<<<<<< HEAD
             } while (opcao3 != 0);
             
                     }
@@ -808,6 +824,11 @@ int main()
                 }
             } while (opcao3 != 0);
     */
+=======
+                // SEPARAÇÃO
+            } while (opcao2 != 0);
+            break;
+>>>>>>> b98acd254c73b2f439dcfc276de2bb0dc854b0eb
         case 2:
             system("cls");
             printf("\n");
