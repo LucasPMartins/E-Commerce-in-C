@@ -115,8 +115,10 @@ int main()
                     printf("==========\n");
                     printf("Insira categoria:\n");
                     scanf("%d", &p.CATEGORIA);
+                    printf("Insira descricao:\n");
                     setbuf(stdin, NULL);
                     fgets(p.DESCRICAO, 100, stdin);
+                    printf("Insira nome do produto:\n");
                     setbuf(stdin, NULL);
                     fgets(p.NOME, 30, stdin);
                     printf("INsira quantidade:\n");
