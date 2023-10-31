@@ -42,6 +42,22 @@ int main()
                 setbuf(stdin, NULL);
                 fgets(v.nome_loja, 30, stdin);
                 v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
+                if (verifica_vendedor(l_vendedores, v) == 0)
+                        {
+                            //printf(ANSI_COLOR_RED);
+                            printf("\nNome ja Existe, Tente Outro!\n");
+                            /*printf(ANSI_COLOR_RESET);
+                            Sleep(1000);
+                            num--;
+                            if (num == 0)
+                            {
+                                opcao = 10;
+                                opcao2 = 0;
+                                opcao3 = 0;
+                                break;
+                            }*/
+                        }
+
                 // Se o nome já existir na lista de vendedores, não será criado um novo vendedor
             } while (verifica_vendedor(l_vendedores, v) == 0);
             v.total_produtos = 0;
@@ -63,12 +79,19 @@ int main()
                 printf("Digite sua senha:");
                 setbuf(stdin, NULL);
                 fgets(v.cadastro.senha, 10, stdin);
+                if(verifica_vendedor_e_retorna(l_vendedores, &v) != 0){
+                    printf("Login incorreto\n");
+                }
             } while (verifica_vendedor_e_retorna(l_vendedores, &v) != 0);
+            printf("===============\n");
+            mostrar_lista_vendedores(l_vendedores);
+            printf("===============\n");
 
+            printf("-----------\n");
             printf("Nome: %s\n", v.cadastro.nome);
             printf("NomeLoja: %s\n", v.nome_loja);
             printf("Senha: %s\n", v.cadastro.senha);
-            printf("%d\n", v.total_produtos);
+            printf("TOTAL PRODUTO [%d]\n", v.total_produtos);
             printf("\n");
 
             printf("\nSeja Bem vindo de volta %s!\n\n", v.cadastro.nome);
@@ -87,6 +110,9 @@ int main()
 
                 case 1:
                     /*  cadastrar produto */
+                    printf("==========\n");
+                    mostrar_lista_vendedores(l_vendedores);
+                    printf("==========\n");
                     printf("Insira categoria:\n");
                     scanf("%d", &p.CATEGORIA);
                     setbuf(stdin, NULL);
@@ -99,11 +125,12 @@ int main()
                     scanf("%f", &p.VALOR);
                     p.NOTA_AVALIACAO = 0;
                     p.QUANT_AVALIACAO = 0;
+                    strcpy(p.nome_loja,v.nome_loja);
                     if (vendedor_adiciona_produtos(&v, p) == 0)
                         printf("Cadastro de produto realizado com sucesso!\n");
                     else
                         printf("Cadastro de produto falhou!\n");
-
+                    atualiza_lista_vendedores(v,l_vendedores);
                     break;
 
                 case 2:
@@ -115,6 +142,7 @@ int main()
                         printf("Remocao concluida!\n");
                     else
                         printf("Remocao falha\n");
+                    atualiza_lista_vendedores(v,l_vendedores);
                     break;
                 case 3:
                     /*       Mostrar produtos           */
