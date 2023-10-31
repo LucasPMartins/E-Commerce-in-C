@@ -16,6 +16,7 @@ typedef struct produtos
     int QUANTIDADE;
     int QUANT_AVALIACAO;
     int NOTA_AVALIACAO;
+    char nome_loja[30];
 } produtos;
 
 typedef struct no_produtos
@@ -114,7 +115,7 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 
 int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p);
 
-int mostrar_5_produtos(lista_vendedores *v, cliente *it, lista_produtos *p);
+int mostrar_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
 
 //                              TAD VENDEDOR
 
@@ -128,6 +129,11 @@ int insere_novo_vendedor(lista_vendedores *l, vendedor v);
 
 void mostrar_lista_vendedores(lista_vendedores *l);
 
-// int vendedor_adiciona_produtos(vendedor v,);
+// Novas:
+int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v);
+int vendedor_adiciona_produtos(vendedor *v, produtos p);
+void mostra_produtos_vendedor(vendedor v);
+int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
+
 
 #endif

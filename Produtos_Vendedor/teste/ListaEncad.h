@@ -16,6 +16,7 @@ typedef struct produtos
     int QUANTIDADE;
     int QUANT_AVALIACAO;
     int NOTA_AVALIACAO;
+    char nome_loja[30];
 } produtos;
 
 typedef struct no_produtos
