@@ -683,7 +683,7 @@ int main()
                         if (ret == 0 && opcao2 == 2)
                         {
                             printf(ANSI_COLOR_RED);
-                            printf("\nNome ja Existe, Tente Outro!\n");
+                            printf("\nNome de usuario ou nome de loja ja Existe, Tente Outro!\n");
                             printf(ANSI_COLOR_RESET);
                             Sleep(1000);
                             num--;
@@ -763,10 +763,15 @@ int main()
                             system("cls");
                             print_logo();
                             printf("\n\n");
+                            do
+                            {
+                                
+                            
                             printf("Insira o Nome do Produto:");
                             setbuf(stdin, NULL);
                             fgets(p.NOME, 30, stdin);
                             p.NOME[strcspn(p.NOME, "\n")] = '\0';
+
                             do
                             {
                                 printf("Insira a Categoria do Produto:(1 ao 12)");
@@ -792,6 +797,9 @@ int main()
                             p.NOTA_AVALIACAO = 0;
                             p.QUANT_AVALIACAO = 0;
                             strcpy(p.nome_loja, v.nome_loja);
+                            if(verifica_produto(v.inicio,p) == 0) //MESMO NOME DE PRODUTO
+                                    printf("NOME DE PRODUTO JA EXISTE!\n");
+                            } while (verifica_produto(v.inicio,p) == 0);
                             if (vendedor_adiciona_produtos(&v, p) == 0)
                             {
                                 atualiza_lista_vendedores(v, l_vendedores);
@@ -801,6 +809,7 @@ int main()
                                 printf("Cadastro de Produto Falhou!\n");
 
                             break;
+
                         case 2:
                             /*       remover produtos           */
                             system("cls");
