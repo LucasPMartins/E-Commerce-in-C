@@ -83,10 +83,6 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         it.senha[strcspn(it.senha, "\n")] = '\0';
                         ret = verifica_cliente(l, it);
-                        if(opcao2 == 3 &&(ret == 1|| ret == 2)) {
-                            num = 0;
-                            break;
-                        }
                         if (ret == 0 && opcao2 == 1)
                         {
                             printf(ANSI_COLOR_RED);
@@ -99,7 +95,7 @@ int main()
                                 break;
                             }
                         }
-                        if (ret == 3 && opcao2 == 3)
+                        if (opcao2 == 3 && (ret == 2 || ret == 1 || ret == 3))
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\nNome de Usuario ou Senha Incorretos!\n");
@@ -147,11 +143,14 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         c = buscar_cliente(l, it);
                         zerar_produtos(retorno_lista);
-                        if(retorna_5_produtos(l_vendedores,l, it, retorno_lista) == 0)
-                            printf("Aqui estao os produtos!\n");
-                         mostrar_produtos(retorno_lista);
-
-
+                        if (retorna_5_produtos(l_vendedores, l, it, retorno_lista) == 0)
+                            mostrar_produtos(retorno_lista);
+                        else
+                        {
+                            printf(ANSI_COLOR_YELLOW);
+                            prinft("Nao foi Encontrado Nenhum Produto na Loja, Sinto Muito! (\n\n");
+                            printf(ANSI_COLOR_RESET);
+                        }
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                         printf("                   1- Procurar  por  um  Produto\n");
                         printf("                   2- Adicionar Produto ao Carrinho\n");
@@ -185,7 +184,7 @@ int main()
                                 setbuf(stdin, NULL);
                                 fgets(pesquisa, 30, stdin);
                                 pesquisa[strlen(pesquisa) - 1] = '\0';
-                                printf("\nPesquisando por %s ", pesquisa);
+                                printf("\nPesquisando por %s", pesquisa);
                                 i = 3;
                                 while (i > 0)
                                 {
@@ -250,8 +249,9 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n");
+                                    printf("\nNenhum Produto Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
+                                    system("pause");
                                     break;
                                 }
                                 zerar_produtos(retorno_lista2);
@@ -273,7 +273,7 @@ int main()
                                 // FUNÇÃO QUE RETORNA TODOS OS PRODUTOS DE CATEGORIA X
                                 produtos_de_categoria(l_vendedores, categoria, retorno_lista2);
                                 printf(ANSI_COLOR_YELLOW);
-                                printf("\nPesquisando pela Categoria %d ", categoria);
+                                printf("\nPesquisando pela Categoria %d", categoria);
                                 i = 3;
                                 while (i > 0)
                                 {
@@ -336,8 +336,9 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n");
+                                    printf("\nNenhum Produto Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
+                                    system("pause");
                                     break;
                                 }
                                 zerar_produtos(retorno_lista2);
@@ -398,7 +399,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n");
+                                    printf("\nNenhum Produto Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
@@ -411,16 +412,16 @@ int main()
                                 system("cls");
                                 print_logo();
                                 mostrar_carrinho(l, it);
-                                printf("\n                   -- O QUE DESEJA FAZER? --\n\n");
-                                printf("                     1- Confirmar Compra\n");
-                                printf("                     2- Remover do carrinho\n");
-                                printf("                     3- Limpar Carrinho\n");
-                                printf("                     0- Voltar\n\n");
-                                printf("                      Digite sua opcao:");
-                                setbuf(stdin, NULL);
-                                scanf("%d", &opcao2);
                                 if (c->valor.total_carrinho != 0 && opcao2 != 0)
                                 {
+                                    printf("\n                   -- O QUE DESEJA FAZER? --\n\n");
+                                    printf("                     1- Confirmar Compra\n");
+                                    printf("                     2- Remover do carrinho\n");
+                                    printf("                     3- Limpar Carrinho\n");
+                                    printf("                     0- Voltar\n\n");
+                                    printf("                      Digite sua opcao:");
+                                    setbuf(stdin, NULL);
+                                    scanf("%d", &opcao2);
                                     if (opcao2 == 1)
                                     {
                                         system("cls");
@@ -542,12 +543,13 @@ int main()
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &pos);
                                                     printf(ANSI_COLOR_RESET);
+                                                    printf("\n(Min: 1 Max: 5)");
                                                     printf("\nDigite sua Avaliacao:");
                                                     setbuf(stdin, NULL);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
-                                                } while (pos < 0);
+                                                } while (pos < 0 || (num > 5 || num < 1));
                                                 avaliar_produto(l_vendedores, l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 printf("\nObrigado por Avaliar!\n\n");
