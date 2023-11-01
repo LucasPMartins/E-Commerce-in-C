@@ -96,6 +96,11 @@ int limpa_carrinho(lista_clientes *l, cadastro it);
 int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 no_clientes *buscar_cliente(lista_clientes *l, cadastro it);
 
+
+//nova
+int produtos_registrados(lista_vendedores *v, lista_produtos *p);
+int remover_posicao_produto(lista_produtos *p, int pos);
+
 //                               TAD PRODUTOS
 
 lista_produtos *criar();
@@ -141,4 +146,5 @@ void mostra_produtos_vendedor(vendedor v);
 int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 
 int buscar_por_posicao_vendedor(lista_vendedores* l, int pos, vendedor *v);
+
 #endif
