@@ -689,7 +689,7 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
 {
     if (c != NULL && l != NULL && p != NULL)
     {
-        cliente *no = buscar_cliente(c, it);
+        no_clientes *no = buscar_cliente(c, it);
         if (no != NULL)
         {
             no_produtos *no1 = p->inicio; // Procura pelo produto na lista de pordutos
@@ -723,7 +723,6 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
                         }
                         no3 = no3->prox;
                     }
-                    return;
                 }
                 no2 = no2->prox;
             }

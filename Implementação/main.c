@@ -148,7 +148,7 @@ int main()
                         else
                         {
                             printf(ANSI_COLOR_YELLOW);
-                            prinft("Nao foi Encontrado Nenhum Produto na Loja, Sinto Muito! (\n\n");
+                            printf("Nao foi Encontrado Nenhum Produto na Loja, Sinto Muito! (\n\n");
                             printf(ANSI_COLOR_RESET);
                         }
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
