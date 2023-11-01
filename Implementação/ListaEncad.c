@@ -772,7 +772,6 @@ void mostrar_produtos(lista_produtos *l)
     }
     if (listaVazia_produtos(l) == 0)
     {
-        printf("Nenhum Produto foi Encontrado! :( \n");
         return;
     }
     if (l != NULL)

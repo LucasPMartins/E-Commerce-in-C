@@ -107,7 +107,7 @@ int main()
                                 break;
                             }
                         }
-                    } while ((opcao2 == 1 && ret == 0) || (opcao2 == 3 && ret == 3));
+                    } while ((opcao2 == 1 && ret == 0) || (opcao2 == 3 && (ret == 2 || ret == 1 || ret == 3)));
                     if (num == 0)
                     {
                         opcao = 10;
@@ -250,7 +250,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n\n");
+                                    printf("\n\nNenhum Produto Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
@@ -338,7 +338,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n\n");
+                                    printf("\n\nNenhum Produto Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
@@ -402,7 +402,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\nNenhum Produto Encontrado :(\n\n");
+                                    printf("\n\nNenhum Produto foi Encontrado :(\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
@@ -515,7 +515,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\n\nNao eh Possivel Realizar Nenhuma Operacao, pois o Carrinho esta Vazio!\n\n");
+                                    printf("\nNao eh Possivel Realizar Nenhuma Operacao, pois o Carrinho esta Vazio!\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
@@ -571,7 +571,7 @@ int main()
                                 else
                                 {
                                     printf(ANSI_COLOR_RED);
-                                    printf("\n\nNao eh Possivel Realizar Nenhuma Operacao, pois o Historico esta Vazio!\n\n");
+                                    printf("\nNao eh Possivel Realizar Nenhuma Operacao, pois o Historico esta Vazio!\n\n");
                                     printf(ANSI_COLOR_RESET);
                                     system("pause");
                                     break;
