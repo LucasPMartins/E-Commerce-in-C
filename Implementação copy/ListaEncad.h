@@ -122,8 +122,9 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p);
 
 int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
-
+//FUNÇAO QUE PODEMOS USAR POSTERIORMENTE
 int buscar_produto_no_vendedor_posicao(vendedor v,int pos,produtos *p);
+
 int conta_produtos_total(lista_vendedores* l);
 int verifica_produto(lista_produtos*p, produtos it);
 int buscar_produto_posicao(lista_produtos*p, produtos* it, int pos);
@@ -142,6 +143,7 @@ void mostrar_lista_vendedores(lista_vendedores *l);
 // Novas:
 int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v);
 int vendedor_adiciona_produtos(vendedor *v, produtos p);
+
 void mostra_produtos_vendedor(vendedor v);
 int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 

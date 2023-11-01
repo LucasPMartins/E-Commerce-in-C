@@ -146,8 +146,12 @@ int main()
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
                         c = buscar_cliente(l, it);
-                        // retorna_5_produtos(l_vendedores,l, it, retorno_lista);
-                        // mostrar_produtos(retorno_lista);
+
+                        if(retorna_5_produtos(l_vendedores,l, it, retorno_lista) == 0)
+                            printf("Aqui estao 5 produtos!\n");
+                         mostrar_produtos(retorno_lista);
+
+
                         printf("\n                    -- O QUE DESEJA FAZER? --\n\n");
                         printf("                   1- Procurar  por  um  Produto\n");
                         printf("                   2- Adicionar Produto ao Carrinho\n");

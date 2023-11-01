@@ -140,11 +140,9 @@ int main()
                         printf(ANSI_COLOR_YELLOW);
                         printf("%s!\n\n", it.nome);
                         printf(ANSI_COLOR_RESET);
+
                         if(retorna_5_produtos(l_vendedores,l, it, retorno_lista) == 0)
                             printf("retornou 5 produtos!\n");
-                         if(tamanho_lista_produtos(retorno_lista) == 0) {
-                            printf("Sem produtos por aqui!\n");
-                         }
                          mostrar_produtos(retorno_lista);
 
 

@@ -889,9 +889,8 @@ void zerar_produtos(lista_produtos *l)
     while (listaVazia_produtos(l) != 0)
         removerInicio_produtos(l);
 }
-
-int buscar_produto_no_vendedor_posicao(vendedor v, int pos, produtos *p)
-{
+//FUNÇAO QUE PODEMOS USAR POSTERIORMENTE
+int buscar_produto_no_vendedor_posicao(vendedor v, int pos, produtos *p){
     if (v.total_produtos == 0)
         return 1;
     if (p == NULL)

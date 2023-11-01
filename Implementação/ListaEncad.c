@@ -789,64 +789,58 @@ int removerInicio_produtos(lista_produtos *l)
     return 0;
 }
 
-
 int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p)
 {
-    if (v == NULL)
+    if (v == NULL || p == NULL)
         return 2;
-    p = (lista_produtos *)malloc(sizeof(lista_produtos));
-    if (p == NULL)
-        return 1;
-    srand(time(NULL));
     no_clientes *no = buscar_cliente(l, it);
-    if (no != NULL)
+    if (no == NULL)
+        return 3;
+    srand(time(NULL));
+    produtos aux;
+    lista_produtos *todos = criar_lista_produtos();
+    int t = 0, x, total;
+    total = conta_produtos_total(v);
+    if (v->total_vendedores == 0 || total == 0)
+        return 0;
+    if (no->valor.total_comprados == 0)
     {
-        int t = 0, x;
-        if (no->valor.total_comprados == 0)
+        if (produtos_registrados(v, todos) != 0)
+            return -1;
+        if (total > 5)
+            total = 5;
+        while (t < total)
         {
-            while (t < 5)
+            x = rand() % tamanho_lista_produtos(todos);
+            if (buscar_produto_posicao(todos, &aux, x) == 0)
             {
-                x = rand() % v->total_vendedores;
-                no_vendedores *no3 = v->inicio;
-                while (x > 0 && no3->prox != NULL)
-                {
-                    no3 = no3->prox;
-                    x--;
-                }
-                no_produtos *no2 = no3->valor.inicio;
-                x = rand() % no3->valor.total_produtos;
-                while (x > 0 && no2->prox != NULL)
-                {
-                    no2 = no2->prox;
-                    x--;
-                }
-                inserirInicio_produtos(p, no2->produto);
+                remover_posicao_produto(todos, x);
+                inserirInicio_produtos(p, aux);
                 t++;
             }
-            mostrar_produtos(p);
-            return 0;
         }
-        // Mostrar relacionado as compras do cliente
-        int y = no->valor.comprados_inicio->produto.CATEGORIA;
-        lista_produtos *p2 = (lista_produtos *)malloc(sizeof(lista_produtos));
-        produtos_de_categoria(v, y, p2);
-        no_produtos *prod = p2->inicio;
-        t = 5;
-        while (t > 0)
-        {
-            x = rand() % tamanho_lista_produtos(p2);
-            while (prod->prox != NULL && x > 0)
-            {
-                x--;
-                prod = prod->prox;
-            }
-            inserirInicio_produtos(p, prod->produto);
-            t--;
-        }
-        mostrar_produtos(p);
+        limpar_lista_produtos(todos);
         return 0;
     }
-    return 3;
+
+    // Mostrar relacionado as compras do cliente
+    int cat = no->valor.comprados_inicio->produto.CATEGORIA;
+    produtos_de_categoria(v, cat, todos);
+    total = tamanho_lista_produtos(todos);
+    if (total > 5)
+        total = 5;
+    while (t < total)
+    {
+        x = rand() % tamanho_lista_produtos(todos);
+        if (buscar_produto_posicao(todos, &aux, x) == 0)
+        {
+            remover_posicao_produto(todos, x);
+            inserirInicio_produtos(p, aux);
+            t++;
+        }
+    }
+    limpar_lista_produtos(todos);
+    return 0;
 }
 
 int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
@@ -899,6 +893,126 @@ int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p)
 void zerar_produtos(lista_produtos* l){
     while (listaVazia_produtos(l) != 0)
         removerInicio_produtos(l);
+}
+/*FUNÇAO QUE PODEMOS USAR POSTERIORMENTE
+int buscar_produto_no_vendedor_posicao(vendedor v, int pos, produtos *p){
+    if (v.total_produtos == 0)
+        return 1;
+    if (p == NULL)
+        return 2;
+    if (pos < 0)
+        return 3;
+    no_produtos *no = v.inicio;
+    while (no->prox != NULL && pos > 0)
+    {
+        no = no->prox;
+    }
+    *p = no->produto;
+    return 0;
+}
+*/
+int remover_posicao_produto(lista_produtos *p, int pos)
+{
+    if (p == NULL)
+        return 2;
+    if (pos < 0)
+        return 1;
+    if (listaVazia_produtos(p) == 0)
+        return 3;
+    no_produtos *atual = p->inicio;
+    while (atual->prox != NULL && pos > 0)
+    {
+        atual = atual->prox;
+        pos--;
+    }
+    if (atual->ant == NULL)
+        return removerInicio_produtos(p);
+    if (atual->prox == NULL)
+    {
+        // Caso remover FIM
+        atual->ant->prox = NULL;
+        free(atual);
+    }
+
+    atual->ant->prox = atual->prox;
+    atual->prox->ant = atual->ant;
+    free(atual);
+    return 0;
+}
+
+int conta_produtos_total(lista_vendedores *l)
+{
+    if (l == NULL)
+        return -2;
+    if (lista_vendedores_vazia(l) == 0)
+        return -1;
+    no_vendedores *no = l->inicio;
+    no_produtos *nl = NULL;
+    int cont = 0;
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            cont++;
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return cont;
+}
+
+int verifica_produto(lista_produtos *p, produtos it)
+{
+    if (p == NULL)
+        return 1;
+    no_produtos *atual = p->inicio;
+    while (atual != NULL)
+    {
+        if (strcmp(atual->produto.NOME, it.NOME) == 0)
+        {
+            return 0;
+        }
+        atual = atual->prox;
+    }
+    return 3;
+}
+
+int buscar_produto_posicao(lista_produtos *p, produtos *it, int pos)
+{
+    if (p == NULL)
+        return 1;
+    if (listaVazia_produtos(p) == 0)
+        return 2;
+    no_produtos *atual = p->inicio;
+    while (atual->prox != NULL && pos > 0)
+    {
+        atual = atual->prox;
+        pos--;
+    }
+    *it = atual->produto;
+    return 0;
+}
+
+int produtos_registrados(lista_vendedores *v, lista_produtos *p)
+{
+    if (v == NULL || p == NULL)
+        return 2;
+    if (conta_produtos_total(v) < 0)
+        return 1;
+    no_vendedores *no = v->inicio;
+    no_produtos *nl = NULL;
+    while (no != NULL)
+    {
+        nl = no->valor.inicio;
+        while (nl != NULL)
+        {
+            inserirInicio_produtos(p, nl->produto);
+            nl = nl->prox;
+        }
+        no = no->prox;
+    }
+    return 0;
 }
 
 /*                                  VENDEDOR   */
@@ -1113,4 +1227,22 @@ int atualiza_lista_vendedores(vendedor v,lista_vendedores *l){
         atual = atual->prox;
     }
     return 3;
+}
+
+int buscar_por_posicao_vendedor(lista_vendedores *l, int pos, vendedor *v)
+{
+    if (l == NULL)
+        return 2;
+    if (lista_vendedores_vazia(l) == 0)
+        return 1;
+    if (pos < 0)
+        return 3;
+    no_vendedores *no = l->inicio;
+    while (no->prox != NULL && pos > 0)
+    {
+        no = no->prox;
+        pos--;
+    }
+    *v = no->valor;
+    return 0;
 }
