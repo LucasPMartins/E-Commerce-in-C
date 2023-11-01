@@ -230,6 +230,7 @@ int main()
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
                                                     } while (qtd < 0);
+                                                    p = compra_produto(l,l_vendedores,retorno_lista2,it,qtd,num);
                                                     insere_novo_carrinho(l, it, p);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
@@ -317,6 +318,7 @@ int main()
                                                         printf(ANSI_COLOR_RESET);
                                                         printf("\n");
                                                     } while (qtd < 0);
+                                                    p = compra_produto(l,l_vendedores,retorno_lista2,it,qtd,num);
                                                     insere_novo_carrinho(l, it, p);
                                                     printf(ANSI_COLOR_YELLOW);
                                                     imprimelento("Adicionando ao Carrinho...\n", 100);
@@ -381,6 +383,7 @@ int main()
                                                     printf(ANSI_COLOR_RESET);
                                                     printf("\n");
                                                 } while (qtd < 0);
+                                                p = compra_produto(l,l_vendedores,retorno_lista,it,qtd,num);
                                                 insere_novo_carrinho(l, it, p);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 imprimelento("Adicionando ao Carrinho...\n", 100);

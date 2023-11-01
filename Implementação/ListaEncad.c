@@ -399,7 +399,7 @@ int excluir_conta_cliente(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         if (search->ant == NULL) // Primeiro cliente da lista
-        {   
+        {
             limpa_compra_carrinho(l, search->valor.cadastro);
             l->inicio = search->prox;
             if (l->inicio != NULL)
@@ -647,20 +647,22 @@ int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int po
         no_vendedores *no3 = l2->inicio;
         while (no3 != NULL)
         {
-            no_produtos *no4 = no3->valor.inicio;
-            while (no4 != NULL)
+            if (strcmp(no2->produto.nome_loja, no3->valor.nome_loja) == 0)
             {
-                if (strcmp(no2->produto.NOME, no4->produto.NOME) == 0)
-                {
-                    no4->produto.NOTA_AVALIACAO = nova_avaliacao;
-                    no4->produto.QUANT_AVALIACAO++;
-                    return 0;
+                no_produtos *no4 = no3->valor.inicio;
+                while(no4 != NULL){
+                    if(strcmp(no4->produto.NOME,no2->produto.NOME) == 0){
+                        no2->produto.NOTA_AVALIACAO = nova_avaliacao;
+                        no2->produto.QUANT_AVALIACAO++;
+                        no4->produto.NOTA_AVALIACAO = nova_avaliacao;
+                        no4->produto.QUANT_AVALIACAO++;
+                        return 0;
+                    }
+                    no4 = no4->prox;
                 }
-                no4 = no4->prox;
             }
             no3 = no3->prox;
         }
-        return 0;
     }
     return 3;
 }
@@ -683,10 +685,55 @@ no_clientes *buscar_cliente(lista_clientes *l, cadastro it)
     return NULL;
 }
 
-/*                                  PRODUTOS   */
-/*                                  PRODUTOS   */
-/*                                  PRODUTOS   */
+produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos)
+{
+    if (c != NULL && l != NULL && p != NULL)
+    {
+        cliente *no = buscar_cliente(c, it);
+        if (no != NULL)
+        {
+            no_produtos *no1 = p->inicio; // Procura pelo produto na lista de pordutos
+            while (no1 != NULL && pos > 0)
+            {
+                pos--;
+                no1 = no1->prox;
+            }
+            produtos p1 = no1->produto;
+            no_vendedores *no2 = l->inicio;
+            while (no2 != NULL)
+            {
+                if (strcmp(no2->valor.nome_loja, p1.nome_loja) == 0)
+                {
+                    no_produtos *no3 = no2->valor.inicio;
+                    while (no3 != NULL)
+                    {
+                        if (strcmp(no3->produto.NOME, p1.NOME) == 0)
+                        {
+                            if (no3->produto.QUANTIDADE <= qtd)
+                            {
+                                no3->produto.QUANTIDADE = 0;
+                                p1.QUANTIDADE = qtd;
+                                no1->produto.QUANTIDADE = 0;
+                                return p1;
+                            }
+                            no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
+                            p1.QUANTIDADE = qtd;
+                            no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
+                            return p1;
+                        }
+                        no3 = no3->prox;
+                    }
+                    return;
+                }
+                no2 = no2->prox;
+            }
+        }
+    }
+}
 
+/*                                  PRODUTOS   */
+/*                                  PRODUTOS   */
+/*                                  PRODUTOS   */
 
 lista_produtos *criar_lista_produtos()
 {
@@ -822,7 +869,6 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
         limpar_lista_produtos(todos);
         return 0;
     }
-       
 
     // Mostrar relacionado as compras do cliente
     int cat = no->valor.comprados_inicio->produto.CATEGORIA;
@@ -891,7 +937,8 @@ int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p)
     return 0;
 }
 
-void zerar_produtos(lista_produtos* l){
+void zerar_produtos(lista_produtos *l)
+{
     while (listaVazia_produtos(l) != 0)
         removerInicio_produtos(l);
 }
@@ -1213,7 +1260,8 @@ int removerPosicao_produto_do_vendedor(vendedor *v, int pos)
     return 0;
 }
 
-int atualiza_lista_vendedores(vendedor v,lista_vendedores *l){
+int atualiza_lista_vendedores(vendedor v, lista_vendedores *l)
+{
     if (l == NULL)
         return 1;
     if (lista_vendedores_vazia(l) == 0)
