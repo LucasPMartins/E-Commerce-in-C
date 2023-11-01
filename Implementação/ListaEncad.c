@@ -796,32 +796,43 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
     no_clientes *no = buscar_cliente(l, it);
     if (no == NULL)
         return 3;
+    printf("passo1\n");
     srand(time(NULL));
     produtos aux;
     lista_produtos *todos = criar_lista_produtos();
     int t = 0, x, total;
     total = conta_produtos_total(v);
+    printf("[%d]\n",total);
     if (v->total_vendedores == 0 || total == 0)
         return 0;
     if (no->valor.total_comprados == 0)
     {
         if (produtos_registrados(v, todos) != 0)
             return -1;
+
         if (total > 5)
             total = 5;
         while (t < total)
         {
             x = rand() % tamanho_lista_produtos(todos);
+        printf("X = [%d]\n",x);
             if (buscar_produto_posicao(todos, &aux, x) == 0)
             {
+                printf("entrou1\n");
                 remover_posicao_produto(todos, x);
+                printf("entrou2\n");
                 inserirInicio_produtos(p, aux);
+                printf("entrou3\n");
                 t++;
             }
+        printf("eitcha\n");
         }
+
+        printf("passo4\n");
         limpar_lista_produtos(todos);
         return 0;
     }
+        printf("passo5\n");
 
     // Mostrar relacionado as compras do cliente
     int cat = no->valor.comprados_inicio->produto.CATEGORIA;
@@ -932,6 +943,7 @@ int remover_posicao_produto(lista_produtos *p, int pos)
         // Caso remover FIM
         atual->ant->prox = NULL;
         free(atual);
+        return 0;
     }
 
     atual->ant->prox = atual->prox;
