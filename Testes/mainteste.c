@@ -51,9 +51,9 @@ int main()
             p.NOTA_AVALIACAO = y;
             y = rand();
             p.QUANT_AVALIACAO = y;
-            y = rand() % 11;
+            y = rand() % 12;
             if (y % 2 == 0)
-                insere_novo_carrinho(l, it, p, 10);
+                insere_novo_carrinho(l, it, p);
             else
                 insere_nova_compra(l, it, p);
         }
