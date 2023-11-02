@@ -239,7 +239,7 @@ void mostra_lista_clientes(lista_clientes *l)
             printf("Categoria: %d\n", prod->produto.CATEGORIA);
             printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
             printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
-            printf("Fornecedor: %s\n",prod->produto.nome_loja);
+            printf("Fornecedor: %s\n", prod->produto.nome_loja);
             printf("Descricao: %s\n", prod->produto.DESCRICAO);
             printf("--------===========================+++++++++++===========================--------\n");
             j++;
@@ -260,7 +260,7 @@ void mostra_lista_clientes(lista_clientes *l)
             printf("Categoria: %d\n", prod->produto.CATEGORIA);
             printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
             printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
-            printf("Fornecedor: %s\n",prod->produto.nome_loja);
+            printf("Fornecedor: %s\n", prod->produto.nome_loja);
             printf("Descricao: %s\n", prod->produto.DESCRICAO);
             printf("--------===========================+++++++++++===========================--------\n");
             j++;
@@ -317,7 +317,7 @@ int limpa_lista_clientes(lista_clientes *l)
     if (l == NULL)
         return 1;
     no_clientes *no = l->inicio;
-    
+
     while (no != NULL) // Limpa cliente por cliente
     {
         excluir_conta_cliente(l, no->valor.cadastro);
@@ -464,52 +464,56 @@ no_clientes *buscar_cliente(lista_clientes *l, cadastro it)
     return NULL;
 }
 
-int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos,produtos *ret)
+int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos, produtos *ret)
 {
-    if (c != NULL && l != NULL && p != NULL)
+    if (c == NULL || l == NULL || p == NULL)
+        return 1;
+    no_clientes *no = buscar_cliente(c, it);
+    if (no == NULL)
+        return 2;
+    no_produtos *no1 = p->inicio; // Procura pelo produto na lista de produtos
+    while (no1 != NULL && pos > 0)
     {
-        no_clientes *no = buscar_cliente(c, it);
-        if (no != NULL)
+        pos--;
+        no1 = no1->prox;
+    }
+    produtos p1 = no1->produto;
+    p1.QUANTIDADE = qtd;
+    if (no1->produto.QUANTIDADE <= qtd)
+    {
+        no1->produto.QUANTIDADE = 0;
+    }
+    else
+    {
+        no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
+    }
+
+    no_vendedores *no2 = l->inicio;
+    while (no2 != NULL)
+    {
+        if (strcmp(no2->valor.nome_loja, p1.nome_loja) == 0)
         {
-            no_produtos *no1 = p->inicio; // Procura pelo produto na lista de pordutos
-            while (no1 != NULL && pos > 0)
+            no_produtos *no3 = no2->valor.inicio;
+            while (no3 != NULL)
             {
-                pos--;
-                no1 = no1->prox;
-            }
-            produtos p1 = no1->produto;
-            no_vendedores *no2 = l->inicio;
-            while (no2 != NULL)
-            {
-                if (strcmp(no2->valor.nome_loja, p1.nome_loja) == 0)
+                if (strcmp(no3->produto.NOME, p1.NOME) == 0)
                 {
-                    no_produtos *no3 = no2->valor.inicio;
-                    while (no3 != NULL)
+                    if (no3->produto.QUANTIDADE <= qtd)
                     {
-                        if (strcmp(no3->produto.NOME, p1.NOME) == 0)
-                        {
-                            if (no3->produto.QUANTIDADE <= qtd)
-                            {
-                                no3->produto.QUANTIDADE = 0;
-                                p1.QUANTIDADE = qtd;
-                                no1->produto.QUANTIDADE = 0;
-                                *ret = p1;
-                                return 0;
-                            }
-                            no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
-                            p1.QUANTIDADE = qtd;
-                            no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
-                            *ret = p1;
-                            return 0;
-                        }
-                        no3 = no3->prox;
+                        no3->produto.QUANTIDADE = 0;
+                        *ret = p1;
+                        return 0;
                     }
+                    no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
+                    *ret = p1;
+                    return 0;
                 }
-                no2 = no2->prox;
+                no3 = no3->prox;
             }
         }
+        no2 = no2->prox;
     }
-    return 1;
+    return 3;
 }
 
 int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
@@ -863,40 +867,48 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p)
     return 0;
 }
 
-//nova:
+// nova:
 
-int inserirFim_produtos(lista_produtos* l, produtos p){
+int inserirFim_produtos(lista_produtos *l, produtos p)
+{
     if (l == NULL)
         return 2;
-    if(tamanho_lista_produtos(l) == 0) return inserirInicio_produtos(l,p);
+    if (tamanho_lista_produtos(l) == 0)
+        return inserirInicio_produtos(l, p);
     no_produtos *no = l->inicio;
-    no_produtos* novo = (no_produtos*) malloc(sizeof(no_produtos));
+    no_produtos *novo = (no_produtos *)malloc(sizeof(no_produtos));
     novo->produto = p;
-    while(no->prox != NULL){
+    while (no->prox != NULL)
+    {
         no = no->prox;
     }
-    //agora está no ultimo
+    // agora está no ultimo
     no->prox = novo;
     novo->prox = NULL;
     novo->ant = no;
-    
+
     return 0;
 }
 
-
-int inserir_decrescente_produtos(lista_produtos* l, produtos p){
-    if(l == NULL) return 2;
-    if(listaVazia_produtos(l) == 0) return inserirInicio_produtos(l,p);
+int inserir_decrescente_produtos(lista_produtos *l, produtos p)
+{
+    if (l == NULL)
+        return 2;
+    if (listaVazia_produtos(l) == 0)
+        return inserirInicio_produtos(l, p);
     no_produtos *temp = l->inicio;
-    no_produtos *novo = (no_produtos*) malloc(sizeof(no_produtos));
+    no_produtos *novo = (no_produtos *)malloc(sizeof(no_produtos));
     novo->produto = p;
     int quant = p.QUANTIDADE;
-    while(temp != NULL){
-        if(quant >= temp->produto.QUANTIDADE){
-            //insere
-            if(temp->ant == NULL){
-                //ele é o primeiro
-                return inserirInicio_produtos(l,p);
+    while (temp != NULL)
+    {
+        if (quant >= temp->produto.QUANTIDADE)
+        {
+            // insere
+            if (temp->ant == NULL)
+            {
+                // ele é o primeiro
+                return inserirInicio_produtos(l, p);
             }
             novo->ant = temp->ant;
             novo->prox = temp;
@@ -906,18 +918,23 @@ int inserir_decrescente_produtos(lista_produtos* l, produtos p){
         }
         temp = temp->prox;
     }
-    return inserirFim_produtos(l,p);
+    return inserirFim_produtos(l, p);
 }
 
-int produto_mais_vendido(lista_produtos* l, produtos*p){
-    if(l == NULL) return 2;
-    if(listaVazia_produtos(l) == 0) return 3;
+int produto_mais_vendido(lista_produtos *l, produtos *p)
+{
+    if (l == NULL)
+        return 2;
+    if (listaVazia_produtos(l) == 0)
+        return 3;
     no_produtos *temp = l->inicio;
     int quant = temp->produto.QUANTIDADE;
     *p = temp->produto;
-    while(temp != NULL){
-        if(quant < temp->produto.QUANTIDADE){
-            //insere
+    while (temp != NULL)
+    {
+        if (quant < temp->produto.QUANTIDADE)
+        {
+            // insere
             quant = temp->produto.QUANTIDADE;
             *p = temp->produto;
         }
@@ -926,15 +943,20 @@ int produto_mais_vendido(lista_produtos* l, produtos*p){
     return 0;
 }
 
-int produto_menos_vendido(lista_produtos* l, produtos*p){
-    if(l == NULL) return 2;
-    if(listaVazia_produtos(l) == 0) return 3;
+int produto_menos_vendido(lista_produtos *l, produtos *p)
+{
+    if (l == NULL)
+        return 2;
+    if (listaVazia_produtos(l) == 0)
+        return 3;
     no_produtos *temp = l->inicio;
     int quant = temp->produto.QUANTIDADE;
     *p = temp->produto;
-    while(temp != NULL){
-        if(quant > temp->produto.QUANTIDADE){
-            //insere
+    while (temp != NULL)
+    {
+        if (quant > temp->produto.QUANTIDADE)
+        {
+            // insere
             quant = temp->produto.QUANTIDADE;
             *p = temp->produto;
         }
@@ -943,66 +965,71 @@ int produto_menos_vendido(lista_produtos* l, produtos*p){
     return 0;
 }
 
-int categoria_mais_vendida(lista_produtos* l, int *categoria){
-    if(l == NULL) return 2;
-    if(listaVazia_produtos(l) == 0) return 3;
+int categoria_mais_vendida(lista_produtos *l, int *categoria)
+{
+    if (l == NULL)
+        return 2;
+    if (listaVazia_produtos(l) == 0)
+        return 3;
     no_produtos *temp = l->inicio;
-    int vet_categorias[12],i;
+    int vet_categorias[12], i;
     int quant;
-    for(i=0;i<12;i++) vet_categorias[i] = 0; //Zerando os campos para somar;
+    for (i = 0; i < 12; i++)
+        vet_categorias[i] = 0; // Zerando os campos para somar;
 
-    while(temp != NULL){
-        switch(temp->produto.CATEGORIA){
+    while (temp != NULL)
+    {
+        switch (temp->produto.CATEGORIA)
+        {
         case 0:
             vet_categorias[0] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 1:
             vet_categorias[1] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 2:
             vet_categorias[2] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 3:
             vet_categorias[3] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 4:
             vet_categorias[4] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 5:
             vet_categorias[5] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 6:
             vet_categorias[6] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 7:
             vet_categorias[7] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 8:
             vet_categorias[8] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 9:
             vet_categorias[9] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 10:
             vet_categorias[10] += temp->produto.QUANTIDADE;
-        break;
+            break;
         case 11:
             vet_categorias[11] += temp->produto.QUANTIDADE;
-        break;
-        
+            break;
         }
         temp = temp->prox;
     }
-        quant = vet_categorias[0];
-        for(i=0;i<12;i++)
-            if(quant < vet_categorias[i]){
-                quant = vet_categorias[i];
-                *categoria = i;
-            }
-     *categoria++;           
+    quant = vet_categorias[0];
+    for (i = 0; i < 12; i++)
+        if (quant < vet_categorias[i])
+        {
+            quant = vet_categorias[i];
+            *categoria = i;
+        }
+    *categoria++;
     return 0;
 }
-
 
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
@@ -1415,16 +1442,22 @@ lista_clientes *ler_clientes()
     return lista;
 }
 
-//FUNCOES NOVAS:
-int remover_vendedor_item(lista_vendedores* l, vendedor v){
-    if(l == NULL) return 3;
-    if(lista_vendedores_vazia(l) == 0) return 2;
+// FUNCOES NOVAS:
+int remover_vendedor_item(lista_vendedores *l, vendedor v)
+{
+    if (l == NULL)
+        return 3;
+    if (lista_vendedores_vazia(l) == 0)
+        return 2;
     no_vendedores *temp = l->inicio;
-    while(temp->prox != NULL && strcmp(v.nome_loja,temp->valor.nome_loja) != 0)
+    while (temp->prox != NULL && strcmp(v.nome_loja, temp->valor.nome_loja) != 0)
         temp = temp->prox;
-    if(strcmp(v.nome_loja,temp->valor.nome_loja) == 0){
-        if(temp->ant == NULL) return removerInicio_vendedores(l);
-        if(temp->prox == NULL){
+    if (strcmp(v.nome_loja, temp->valor.nome_loja) == 0)
+    {
+        if (temp->ant == NULL)
+            return removerInicio_vendedores(l);
+        if (temp->prox == NULL)
+        {
             // Remover fim
             temp->ant->prox = NULL;
             free(temp);
@@ -1453,8 +1486,9 @@ int removerInicio_vendedores(lista_vendedores *l)
     return 0;
 }
 
-void limpar_vendedores(lista_vendedores* v){
-while (lista_vendedores_vazia(v) != 0)
+void limpar_vendedores(lista_vendedores *v)
+{
+    while (lista_vendedores_vazia(v) != 0)
         removerInicio_vendedores(v);
     free(v);
     v = NULL;

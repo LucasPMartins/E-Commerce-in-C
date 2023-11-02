@@ -409,7 +409,7 @@ int main()
                                 if (listaVazia_produtos(retorno_lista) != 0)
                                 {
                                     printf(ANSI_COLOR_YELLOW);
-                                    printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...");
+                                    printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
                                     printf(ANSI_COLOR_RESET);
                                     while (1)
                                     {
@@ -426,7 +426,7 @@ int main()
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
                                                     printf("\n");
-                                                } while (num > tamanho_lista_produtos(retorno_lista) || num < 0);
+                                                } while (num > tamanho_lista_produtos(retorno_lista) - 1 || num < 0);
                                                 do
                                                 {
                                                     printf("Digite a Quantidade:");
