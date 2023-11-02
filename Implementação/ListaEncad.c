@@ -493,11 +493,13 @@ int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, ca
                                 no3->produto.QUANTIDADE = 0;
                                 p1.QUANTIDADE = qtd;
                                 no1->produto.QUANTIDADE = 0;
+                                *ret = p1;
                                 return 0;
                             }
                             no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
                             p1.QUANTIDADE = qtd;
                             no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
+                            *ret = p1;
                             return 0;
                         }
                         no3 = no3->prox;

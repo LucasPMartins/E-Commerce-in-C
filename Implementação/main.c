@@ -20,6 +20,7 @@ void mostrar_carrinho(lista_clientes *l, cadastro it);
 void mostrar_comprados(lista_clientes *l, cadastro it);
 void mostrar_produtos(lista_produtos *l);
 void mostra_produtos_vendedor(vendedor v);
+void mostrar_conta_vendedor(vendedor v);
 
 int main()
 {
@@ -767,6 +768,7 @@ int main()
                         setbuf(stdin, NULL);
                         printf(ANSI_COLOR_YELLOW);
                         fgets(v.cadastro.senha, 10, stdin);
+                        v.cadastro.senha[strcspn(v.cadastro.senha, "\n")] = '\0';
                         printf(ANSI_COLOR_RESET);
                         printf("                            Digite o nome da loja:");
                         setbuf(stdin, NULL);
@@ -847,10 +849,10 @@ int main()
                         printf("                            -- O QUE DESEJA FAZER? --\n\n");
                         printf(ANSI_COLOR_RESET);
                         printf("                               1- Cadastrar Produto\n");
-                        printf("                               2- Remover produto\n");
-                        printf("                               3- Ver produtos\n");
-                        printf("                               4- Excluir conta\n");
-                        printf("                               0- SAIR\n\n");
+                        printf("                               2- Remover Produto\n");
+                        printf("                               3- Ver Produtos\n");
+                        printf("                               4- Ver Conta\n");
+                        printf("                               0- Voltar\n\n");
                         printf(ANSI_COLOR_YELLOW);
                         printf("                               DIGITE SUA OPCAO:");
                         printf(ANSI_COLOR_RESET);
@@ -970,6 +972,7 @@ int main()
                             system("cls");
                             print_logo();
                             printf("\n\n");
+                            mostrar_conta_vendedor(v);
                             printf(ANSI_COLOR_YELLOW);
                             printf("Pressione Backspace para Deletar a Conta ou Esc para Voltar...\n");
                             printf(ANSI_COLOR_RESET);
@@ -1127,7 +1130,7 @@ int main()
             printf("                               |       `._    `.    \\\n");
             printf("                               `._________`-.   `.   `.___\n");
             printf("                                                  `------'`\n");
-            printf("\n\nVolte sempre!");
+            printf("\n\nVolte sempre!\n\n");
             system("pause");
             printf(ANSI_COLOR_RESET);
             break;
@@ -1179,8 +1182,8 @@ void mostrar_conta_cliente(lista_clientes *l, cadastro it)
     no_clientes *search = buscar_cliente(l, it);
     if (search != NULL)
     {
-        printf("Nome: %s     Senha: %s\n", search->valor.cadastro.nome, search->valor.cadastro.senha);
-        printf("Historico de compras: (total: %d)\n", search->valor.total_comprados);
+        printf("Nome: %s\tSenha: %s\n", search->valor.cadastro.nome, search->valor.cadastro.senha);
+        printf("Historico de compras: (TOTAL: %d)\n", search->valor.total_comprados);
         no_produtos *prod = search->valor.comprados_inicio;
         int j = 0;
         while (prod != NULL)
@@ -1206,7 +1209,7 @@ void mostrar_conta_cliente(lista_clientes *l, cadastro it)
         if (search->valor.comprados_inicio == NULL)
             printf("Nenhum produto foi comprado!\n");
         j = 0;
-        printf("\nProdutos no Carrinho: (total:%d)\n", search->valor.total_carrinho);
+        printf("\nProdutos no Carrinho: (TOTAL: %d)\n", search->valor.total_carrinho);
         prod = search->valor.carrinho_inicio;
         while (prod != NULL)
         {
@@ -1369,6 +1372,43 @@ void mostra_produtos_vendedor(vendedor v)
     else
     {
         printf("Produtos do vendedor:\n");
+        no_produtos *temp = v.inicio;
+        int j = 0;
+        while (temp != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", temp->produto.NOME);
+            printf("Quantidade: %d | ", temp->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", temp->produto.VALOR);
+            printf("Categoria: %d\n", temp->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", temp->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", temp->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", temp->produto.nome_loja);
+            printf("Descricao: %s\n", temp->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            temp = temp->prox;
+        }
+    }
+}
+
+void mostrar_conta_vendedor(vendedor v){
+    printf("Nome: %s\tSenha: %s\n",v.cadastro.nome,v.cadastro.senha);
+    printf("Nome da Loja: %s\n\n",v.nome_loja);
+    if (v.inicio == NULL)
+    {
+        printf(ANSI_COLOR_YELLOW);
+        printf("O VENDEDOR NAO POSSUI PRODUTOS!\n\n");
+        printf(ANSI_COLOR_RESET);
+    }
+    else
+    {
+        printf("PRODUTOS DO VENDEDOR: (TOTAL: %d)\n\n",v.total_produtos);
         no_produtos *temp = v.inicio;
         int j = 0;
         while (temp != NULL)
