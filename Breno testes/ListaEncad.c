@@ -464,7 +464,7 @@ no_clientes *buscar_cliente(lista_clientes *l, cadastro it)
     return NULL;
 }
 
-produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos)
+int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos,produtos *ret)
 {
     if (c != NULL && l != NULL && p != NULL)
     {
@@ -493,12 +493,14 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
                                 no3->produto.QUANTIDADE = 0;
                                 p1.QUANTIDADE = qtd;
                                 no1->produto.QUANTIDADE = 0;
-                                return p1;
+                                *ret = p1;
+                                return 0;
                             }
                             no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
                             p1.QUANTIDADE = qtd;
                             no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
-                            return p1;
+                            *ret = p1;
+                            return 0;
                         }
                         no3 = no3->prox;
                     }
@@ -507,7 +509,7 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
             }
         }
     }
-    return;
+    return 1;
 }
 
 int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
@@ -649,6 +651,7 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
         return 0;
     if (no->valor.total_comprados == 0)
     {
+
         if (produtos_registrados(v, todos) != 0)
             return -1;
         if (total > 5)
@@ -880,6 +883,7 @@ int inserirFim_produtos(lista_produtos* l, produtos p){
     return 0;
 }
 
+
 int inserir_decrescente_produtos(lista_produtos* l, produtos p){
     if(l == NULL) return 2;
     if(listaVazia_produtos(l) == 0) return inserirInicio_produtos(l,p);
@@ -998,6 +1002,8 @@ int categoria_mais_vendida(lista_produtos* l, int *categoria){
      *categoria++;           
     return 0;
 }
+
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
@@ -1029,7 +1035,7 @@ int verifica_vendedor(lista_vendedores *l, vendedor v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0 && strcmp(atual->valor.nome_loja, v.nome_loja) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v.cadastro.senha) == 0 && strcmp(atual->valor.nome_loja, v.nome_loja) == 0)
         {
             return 0;
         }
@@ -1047,7 +1053,7 @@ int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v->cadastro.senha) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v->cadastro.senha) == 0 && strcmp(atual->valor.nome_loja, v->nome_loja) == 0)
         {
             *v = atual->valor;
             return 0;
