@@ -648,7 +648,7 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
     int t = 0, x, total;
     total = conta_produtos_total(v);
     if (v->total_vendedores == 0 || total == 0)
-        return 0;
+        return 4;
     if (no->valor.total_comprados == 0)
     {
 

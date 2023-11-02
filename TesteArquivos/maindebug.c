@@ -36,21 +36,5 @@ int main()
     int opcao;
     system("cls");
     print_logo();
-    printf("\n");
-    printf("                                BEM VINDO, ");
-    printf(ANSI_COLOR_YELLOW);
-    printf("%d!\n\n",opcao);
-    printf("                            -- O QUE DESEJA FAZER? --\n\n");
-    printf(ANSI_COLOR_RESET);
-    printf("                               1- Cadastrar Produto\n");
-    printf("                               2- Remover produto\n");
-    printf("                               3- Ver produtos\n");
-    printf("                               4- Excluir conta\n");
-    printf("                               0- SAIR\n\n");
-    printf(ANSI_COLOR_YELLOW);
-    printf("                               DIGITE SUA OPCAO:");
-    printf(ANSI_COLOR_RESET);
-    scanf("%d", opcao);
-    system("pause");
     return 0;
 }
