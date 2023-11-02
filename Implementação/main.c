@@ -35,6 +35,8 @@ int main()
     produtos p;                                             // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
     lista_produtos *retorno_lista2 = criar_lista_produtos();
+    lista_produtos* relatorio = criar_lista_produtos();
+
     // Necessario para salvar os 5 produtos iniciais, se usarmos as op. de pesquisa de produtos perderemos esses 5 pordutos (utilizar outra lista)
 
     /*    -----      DECLARAÇÕES    ----   */
@@ -163,12 +165,16 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         c = buscar_cliente(l, it);
                         zerar_produtos(retorno_lista);
+                        printf("debug\n");
+                        //ERRO AQUIIIII
+                        mostrar_lista_vendedores(l_vendedores);
+
                         if (retorna_5_produtos(l_vendedores, l, it, retorno_lista) == 0)
                             mostrar_produtos(retorno_lista);
                         else
                         {
                             printf(ANSI_COLOR_YELLOW);
-                            printf("NAO FOI ENCONTRADO NENHUM PRODUTO NA LOJA, SINTO MUITO! (\n\n");
+                            printf("NAO FOI ENCONTRADO NENHUM PRODUTO NA LOJA, SINTO MUITO! :(\n\n");
                             printf(ANSI_COLOR_RESET);
                         }
                         printf(ANSI_COLOR_YELLOW);
@@ -534,6 +540,7 @@ int main()
                                             }
                                         }
                                         insere_do_carrinho_para_comprados(l, it);
+                                        // insere_relatorio(produto, relatorio);
                                     }
                                     else if (opcao2 == 2)
                                     {
@@ -741,7 +748,7 @@ int main()
                 }
                 if (opcao2 == 2 || opcao2 == 4) // Login e Cadastro de Vendedor
                 {
-                    /*            CADASTRO/LOGIN VENDEDOR */
+                    /*            CADASTRO/LOGIN VENDEDOR     */
                     num = 3;
                     do
                     {
@@ -753,6 +760,7 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         printf(")");
                         printf(ANSI_COLOR_YELLOW);
+                        mostrar_lista_vendedores(l_vendedores);
                         printf("\n\n                            --- Digite seus DADOS ---\n\n");
                         printf(ANSI_COLOR_RESET);
                         printf("                            Digite seu nome:");
@@ -773,8 +781,9 @@ int main()
                         fgets(v.nome_loja, 30, stdin);
                         printf(ANSI_COLOR_RESET);
                         v.nome_loja[strcspn(v.nome_loja, "\n")] = '\0';
+
                         ret = verifica_vendedor(l_vendedores, v);
-                        if (ret == 0 && opcao2 == 2)
+                        if (ret == 0 && opcao2 == 2) //VENDEDOR EXISTE E ELE TENTOU CRIAR
                         {
                             printf(ANSI_COLOR_RED);
                             printf("\n                    DADOS DE USUARIO JA EXISTE, TENTE OUTRO!\n");
@@ -786,7 +795,7 @@ int main()
                                 break;
                             }
                         }
-                        if (ret == 3 && opcao2 == 4)
+                        if (ret == 3 && opcao2 == 4) //VENDEDOR N EXISTE NA LISTA E ELE FEZ LOGIN
                         {
 
                             printf(ANSI_COLOR_RED);
@@ -804,6 +813,7 @@ int main()
                     if (ret == 0 && opcao2 == 4)
                     {
                         verifica_vendedor_e_retorna(l_vendedores, &v);
+                        printf("Aqui\n");
                     }
 
                     if (num == 0)
@@ -834,6 +844,11 @@ int main()
                         imprimelento("CARREGANDO...", 200);
                         printf(ANSI_COLOR_RESET);
                     }
+                    printf("---------\n");
+                    printf("%s\n",v.cadastro.nome);
+                    printf("%s\n",v.cadastro.senha);
+                    printf("%s\n",v.nome_loja);
+                    system("pause");
                     do
                     {
                         system("cls");
@@ -867,7 +882,6 @@ int main()
                                 setbuf(stdin, NULL);
                                 fgets(p.NOME, 30, stdin);
                                 p.NOME[strcspn(p.NOME, "\n")] = '\0';
-
                                 do
                                 {
                                     printf("Insira a Categoria do Produto:(1 ao 12)");
@@ -917,7 +931,7 @@ int main()
                                 printf("CADASTRO DO PRODUTO FALHOU!\n\n");
                                 printf(ANSI_COLOR_RESET);
                                 system("pause");
-                            }                               
+                            }                        
                             break;
                         case 2:
                             /*       remover produtos           */
@@ -965,6 +979,7 @@ int main()
                             system("pause");
                             break;
                         case 4:
+                        /*    deletar conta   */
                             system("cls");
                             print_logo();
                             printf("\n\n");
@@ -1027,6 +1042,10 @@ int main()
                                 }
                             }
                             break;
+                        case 0:
+                        /* SAIR */
+                        v.inicio = NULL;
+                        v.total_produtos = 0;
                         default:
                             break;
                         }

@@ -643,6 +643,7 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
     if (no == NULL)
         return 3;
     srand(time(NULL));
+    printf("Passo1\n");
     produtos aux;
     lista_produtos *todos = criar_lista_produtos();
     int t = 0, x, total;
@@ -651,12 +652,16 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
         return 0;
     if (no->valor.total_comprados == 0)
     {
+
+    printf("Passo2\n");
         if (produtos_registrados(v, todos) != 0)
             return -1;
         if (total > 5)
             total = 5;
+    printf("Passo3\n");
         while (t < total)
         {
+    printf("Passo4\n");
             x = rand() % tamanho_lista_produtos(todos);
             if (buscar_produto_posicao(todos, &aux, x) == 0)
             {
@@ -665,9 +670,11 @@ int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, list
                 t++;
             }
         }
+    printf("Passo5\n");
         limpar_lista_produtos(todos);
         return 0;
     }
+    printf("Passo6\n");
 
     // Mostrar relacionado as compras do cliente
     int cat = no->valor.comprados_inicio->produto.CATEGORIA;
@@ -1034,7 +1041,7 @@ int verifica_vendedor(lista_vendedores *l, vendedor v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0 && strcmp(atual->valor.nome_loja, v.nome_loja) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v.cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v.cadastro.senha) == 0 && strcmp(atual->valor.nome_loja, v.nome_loja) == 0)
         {
             return 0;
         }
@@ -1052,7 +1059,7 @@ int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v)
     no_vendedores *atual = l->inicio;
     while (atual != NULL)
     {
-        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v->cadastro.senha) == 0)
+        if (strcmp(atual->valor.cadastro.nome, v->cadastro.nome) == 0 && strcmp(atual->valor.cadastro.senha, v->cadastro.senha) == 0 && strcmp(atual->valor.nome_loja, v->nome_loja) == 0)
         {
             *v = atual->valor;
             return 0;
