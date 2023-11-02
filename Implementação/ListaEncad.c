@@ -860,6 +860,53 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p)
     return 0;
 }
 
+//nova:
+
+int inserirFim_produtos(lista_produtos* l, produtos p){
+    if (l == NULL)
+        return 2;
+    if(tamanho_lista_produtos(l) == 0) return inserirInicio_produtos(l,p);
+    no_produtos *no = l->inicio;
+    no_produtos* novo = (no_produtos*) malloc(sizeof(no_produtos));
+    novo->produto = p;
+    while(no->prox != NULL){
+        no = no->prox;
+    }
+    //agora está no ultimo
+    no->prox = novo;
+    novo->prox = NULL;
+    novo->ant = no;
+    
+    return 0;
+}
+
+
+int inserir_decrescente_produtos(lista_produtos* l, produtos p){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return inserirInicio_produtos(l,p);
+    no_produtos *temp = l->inicio;
+    no_produtos *novo = (no_produtos*) malloc(sizeof(no_produtos));
+    novo->produto = p;
+    int quant = p.QUANTIDADE;
+    while(temp != NULL){
+        if(quant >= temp->produto.QUANTIDADE){
+            //insere
+            if(temp->ant == NULL){
+                //ele é o primeiro
+                return inserirInicio_produtos(l,p);
+            }
+            novo->ant = temp->ant;
+            novo->prox = temp;
+            temp->ant->prox = novo;
+            temp->ant = novo;
+            return 0;
+        }
+        temp = temp->prox;
+    }
+    return inserirFim_produtos(l,p);
+}
+
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
