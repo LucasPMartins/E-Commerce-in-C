@@ -36,6 +36,7 @@ int main()
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
     lista_produtos *retorno_lista2 = criar_lista_produtos();
     lista_produtos *decrescrente_teste = criar_lista_produtos(); // testezin
+    int leleu;
 
     // Necessario para salvar os 5 produtos iniciais, se usarmos as op. de pesquisa de produtos perderemos esses 5 pordutos (utilizar outra lista)
 
@@ -831,30 +832,15 @@ int main()
                             if (inserir_decrescente_produtos(decrescrente_teste, p) == 0)
                                 printf("Cadastro de Produto Realizado com Sucesso!\n");
                             printf("---PRODUTO MAIS VENDIDO!!!!!!-----:");
-                            produto_mais_vendido(decrescrente_teste, &p);
+                            categoria_mais_vendida(decrescrente_teste, &leleu);
                             printf(ANSI_COLOR_YELLOW);
                             printf("--------===========================+++++++++++===========================--------\n");
                             printf(ANSI_COLOR_RESET);
-                            printf("Nome: %s | ", p.NOME);
-                            printf("Quantidade: %d | ", p.QUANTIDADE);
-                            printf("Valor: R$%.2f | ", p.VALOR);
-                            printf("Categoria: %d\n", p.CATEGORIA);
+                            printf("CATEGORIA: %d | ", leleu);
                             printf(ANSI_COLOR_YELLOW);
                             printf("--------===========================+++++++++++===========================--------\n");
                             printf(ANSI_COLOR_RESET);
-                            
-                            produto_menos_vendido(decrescrente_teste,&menos);
-                            printf("---PRODUTO MENOS VENDIDO!!!!!!-----:");
-                            printf(ANSI_COLOR_YELLOW);
-                            printf("--------===========================+++++++++++===========================--------\n");
-                            printf(ANSI_COLOR_RESET);
-                            printf("Nome: %s | ", menos.NOME);
-                            printf("Quantidade: %d | ", menos.QUANTIDADE);
-                            printf("Valor: R$%.2f | ", menos.VALOR);
-                            printf("Categoria: %d\n", menos.CATEGORIA);
-                            printf(ANSI_COLOR_YELLOW);
-                            printf("--------===========================+++++++++++===========================--------\n");
-                            printf(ANSI_COLOR_RESET);
+                           
 
                             system("pause");
 

@@ -938,6 +938,66 @@ int produto_menos_vendido(lista_produtos* l, produtos*p){
     }
     return 0;
 }
+
+int categoria_mais_vendida(lista_produtos* l, int *categoria){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return 3;
+    no_produtos *temp = l->inicio;
+    int vet_categorias[12],i;
+    int quant;
+    for(i=0;i<12;i++) vet_categorias[i] = 0; //Zerando os campos para somar;
+
+    while(temp != NULL){
+        switch(temp->produto.CATEGORIA){
+        case 0:
+            vet_categorias[0] += temp->produto.QUANTIDADE;
+        break;
+        case 1:
+            vet_categorias[1] += temp->produto.QUANTIDADE;
+        break;
+        case 2:
+            vet_categorias[2] += temp->produto.QUANTIDADE;
+        break;
+        case 3:
+            vet_categorias[3] += temp->produto.QUANTIDADE;
+        break;
+        case 4:
+            vet_categorias[4] += temp->produto.QUANTIDADE;
+        break;
+        case 5:
+            vet_categorias[5] += temp->produto.QUANTIDADE;
+        break;
+        case 6:
+            vet_categorias[6] += temp->produto.QUANTIDADE;
+        break;
+        case 7:
+            vet_categorias[7] += temp->produto.QUANTIDADE;
+        break;
+        case 8:
+            vet_categorias[8] += temp->produto.QUANTIDADE;
+        break;
+        case 9:
+            vet_categorias[9] += temp->produto.QUANTIDADE;
+        break;
+        case 10:
+            vet_categorias[10] += temp->produto.QUANTIDADE;
+        break;
+        case 11:
+            vet_categorias[11] += temp->produto.QUANTIDADE;
+        break;
+        
+        }
+        temp = temp->prox;
+    }
+        quant = vet_categorias[0];
+        for(i=0;i<12;i++)
+            if(quant < vet_categorias[i]){
+                quant = vet_categorias[i];
+                *categoria = i;
+            }
+     *categoria++;           
+    return 0;
+}
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
