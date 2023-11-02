@@ -436,7 +436,7 @@ int main()
                                                     printf(ANSI_COLOR_RESET);
                                                     printf("\n");
                                                 } while (qtd < 0);
-                                                ret = compra_produto(l, l_vendedores, retorno_lista2, it, qtd, num, &p);
+                                                ret = compra_produto(l, l_vendedores, retorno_lista, it, qtd, num, &p);
                                                 if (ret == 0)
                                                 {
                                                     insere_novo_carrinho(l, it, p);
@@ -1039,7 +1039,6 @@ int main()
                         default:
                             break;
                         }
-
                     } while (opcao3 != 0);
                 }
             } while (opcao2 != 0);
