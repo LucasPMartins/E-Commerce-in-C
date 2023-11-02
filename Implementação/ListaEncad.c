@@ -906,6 +906,22 @@ int inserir_decrescente_produtos(lista_produtos* l, produtos p){
     return inserirFim_produtos(l,p);
 }
 
+int produto_mais_vendido(lista_produtos* l, produtos*p){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return 3;
+    no_produtos *temp = l->inicio;
+    int quant = temp->produto.QUANTIDADE;
+    *p = temp->produto;
+    while(temp != NULL){
+        if(quant < temp->produto.QUANTIDADE){
+            //insere
+            quant = temp->produto.QUANTIDADE;
+            *p = temp->produto;
+        }
+        temp = temp->prox;
+    }
+    return 0;
+}
 
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
