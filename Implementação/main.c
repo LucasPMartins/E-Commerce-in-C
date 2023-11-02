@@ -1015,3 +1015,225 @@ void imprimelento(char *p, int N)
         Sleep(N);
     }
 }
+
+void mostrar_conta_cliente(lista_clientes *l, cadastro it)
+{
+    if (l == NULL)
+        return;
+    if (lista_clientes_vazia(l) == 0)
+        return;
+    no_clientes *search = buscar_cliente(l, it);
+    if (search != NULL)
+    {
+        printf("Nome: %s     Senha: %s\n", search->valor.cadastro.nome, search->valor.cadastro.senha);
+        printf("Historico de compras: (total: %d)\n", search->valor.total_comprados);
+        no_produtos *prod = search->valor.comprados_inicio;
+        int j = 0;
+        while (prod != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", prod->produto.NOME);
+            printf("Quantidade: %d | ", prod->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", prod->produto.VALOR);
+            printf("Categoria: %d\n", prod->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", prod->produto.nome_loja);
+            printf("Descricao: %s\n", prod->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            prod = prod->prox;
+        }
+        if (search->valor.comprados_inicio == NULL)
+            printf("Nenhum produto foi comprado!\n");
+        j = 0;
+        printf("\nProdutos no Carrinho: (total:%d)\n", search->valor.total_carrinho);
+        prod = search->valor.carrinho_inicio;
+        while (prod != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", prod->produto.NOME);
+            printf("Quantidade: %d | ", prod->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", prod->produto.VALOR);
+            printf("Categoria: %d\n", prod->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", prod->produto.nome_loja);
+            printf("Descricao: %s\n", prod->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            prod = prod->prox;
+        }
+        if (search->valor.carrinho_inicio == NULL)
+            printf("Nenhum produto no carrinho!\n");
+        printf("\n");
+        return;
+    }
+    return;
+}
+
+void mostrar_carrinho(lista_clientes *l, cadastro it)
+{
+    if (l != NULL)
+        if (lista_clientes_vazia(l) != 0)
+        {
+            no_clientes *search = buscar_cliente(l, it);
+            if (search != NULL)
+            {
+                int j = 0;
+                printf("\nProdutos no Carrinho: (total:%d)\n\n", search->valor.total_carrinho);
+                if (search->valor.carrinho_inicio == NULL)
+                {
+                    printf("Nenhum produto no carrinho!\n");
+                }
+                else
+                {
+                    no_produtos *prod = search->valor.carrinho_inicio;
+                    while (prod != NULL)
+                    {
+                        printf(ANSI_COLOR_YELLOW);
+                        printf("--------===========================+++++++++++===========================--------\n");
+                        printf(ANSI_COLOR_RESET);
+                        printf("Produto %d: ", j);
+                        printf("Nome: %s | ", prod->produto.NOME);
+                        printf("Quantidade: %d | ", prod->produto.QUANTIDADE);
+                        printf("Valor: R$%.2f | ", prod->produto.VALOR);
+                        printf("Categoria: %d\n", prod->produto.CATEGORIA);
+                        printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
+                        printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
+                        printf("Fornecedor: %s\n", prod->produto.nome_loja);
+                        printf("Descricao: %s\n", prod->produto.DESCRICAO);
+                        printf(ANSI_COLOR_YELLOW);
+                        printf("--------===========================+++++++++++===========================--------\n");
+                        printf(ANSI_COLOR_RESET);
+                        j++;
+                        prod = prod->prox;
+                    }
+                }
+            }
+        }
+}
+
+void mostrar_comprados(lista_clientes *l, cadastro it)
+{
+    if (l == NULL)
+        return;
+    if (lista_clientes_vazia(l) == 0)
+        return;
+    no_clientes *search = buscar_cliente(l, it);
+    if (search != NULL)
+    {
+        int j = 0;
+        printf("\nHistorico de Produtos Comprados: (total:%d)\n\n", search->valor.total_comprados);
+        if (search->valor.comprados_inicio == NULL)
+        {
+            printf("Nenhum produto no comprados!\n");
+            return;
+        }
+        no_produtos *prod = search->valor.comprados_inicio;
+        while (prod != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", prod->produto.NOME);
+            printf("Quantidade: %d | ", prod->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", prod->produto.VALOR);
+            printf("Categoria: %d\n", prod->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", prod->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", prod->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", prod->produto.nome_loja);
+            printf("Descricao: %s\n", prod->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            prod = prod->prox;
+        }
+        return;
+    }
+    return;
+}
+
+void mostrar_produtos(lista_produtos *l)
+{
+    if (l == NULL)
+    {
+        printf("Lista de Produtos nao Criada!\n");
+        return;
+    }
+    if (listaVazia_produtos(l) == 0)
+    {
+        return;
+    }
+    if (l != NULL)
+    {
+        no_produtos *no_Lista = l->inicio;
+        int j = 0;
+        while (no_Lista != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", no_Lista->produto.NOME);
+            printf("Quantidade: %d | ", no_Lista->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", no_Lista->produto.VALOR);
+            printf("Categoria: %d\n", no_Lista->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", no_Lista->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", no_Lista->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", no_Lista->produto.nome_loja);
+            printf("Descricao: %s\n", no_Lista->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            no_Lista = no_Lista->prox;
+        }
+    }
+}
+
+void mostra_produtos_vendedor(vendedor v)
+{
+    if (v.inicio == NULL)
+    {
+        printf("O vendedor nao possui produtos.\n");
+    }
+    else
+    {
+        printf("Produtos do vendedor:\n");
+        no_produtos *temp = v.inicio;
+        int j = 0;
+        while (temp != NULL)
+        {
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            printf("Produto %d: ", j);
+            printf("Nome: %s | ", temp->produto.NOME);
+            printf("Quantidade: %d | ", temp->produto.QUANTIDADE);
+            printf("Valor: R$%.2f | ", temp->produto.VALOR);
+            printf("Categoria: %d\n", temp->produto.CATEGORIA);
+            printf("Quantidade de Avaliacoes: %d | ", temp->produto.QUANT_AVALIACAO);
+            printf("Nota de Avalicao: %d | ", temp->produto.NOTA_AVALIACAO);
+            printf("Fornecedor: %s\n", temp->produto.nome_loja);
+            printf("Descricao: %s\n", temp->produto.DESCRICAO);
+            printf(ANSI_COLOR_YELLOW);
+            printf("--------===========================+++++++++++===========================--------\n");
+            printf(ANSI_COLOR_RESET);
+            j++;
+            temp = temp->prox;
+        }
+    }
+}

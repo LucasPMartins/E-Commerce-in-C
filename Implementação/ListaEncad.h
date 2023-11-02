@@ -83,9 +83,6 @@ int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p);
 int remove_do_carrinho(lista_clientes *l, cadastro it, int pos);
 void mostra_lista_clientes(lista_clientes *l);
 int remove_do_comprados(lista_clientes *l, cadastro it, int pos);
-void mostrar_carrinho(lista_clientes *l, cadastro it);
-void mostrar_conta_cliente(lista_clientes *l, cadastro it);
-void mostrar_comprados(lista_clientes *l, cadastro it);
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 int limpa_lista_clientes(lista_clientes *l);
 int limpa_compra_carrinho(lista_clientes *l, cadastro it);
@@ -102,7 +99,6 @@ lista_produtos *criar();
 
 void limpar_lista_produtos(lista_produtos *l);
 int tamanho_lista_produtos(lista_produtos *l);
-void mostrar_produtos(lista_produtos *l);
 
 int inserirInicio_produtos(lista_produtos *l, produtos it);
 
@@ -141,8 +137,6 @@ void mostrar_lista_vendedores(lista_vendedores *l);
 int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v);
 
 int vendedor_adiciona_produtos(vendedor *v, produtos p);
-
-void mostra_produtos_vendedor(vendedor v);
 
 int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 
