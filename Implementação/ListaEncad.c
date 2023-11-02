@@ -317,6 +317,7 @@ int limpa_lista_clientes(lista_clientes *l)
     if (l == NULL)
         return 1;
     no_clientes *no = l->inicio;
+    
     while (no != NULL) // Limpa cliente por cliente
     {
         excluir_conta_cliente(l, no->valor.cadastro);
@@ -391,11 +392,11 @@ int limpa_carrinho(lista_clientes *l, cadastro it)
     no_clientes *search = buscar_cliente(l, it);
     if (search != NULL)
     {
-        no_produtos *no = search->valor.carrinho_inicio;
-        while (search->valor.carrinho_inicio != NULL)
+        int i = search->valor.total_carrinho;
+        while (i >= 0)
         {
             remove_do_carrinho(l, it, 0);
-            no = search->valor.carrinho_inicio;
+            i--;
         }
         search->valor.carrinho_inicio = NULL;
         return 0;
@@ -506,6 +507,7 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
             }
         }
     }
+    return;
 }
 
 int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
@@ -536,7 +538,7 @@ int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, 
                             if (p != NULL)
                             {
                                 no_produtos *no5 = p->inicio;
-                                while (p != NULL)
+                                while (no5 != NULL)
                                 {
                                     if (strcmp(no5->produto.nome_loja, no2->produto.nome_loja) == 0 && strcmp(no5->produto.NOME, no2->produto.NOME) == 0)
                                     {

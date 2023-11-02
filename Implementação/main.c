@@ -208,7 +208,7 @@ int main()
                                         print_logo();
                                         printf("\n\nProdutos encontrados para %s:\n\n", pesquisa);
                                         mostrar_produtos(retorno_lista2);
-                                        printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
+                                        printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n\n");
                                         while (1)
                                         {
 
@@ -238,7 +238,7 @@ int main()
                                                     p = compra_produto(l, l_vendedores, retorno_lista2, it, qtd, num);
                                                     insere_novo_carrinho(l, it, p);
                                                     printf(ANSI_COLOR_YELLOW);
-                                                    imprimelento("Adicionando ao Carrinho...\n", 100);
+                                                    imprimelento("Adicionando ao Carrinho...\n\n", 100);
                                                     printf(ANSI_COLOR_RESET);
                                                     system("pause");
                                                     break;
@@ -297,7 +297,7 @@ int main()
                                         print_logo();
                                         printf("\n\nProdutos encontrados para Categoria %d:\n\n", categoria);
                                         mostrar_produtos(retorno_lista2);
-                                        printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n");
+                                        printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...\n\n");
                                         while (1)
                                         {
                                             if (_kbhit())
@@ -475,10 +475,13 @@ int main()
                                     }
                                     else if (opcao2 == 2)
                                     {
-                                        printf("\nDigite o Numero do Produto de deseja Remover:");
-                                        setbuf(stdin, NULL);
-                                        printf(ANSI_COLOR_YELLOW);
-                                        scanf("%d", &num);
+                                        do
+                                        {
+                                            printf("\nDigite o Numero do Produto de deseja Remover:");
+                                            setbuf(stdin, NULL);
+                                            printf(ANSI_COLOR_YELLOW);
+                                            scanf("%d", &num);
+                                        } while (num > c->valor.total_carrinho - 1);
                                         ret = devolve_produtos(l, l_vendedores, retorno_lista, it, num);
                                         imprimelento("\nRemovendo", 100);
                                         i = 3;
@@ -502,21 +505,17 @@ int main()
                                         i = 3;
                                         while (i > 0)
                                         {
-                                            imprimelento("...", 500);
+                                            imprimelento("...", 200);
                                             printf("\b\b\b   \b\b\b");
                                             i--;
                                         }
-                                        num = 0;
-                                        while (c->valor.carrinho_inicio != NULL)
+                                        num = c->valor.total_carrinho;
+                                        while (num > 0)
                                         {
+                                            num--;
                                             devolve_produtos(l, l_vendedores, retorno_lista, it, num);
-                                            c = buscar_cliente(l, it);
                                         }
-                                        ret = limpa_carrinho(l, it);
-                                        if (ret == 0)
-                                            printf("\n\nTodos os Produtos Removidos com Sucesso!\n\n");
-                                        else
-                                            printf("\n\nErro! :(\n\n");
+                                        printf("\n\nRemovido com Sucesso!\n\n");
                                         printf(ANSI_COLOR_RESET);
                                         system("pause");
                                     }
@@ -877,15 +876,15 @@ int main()
                             system("pause");
                             break;
                         case 4:
-                        system("cls");
+                            system("cls");
                             print_logo();
                             printf("\n\n");
                             printf("TEM CERTEZA QUE DESEJA EXCLUIR SUA CONTA?\n");
-                            if(remover_vendedor_item(l_vendedores,v) == 0)
+                            if (remover_vendedor_item(l_vendedores, v) == 0)
                                 printf("Sucesso na remocao!\n");
                             else
                                 printf("Erro na remocao!\n");
-                            
+
                             break;
                         default:
                             break;
