@@ -507,7 +507,6 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
             }
         }
     }
-    return;
 }
 
 int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
