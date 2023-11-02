@@ -34,6 +34,8 @@ int main()
     produtos p;                                             // Necessario uma função que retorna um produto de uma lista de produtos;
     lista_produtos *retorno_lista = criar_lista_produtos(); // Lista temporaria de produtos para printar
     lista_produtos *retorno_lista2 = criar_lista_produtos();
+    lista_produtos* relatorio = criar_lista_produtos();
+
     // Necessario para salvar os 5 produtos iniciais, se usarmos as op. de pesquisa de produtos perderemos esses 5 pordutos (utilizar outra lista)
 
     /*    -----      DECLARAÇÕES    ----   */
@@ -533,6 +535,7 @@ int main()
                                             }
                                         }
                                         insere_do_carrinho_para_comprados(l, it);
+                                        // insere_relatorio(produto, relatorio);
                                     }
                                     else if (opcao2 == 2)
                                     {
