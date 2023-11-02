@@ -115,7 +115,7 @@ int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p);
 int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
 //NOVAS
 int conta_produtos_total(lista_vendedores* l);
-int verifica_produto(lista_produtos*p, produtos it);
+int verifica_produto(no_produtos*p, produtos it);
 int buscar_produto_posicao(lista_produtos*p, produtos* it, int pos);
 int produtos_registrados(lista_vendedores *v, lista_produtos *p);
 

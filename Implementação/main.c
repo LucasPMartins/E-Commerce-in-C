@@ -821,6 +821,7 @@ int main()
                                 if (verifica_produto(v.inicio, p) == 0) // MESMO NOME DE PRODUTO
                                     printf("NOME DE PRODUTO JA EXISTE!\n");
                             } while (verifica_produto(v.inicio, p) == 0);
+                            
                             if (vendedor_adiciona_produtos(&v, p) == 0)
                             {
                                 atualiza_lista_vendedores(v, l_vendedores);
