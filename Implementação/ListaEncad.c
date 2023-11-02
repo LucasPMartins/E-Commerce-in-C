@@ -806,18 +806,17 @@ int conta_produtos_total(lista_vendedores *l)
     return cont;
 }
 
-int verifica_produto(lista_produtos *p, produtos it)
+int verifica_produto(no_produtos *p, produtos it)
 {
     if (p == NULL)
         return 1;
-    no_produtos *atual = p->inicio;
-    while (atual != NULL)
+    while (p != NULL)
     {
-        if (strcmp(atual->produto.NOME, it.NOME) == 0)
+        if (strcmp(p->produto.NOME, it.NOME) == 0)
         {
             return 0;
         }
-        atual = atual->prox;
+        p = p->prox;
     }
     return 3;
 }
