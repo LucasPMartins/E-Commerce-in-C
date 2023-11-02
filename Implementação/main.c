@@ -770,6 +770,7 @@ int main()
                         printf("                    1- Cadastrar Produto\n");
                         printf("                    2- Remover produto\n");
                         printf("                    3- Ver produtos\n");
+                        printf("                    4- Excluir conta\n");
                         printf("                    0- SAIR\n");
                         printf("                      Digite sua opcao:");
                         scanf("%d", &opcao3);
@@ -870,7 +871,17 @@ int main()
                             mostra_produtos_vendedor(v);
                             system("pause");
                             break;
-
+                        case 4:
+                        system("cls");
+                            print_logo();
+                            printf("\n\n");
+                            printf("TEM CERTEZA QUE DESEJA EXCLUIR SUA CONTA?\n");
+                            if(remover_vendedor_item(l_vendedores,v) == 0)
+                                printf("Sucesso na remocao!\n");
+                            else
+                                printf("Erro na remocao!\n");
+                            
+                            break;
                         default:
                             break;
                         }

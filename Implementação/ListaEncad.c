@@ -1442,3 +1442,51 @@ lista_clientes *ler_clientes()
     fclose(arquivo);
     return lista;
 }
+
+//FUNCOES NOVAS:
+int remover_vendedor_item(lista_vendedores* l, vendedor v){
+    if(l == NULL) return 3;
+    if(lista_vendedores_vazia(l) == 0) return 2;
+    no_vendedores *temp = l->inicio;
+    while(temp->prox != NULL && strcmp(v.nome_loja,temp->valor.nome_loja) != 0)
+        temp = temp->prox;
+    if(strcmp(v.nome_loja,temp->valor.nome_loja) == 0){
+        if(temp->ant == NULL) return removerInicio(l);
+        if(temp->prox == NULL){
+            // Remover fim
+            temp->ant->prox = NULL;
+            free(temp);
+            return 0;
+        }
+        // Remover meio
+        temp->ant->prox = temp->prox;
+        temp->prox->ant = temp->ant;
+        free(temp);
+    }
+    return 0;
+}
+
+int removerInicio_vendedores(lista_vendedores *l)
+{
+    if (l == NULL)
+        return 2;
+    if (lista_vendedores_vazia(l) == 0)
+        return 1;
+    no_vendedores *noLista = l->inicio;
+    l->inicio = noLista->prox;
+    if (l->inicio != NULL)
+        l->inicio->ant = NULL;
+    free(noLista);
+
+    return 0;
+}
+
+void limpar_vendedores(lista_vendedores* v){
+while (lista_vendedores_vazia(v) != 0)
+        removerInicio_vendedores(v);
+    free(v);
+    v = NULL;
+
+}
+
+

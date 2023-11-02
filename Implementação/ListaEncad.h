@@ -150,6 +150,13 @@ int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 int buscar_por_posicao_vendedor(lista_vendedores* l, int pos, vendedor *v);
 
 int atualiza_lista_vendedores(vendedor v, lista_vendedores *l);
+// novas:
+
+int remover_vendedor_item(lista_vendedores* l, vendedor v);
+
+int removerInicio_vendedores(lista_vendedores *l);
+
+void limpar_vendedores(lista_vendedores* v);
 
 // ARQUIVOS
 
