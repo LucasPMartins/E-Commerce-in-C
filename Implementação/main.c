@@ -473,7 +473,7 @@ int main()
                                         setbuf(stdin, NULL);
                                         printf(ANSI_COLOR_YELLOW);
                                         scanf("%d", &num);
-                                        ret = remove_do_carrinho(l, it, num);
+                                        ret = devolve_produtos(l, l_vendedores, retorno_lista, it, num);
                                         imprimelento("\nRemovendo", 100);
                                         i = 3;
                                         while (i > 0)
@@ -491,7 +491,6 @@ int main()
                                     }
                                     else if (opcao2 == 3)
                                     {
-                                        ret = limpa_carrinho(l, it);
                                         printf(ANSI_COLOR_YELLOW);
                                         printf("\nLimpando carrinho");
                                         i = 3;
@@ -501,8 +500,15 @@ int main()
                                             printf("\b\b\b   \b\b\b");
                                             i--;
                                         }
+                                        num = 0;
+                                        while (c->valor.carrinho_inicio != NULL)
+                                        {
+                                            devolve_produtos(l, l_vendedores, retorno_lista, it, num);
+                                            c = buscar_cliente(l,it);
+                                        }
+                                        ret = limpa_carrinho(l, it);
                                         if (ret == 0)
-                                            printf("Todos os Produtos Removidos com Sucesso!\n\n");
+                                            printf("\n\nTodos os Produtos Removidos com Sucesso!\n\n");
                                         else
                                             printf("\n\nErro! :(\n\n");
                                         printf(ANSI_COLOR_RESET);

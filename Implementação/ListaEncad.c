@@ -452,10 +452,11 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
         if (search->valor.carrinho_inicio == NULL && search->valor.comprados_inicio == NULL)
             return 0; // Carrinho e comprados vazio
         int i = 0;
-        while (i != search->valor.total_carrinho) // Limpa carrinho
+        no_produtos *no = search->valor.carrinho_inicio;
+        while (no != NULL) // Limpa carrinho
         {
             remove_do_carrinho(l, it, 0);
-            i++;
+            no = no->prox;
         }
         i = 0;
         while (i != search->valor.total_comprados) // Limpa comprados
@@ -505,10 +506,10 @@ int limpa_carrinho(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         no_produtos *no = search->valor.carrinho_inicio;
-        while (no != NULL)
+        while (search->valor.carrinho_inicio != NULL)
         {
             remove_do_carrinho(l, it, 0);
-            no = no->prox;
+            no = search->valor.carrinho_inicio;
         }
         search->valor.carrinho_inicio = NULL;
         return 0;
@@ -539,8 +540,10 @@ int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int po
             if (strcmp(no2->produto.nome_loja, no3->valor.nome_loja) == 0)
             {
                 no_produtos *no4 = no3->valor.inicio;
-                while(no4 != NULL){
-                    if(strcmp(no4->produto.NOME,no2->produto.NOME) == 0){
+                while (no4 != NULL)
+                {
+                    if (strcmp(no4->produto.NOME, no2->produto.NOME) == 0)
+                    {
                         no2->produto.NOTA_AVALIACAO = nova_avaliacao;
                         no2->produto.QUANT_AVALIACAO++;
                         no4->produto.NOTA_AVALIACAO = nova_avaliacao;
@@ -618,6 +621,58 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
         }
     }
 }
+
+int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
+{
+    if (c != NULL && l != NULL)
+    {
+        no_clientes *no = buscar_cliente(c, it);
+        if (no != NULL)
+        {
+            no_produtos *no2 = no->valor.carrinho_inicio;
+            int num = pos;
+            while (no2 != NULL && num > 0)
+            {
+                num--;
+                no2 = no2->prox;
+            }
+            no_vendedores *no3 = l->inicio;
+            while (no3 != NULL)
+            {
+                if (strcmp(no3->valor.nome_loja, no2->produto.nome_loja) == 0)
+                {
+                    no_produtos *no4 = no3->valor.inicio;
+                    while (no4 != NULL)
+                    {
+                        if (strcmp(no4->produto.NOME, no2->produto.NOME) == 0)
+                        {
+                            no4->produto.QUANTIDADE += no2->produto.QUANTIDADE;
+                            if (p != NULL)
+                            {
+                                no_produtos *no5 = p->inicio;
+                                while (p != NULL)
+                                {
+                                    if (strcmp(no5->produto.nome_loja, no2->produto.nome_loja) == 0 && strcmp(no5->produto.NOME, no2->produto.NOME) == 0)
+                                    {
+                                        no5->produto.QUANTIDADE += no2->produto.QUANTIDADE;
+                                        break;
+                                    }
+                                    no5 = no5->prox;
+                                }
+                            }
+                            remove_do_carrinho(c, it, pos);
+                            return 0;
+                        }
+                        no4 = no4->prox;
+                    }
+                }
+                no3 = no3->prox;
+            }
+        }
+    }
+    return 3;
+}
+
 
 /*                                  PRODUTOS   */
 /*                                  PRODUTOS   */

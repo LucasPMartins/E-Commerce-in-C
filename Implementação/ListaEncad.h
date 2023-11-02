@@ -94,6 +94,7 @@ int limpa_carrinho(lista_clientes *l, cadastro it);
 int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 no_clientes *buscar_cliente(lista_clientes *l, cadastro it);
 produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos);
+int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos);
 
 //                               TAD PRODUTOS
 
