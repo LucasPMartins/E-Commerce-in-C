@@ -89,13 +89,12 @@ void mostrar_comprados(lista_clientes *l, cadastro it);
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 int limpa_lista_clientes(lista_clientes *l);
 int limpa_compra_carrinho(lista_clientes *l, cadastro it);
-int salvar_clientes(lista_clientes *l);
-lista_clientes *ler_clientes();
 int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it);
 int limpa_carrinho(lista_clientes *l, cadastro it);
 int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 no_clientes *buscar_cliente(lista_clientes *l, cadastro it);
 produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos);
+int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos);
 
 //                               TAD PRODUTOS
 
@@ -151,5 +150,15 @@ int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 int buscar_por_posicao_vendedor(lista_vendedores* l, int pos, vendedor *v);
 
 int atualiza_lista_vendedores(vendedor v, lista_vendedores *l);
+
+// ARQUIVOS
+
+void salvarListaVendedores(lista_vendedores *lista);
+
+lista_vendedores* lerListaVendedores();
+
+int salvar_clientes(lista_clientes *l);
+
+lista_clientes *ler_clientes();
 
 #endif
