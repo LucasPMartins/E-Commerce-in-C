@@ -541,11 +541,11 @@ int main()
                                 c = buscar_cliente(l, it);
                                 if (c->valor.total_comprados != 0)
                                 {
+                                    printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...");
                                     while (1)
                                     {
                                         if (_kbhit())
                                         {
-                                            printf("\nPressione Enter para Avaliar Produtos ou Esc para Voltar...");
                                             tecla = _getch();
                                             if (tecla == 13)
                                             { // Verifica se a tecla pressionada é o código ASCII do "Enter"
@@ -562,7 +562,7 @@ int main()
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
-                                                } while (pos < 0 || (num > 5 || num < 1));
+                                                } while (pos < 0 || (num > 5 && num < 1));
                                                 avaliar_produto(l_vendedores, l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 printf("\nObrigado por Avaliar!\n\n");
