@@ -357,11 +357,11 @@ int main()
                                 mostrar_produtos(retorno_lista); // Mostra a lista do 5 produtos iniciais
                                 if (listaVazia_produtos(retorno_lista) != 0)
                                 {
+                                    printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...");
                                     while (1)
                                     {
                                         if (_kbhit())
                                         {
-                                            printf("\n\nPressione Enter para Adicionar Produtos ou Esc para Voltar...");
                                             tecla = _getch();
                                             if (tecla == 13)
                                             { // Verifica se a tecla pressionada é o código ASCII do "Enter"
@@ -386,6 +386,7 @@ int main()
                                                 p = compra_produto(l, l_vendedores, retorno_lista, it, qtd, num);
                                                 insere_novo_carrinho(l, it, p);
                                                 printf(ANSI_COLOR_YELLOW);
+                                                printf("\n");
                                                 imprimelento("Adicionando ao Carrinho...\n", 100);
                                                 printf(ANSI_COLOR_RESET);
                                                 system("pause");
@@ -504,7 +505,7 @@ int main()
                                         while (c->valor.carrinho_inicio != NULL)
                                         {
                                             devolve_produtos(l, l_vendedores, retorno_lista, it, num);
-                                            c = buscar_cliente(l,it);
+                                            c = buscar_cliente(l, it);
                                         }
                                         ret = limpa_carrinho(l, it);
                                         if (ret == 0)
