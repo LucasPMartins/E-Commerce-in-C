@@ -164,10 +164,6 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         c = buscar_cliente(l, it);
                         zerar_produtos(retorno_lista);
-                        printf("debug\n");
-                        //ERRO AQUIIIII
-                        mostrar_lista_vendedores(l_vendedores);
-
                         if (retorna_5_produtos(l_vendedores, l, it, retorno_lista) == 0)
                             mostrar_produtos(retorno_lista);
                         else
