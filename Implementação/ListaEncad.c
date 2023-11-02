@@ -1278,7 +1278,7 @@ int remover_vendedor_item(lista_vendedores* l, vendedor v){
     while(temp->prox != NULL && strcmp(v.nome_loja,temp->valor.nome_loja) != 0)
         temp = temp->prox;
     if(strcmp(v.nome_loja,temp->valor.nome_loja) == 0){
-        if(temp->ant == NULL) return removerInicio(l);
+        if(temp->ant == NULL) return removerInicio_vendedores(l);
         if(temp->prox == NULL){
             // Remover fim
             temp->ant->prox = NULL;
@@ -1313,7 +1313,4 @@ while (lista_vendedores_vazia(v) != 0)
         removerInicio_vendedores(v);
     free(v);
     v = NULL;
-
 }
-
-
