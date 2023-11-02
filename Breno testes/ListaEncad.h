@@ -86,7 +86,7 @@ int remove_do_comprados(lista_clientes *l, cadastro it, int pos);
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 int limpa_lista_clientes(lista_clientes *l);
 int limpa_compra_carrinho(lista_clientes *l, cadastro it);
-int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it);
+int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it, lista_produtos* relatorio);
 int limpa_carrinho(lista_clientes *l, cadastro it);
 int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 no_clientes *buscar_cliente(lista_clientes *l, cadastro it);
@@ -121,6 +121,11 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p);
 
 int remover_posicao_produto(lista_produtos *p, int pos);
 
+int insere_relatorio(lista_produtos* l,produtos p);
+
+int verifica_produto_na_lista(lista_produtos *p, produtos it);
+
+int inserir_decrescente_produtos(lista_produtos* l, produtos p);
 
 //                              TAD VENDEDOR
 
