@@ -15,6 +15,11 @@
 
 void print_logo();
 void imprimelento(char *p, int N);
+void mostrar_conta_cliente(lista_clientes *l, cadastro it);
+void mostrar_carrinho(lista_clientes *l, cadastro it);
+void mostrar_comprados(lista_clientes *l, cadastro it);
+void mostrar_produtos(lista_produtos *l);
+void mostra_produtos_vendedor(vendedor v);
 
 int main()
 {
