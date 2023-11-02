@@ -140,7 +140,7 @@ int insere_novo_vendedor(lista_vendedores *l, vendedor v);
 
 void mostrar_lista_vendedores(lista_vendedores *l);
 
-// Novas:
+// Novas::
 int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v);
 int vendedor_adiciona_produtos(vendedor *v, produtos p);
 
