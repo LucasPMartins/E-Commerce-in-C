@@ -464,7 +464,7 @@ no_clientes *buscar_cliente(lista_clientes *l, cadastro it)
     return NULL;
 }
 
-produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos)
+int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos,produtos *ret)
 {
     if (c != NULL && l != NULL && p != NULL)
     {
@@ -493,12 +493,12 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
                                 no3->produto.QUANTIDADE = 0;
                                 p1.QUANTIDADE = qtd;
                                 no1->produto.QUANTIDADE = 0;
-                                return p1;
+                                return 0;
                             }
                             no3->produto.QUANTIDADE = no3->produto.QUANTIDADE - qtd;
                             p1.QUANTIDADE = qtd;
                             no1->produto.QUANTIDADE = no1->produto.QUANTIDADE - qtd;
-                            return p1;
+                            return 0;
                         }
                         no3 = no3->prox;
                     }
@@ -507,6 +507,7 @@ produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *
             }
         }
     }
+    return 1;
 }
 
 int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos)
