@@ -860,6 +860,147 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p)
     return 0;
 }
 
+//nova:
+
+int inserirFim_produtos(lista_produtos* l, produtos p){
+    if (l == NULL)
+        return 2;
+    if(tamanho_lista_produtos(l) == 0) return inserirInicio_produtos(l,p);
+    no_produtos *no = l->inicio;
+    no_produtos* novo = (no_produtos*) malloc(sizeof(no_produtos));
+    novo->produto = p;
+    while(no->prox != NULL){
+        no = no->prox;
+    }
+    //agora está no ultimo
+    no->prox = novo;
+    novo->prox = NULL;
+    novo->ant = no;
+    
+    return 0;
+}
+
+
+int inserir_decrescente_produtos(lista_produtos* l, produtos p){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return inserirInicio_produtos(l,p);
+    no_produtos *temp = l->inicio;
+    no_produtos *novo = (no_produtos*) malloc(sizeof(no_produtos));
+    novo->produto = p;
+    int quant = p.QUANTIDADE;
+    while(temp != NULL){
+        if(quant >= temp->produto.QUANTIDADE){
+            //insere
+            if(temp->ant == NULL){
+                //ele é o primeiro
+                return inserirInicio_produtos(l,p);
+            }
+            novo->ant = temp->ant;
+            novo->prox = temp;
+            temp->ant->prox = novo;
+            temp->ant = novo;
+            return 0;
+        }
+        temp = temp->prox;
+    }
+    return inserirFim_produtos(l,p);
+}
+
+int produto_mais_vendido(lista_produtos* l, produtos*p){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return 3;
+    no_produtos *temp = l->inicio;
+    int quant = temp->produto.QUANTIDADE;
+    *p = temp->produto;
+    while(temp != NULL){
+        if(quant < temp->produto.QUANTIDADE){
+            //insere
+            quant = temp->produto.QUANTIDADE;
+            *p = temp->produto;
+        }
+        temp = temp->prox;
+    }
+    return 0;
+}
+
+int produto_menos_vendido(lista_produtos* l, produtos*p){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return 3;
+    no_produtos *temp = l->inicio;
+    int quant = temp->produto.QUANTIDADE;
+    *p = temp->produto;
+    while(temp != NULL){
+        if(quant > temp->produto.QUANTIDADE){
+            //insere
+            quant = temp->produto.QUANTIDADE;
+            *p = temp->produto;
+        }
+        temp = temp->prox;
+    }
+    return 0;
+}
+
+int categoria_mais_vendida(lista_produtos* l, int *categoria){
+    if(l == NULL) return 2;
+    if(listaVazia_produtos(l) == 0) return 3;
+    no_produtos *temp = l->inicio;
+    int vet_categorias[12],i;
+    int quant;
+    for(i=0;i<12;i++) vet_categorias[i] = 0; //Zerando os campos para somar;
+
+    while(temp != NULL){
+        switch(temp->produto.CATEGORIA){
+        case 0:
+            vet_categorias[0] += temp->produto.QUANTIDADE;
+        break;
+        case 1:
+            vet_categorias[1] += temp->produto.QUANTIDADE;
+        break;
+        case 2:
+            vet_categorias[2] += temp->produto.QUANTIDADE;
+        break;
+        case 3:
+            vet_categorias[3] += temp->produto.QUANTIDADE;
+        break;
+        case 4:
+            vet_categorias[4] += temp->produto.QUANTIDADE;
+        break;
+        case 5:
+            vet_categorias[5] += temp->produto.QUANTIDADE;
+        break;
+        case 6:
+            vet_categorias[6] += temp->produto.QUANTIDADE;
+        break;
+        case 7:
+            vet_categorias[7] += temp->produto.QUANTIDADE;
+        break;
+        case 8:
+            vet_categorias[8] += temp->produto.QUANTIDADE;
+        break;
+        case 9:
+            vet_categorias[9] += temp->produto.QUANTIDADE;
+        break;
+        case 10:
+            vet_categorias[10] += temp->produto.QUANTIDADE;
+        break;
+        case 11:
+            vet_categorias[11] += temp->produto.QUANTIDADE;
+        break;
+        
+        }
+        temp = temp->prox;
+    }
+        quant = vet_categorias[0];
+        for(i=0;i<12;i++)
+            if(quant < vet_categorias[i]){
+                quant = vet_categorias[i];
+                *categoria = i;
+            }
+     *categoria++;           
+    return 0;
+}
+
+
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */
 /*                                  VENDEDOR   */

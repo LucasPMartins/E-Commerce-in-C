@@ -83,23 +83,15 @@ int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p);
 int remove_do_carrinho(lista_clientes *l, cadastro it, int pos);
 void mostra_lista_clientes(lista_clientes *l);
 int remove_do_comprados(lista_clientes *l, cadastro it, int pos);
-void mostrar_carrinho(lista_clientes *l, cadastro it);
-void mostrar_conta_cliente(lista_clientes *l, cadastro it);
-void mostrar_comprados(lista_clientes *l, cadastro it);
 int excluir_conta_cliente(lista_clientes *l, cadastro it);
 int limpa_lista_clientes(lista_clientes *l);
 int limpa_compra_carrinho(lista_clientes *l, cadastro it);
-int salvar_clientes(lista_clientes *l);
-lista_clientes *ler_clientes();
 int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it);
 int limpa_carrinho(lista_clientes *l, cadastro it);
 int avaliar_produto(lista_vendedores *l2, lista_clientes *l, cadastro it, int pos, int num);
 no_clientes *buscar_cliente(lista_clientes *l, cadastro it);
-
-
-//nova
-int produtos_registrados(lista_vendedores *v, lista_produtos *p);
-int remover_posicao_produto(lista_produtos *p, int pos);
+produtos compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int qtd, int pos);
+int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, cadastro it, int pos);
 
 //                               TAD PRODUTOS
 
@@ -107,7 +99,6 @@ lista_produtos *criar();
 
 void limpar_lista_produtos(lista_produtos *l);
 int tamanho_lista_produtos(lista_produtos *l);
-void mostrar_produtos(lista_produtos *l);
 
 int inserirInicio_produtos(lista_produtos *l, produtos it);
 
@@ -122,12 +113,15 @@ int produtos_de_categoria(lista_vendedores *v, int categoria, lista_produtos *p)
 int produtos_de_nome(lista_vendedores *v, char *pesquisa, lista_produtos *p);
 
 int retorna_5_produtos(lista_vendedores *v, lista_clientes *l, cadastro it, lista_produtos *p);
-//FUNÇAO QUE PODEMOS USAR POSTERIORMENTE
-int buscar_produto_no_vendedor_posicao(vendedor v,int pos,produtos *p);
-
+//NOVAS
 int conta_produtos_total(lista_vendedores* l);
-int verifica_produto(lista_produtos*p, produtos it);
+int verifica_produto(no_produtos*p, produtos it);
 int buscar_produto_posicao(lista_produtos*p, produtos* it, int pos);
+int produtos_registrados(lista_vendedores *v, lista_produtos *p);
+
+int remover_posicao_produto(lista_produtos *p, int pos);
+
+
 //                              TAD VENDEDOR
 
 lista_vendedores *criar_lista_vendedores();
@@ -140,15 +134,32 @@ int insere_novo_vendedor(lista_vendedores *l, vendedor v);
 
 void mostrar_lista_vendedores(lista_vendedores *l);
 
-void limpar_vendedores(lista_vendedores* v);
-
-// Novas::
 int verifica_vendedor_e_retorna(lista_vendedores *l, vendedor *v);
+
 int vendedor_adiciona_produtos(vendedor *v, produtos p);
 
-void mostra_produtos_vendedor(vendedor v);
 int removerPosicao_produto_do_vendedor(vendedor *v, int pos);
 
+// NOVAS:
 int buscar_por_posicao_vendedor(lista_vendedores* l, int pos, vendedor *v);
+
+int atualiza_lista_vendedores(vendedor v, lista_vendedores *l);
+// novas:
+
+int remover_vendedor_item(lista_vendedores* l, vendedor v);
+
+int removerInicio_vendedores(lista_vendedores *l);
+
+void limpar_vendedores(lista_vendedores* v);
+
+// ARQUIVOS
+
+void salvarListaVendedores(lista_vendedores *lista);
+
+lista_vendedores* lerListaVendedores();
+
+int salvar_clientes(lista_clientes *l);
+
+lista_clientes *ler_clientes();
 
 #endif
