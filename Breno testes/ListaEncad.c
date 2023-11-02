@@ -358,7 +358,7 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
     return 3;
 }
 
-int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
+int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it, lista_produtos* relatorio)
 {
     if (l == NULL)
         return 1;
@@ -373,6 +373,7 @@ int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
             while (no != NULL)
             {
                 insere_nova_compra(l, it, no->produto);
+                insere_relatorio(relatorio,no->produto);
                 no = no->prox;
             }
             limpa_carrinho(l, it);
@@ -562,6 +563,29 @@ int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, 
     }
     return 3;
 }
+
+
+//RELATORIO
+int insere_relatorio(lista_produtos* l,produtos p){
+    if(l == NULL) return 2;
+    if(verifica_produto_na_lista(l,p) == 3) //ele nao esta na lista
+        return inserir_decrescente_produtos(l,p);
+    //Caso contrario ele está na lista>
+    no_produtos* no = l->inicio;
+    int quant = p.QUANTIDADE;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, p.NOME) == 0 && strcmp(no->produto.nome_loja, p.nome_loja) == 0)
+        {
+            //achei o produto na lista
+            no->produto.QUANTIDADE += quant;
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
 
 /*                                  PRODUTOS   */
 /*                                  PRODUTOS   */
@@ -1001,6 +1025,22 @@ int categoria_mais_vendida(lista_produtos* l, int *categoria){
             }
      *categoria++;           
     return 0;
+}
+
+int verifica_produto_na_lista(lista_produtos *p, produtos it)
+{
+    if (p == NULL)
+        return 1;
+    no_produtos* no = p->inicio;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, it.NOME) == 0 && strcmp(no->produto.nome_loja, it.nome_loja) == 0)
+        {
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
 }
 
 

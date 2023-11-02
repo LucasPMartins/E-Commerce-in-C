@@ -534,8 +534,8 @@ int main()
                                                 }
                                             }
                                         }
-                                        insere_do_carrinho_para_comprados(l, it);
-                                        // insere_relatorio(produto, relatorio);
+                                        insere_do_carrinho_para_comprados(l, it, relatorio);
+                                        // relatorio aqui
                                     }
                                     else if (opcao2 == 2)
                                     {
