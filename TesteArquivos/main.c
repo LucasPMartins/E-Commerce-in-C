@@ -962,9 +962,7 @@ int main()
             break;
         }
     } while (opcao != 0);
-    salvar_clientes(l);
     salvarListaVendedores(l_vendedores);
-    limpa_lista_clientes(l);
     return 0;
 }
 

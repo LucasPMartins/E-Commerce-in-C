@@ -470,117 +470,6 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
     return 3;
 }
 
-int salvar_clientes(lista_clientes *l)
-{
-    FILE *arquivo;
-    arquivo = fopen("arquivo_clientes.txt", "wb");
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo!\n");
-        return 1;
-    }
-    no_clientes *no = l->inicio;
-    while (no != NULL)
-    {
-        // Escreve os dados do cliente
-        fwrite(&no->valor, sizeof(cliente), 1, arquivo);
-        // Escreve os dados dos produtos no carrinho
-        no_produtos *no2 = no->valor.carrinho_inicio;
-        while (no2 != NULL)
-        {
-            fwrite(&no2->produto, sizeof(produtos), 1, arquivo);
-            no2 = no2->prox;
-        }
-        // Escreve os dados dos produtos comprados
-        no2 = no->valor.comprados_inicio;
-        while (no2 != NULL)
-        {
-            fwrite(&no2->produto, sizeof(produtos), 1, arquivo);
-            no2 = no2->prox;
-        }
-        no = no->prox;
-    }
-    fclose(arquivo);
-    return 0;
-}
-
-lista_clientes *ler_clientes()
-{
-    FILE *arquivo;
-    arquivo = fopen("arquivo_clientes.txt", "rb");
-    lista_clientes *lista = (lista_clientes *)malloc(sizeof(lista_clientes));
-    lista->total_clientes = 0;
-    lista->inicio = NULL;
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo!\n");
-        return lista;
-    }
-    cliente cliente_lido;
-    while (fread(&cliente_lido, sizeof(cliente), 1, arquivo))
-    {
-        // Cria um novo cliente
-        no_clientes *novo_cliente = (no_clientes *)malloc(sizeof(no_clientes));
-        novo_cliente->valor = cliente_lido;
-        novo_cliente->prox = NULL;
-        novo_cliente->ant = NULL;
-        // Adiciona novo cliente na lista
-        if (lista->inicio == NULL)
-        {
-            lista->inicio = novo_cliente;
-        }
-        else
-        {
-            novo_cliente->prox = lista->inicio;
-            lista->inicio->ant = novo_cliente;
-            lista->inicio = novo_cliente;
-        }
-        lista->total_clientes++;
-        // Le os dados dos produtos no carrinho
-        no_produtos *no_carrinho = NULL;
-        for (int i = 0; i < cliente_lido.total_carrinho; i++)
-        {
-            no_produtos *novo_produto = (no_produtos *)malloc(sizeof(no_produtos));
-            fread(&novo_produto->produto, sizeof(produtos), 1, arquivo);
-            novo_produto->prox = NULL;
-            novo_produto->ant = NULL;
-            if (no_carrinho == NULL)
-            {
-                no_carrinho = novo_produto;
-                novo_cliente->valor.carrinho_inicio = no_carrinho;
-            }
-            else
-            {
-                no_carrinho->prox = novo_produto;
-                novo_produto->ant = no_carrinho;
-                no_carrinho = no_carrinho->prox;
-            }
-        }
-        // Le os dados dos produtos comprados
-        no_produtos *no_comprados = NULL;
-        for (int i = 0; i < cliente_lido.total_comprados; i++)
-        {
-            no_produtos *novo_produto = (no_produtos *)malloc(sizeof(no_produtos));
-            fread(&novo_produto->produto, sizeof(produtos), 1, arquivo);
-            novo_produto->prox = NULL;
-            novo_produto->ant = NULL;
-            if (no_comprados == NULL)
-            {
-                no_comprados = novo_produto;
-                novo_cliente->valor.comprados_inicio = no_comprados;
-            }
-            else
-            {
-                no_comprados->prox = novo_produto;
-                novo_produto->ant = no_comprados;
-                no_comprados = no_comprados->prox;
-            }
-        }
-    }
-    fclose(arquivo);
-    return lista;
-}
-
 int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
 {
     if (l == NULL)
@@ -1293,4 +1182,208 @@ int buscar_por_posicao_vendedor(lista_vendedores *l, int pos, vendedor *v)
     }
     *v = no->valor;
     return 0;
+}
+
+// FUNÇÔES DE ARQUIVOS
+
+void salvarListaVendedores(lista_vendedores *lista)
+{
+    FILE *arquivo = fopen("arquivo_vendedores.txt", "wb");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+
+    no_vendedores *atual_vendedor = lista->inicio;
+
+    while (atual_vendedor != NULL)
+    {
+        fwrite(&atual_vendedor->valor, sizeof(vendedor), 1, arquivo);
+
+        no_produtos *atual_produto = atual_vendedor->valor.inicio;
+        while (atual_produto != NULL)
+        {
+            fwrite(&atual_produto->produto, sizeof(produtos), 1, arquivo);
+            atual_produto = atual_produto->prox;
+        }
+
+        atual_vendedor = atual_vendedor->prox;
+    }
+
+    fclose(arquivo);
+}
+
+lista_vendedores *lerListaVendedores()
+{
+    FILE *arquivo = fopen("arquivo_vendedores.txt", "rb");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return NULL;
+    }
+
+    lista_vendedores *lista = (lista_vendedores *)malloc(sizeof(lista_vendedores));
+    lista->total_vendedores = 0;
+    lista->inicio = NULL;
+
+    vendedor novo_vendedor;
+    while (fread(&novo_vendedor, sizeof(vendedor), 1, arquivo) == 1)
+    {
+        // Para cada vendedor lido, crie um novo nó de vendedor e adicione à lista de vendedores
+        no_vendedores *novo_no_vendedor = (no_vendedores *)malloc(sizeof(no_vendedores));
+        novo_no_vendedor->valor = novo_vendedor;
+        novo_no_vendedor->prox = NULL;
+        novo_no_vendedor->ant = NULL;
+
+        if (lista->inicio == NULL)
+        {
+            lista->inicio = novo_no_vendedor;
+        }
+        else
+        {
+            novo_no_vendedor->prox = lista->inicio;
+            lista->inicio->ant = novo_no_vendedor;
+            lista->inicio = novo_no_vendedor;
+        }
+
+        lista->total_vendedores++;
+
+        no_produtos *lista_prod = NULL;
+        // Agora leia os produtos deste vendedor e crie nós de produtos e os adicione à lista de produtos do vendedor
+        for (int i = 0; i < novo_vendedor.total_produtos; i++)
+        {
+            no_produtos *novo_produto = (no_produtos *)malloc(sizeof(no_produtos));
+            fread(&novo_produto->produto, sizeof(produtos), 1, arquivo);
+            // Crie um novo nó de produto e adicione à lista de produtos do vendedor
+            novo_produto->prox = NULL;
+            novo_produto->ant = NULL;
+            if (lista_prod == NULL)
+            {
+                lista_prod = novo_produto;
+                novo_no_vendedor->valor.inicio = lista_prod;
+            }
+            else
+            {
+                lista_prod->prox = novo_produto;
+                novo_produto->ant = lista_prod;
+                lista_prod = lista_prod->prox;
+            }
+        }
+    }
+    fclose(arquivo);
+    return lista;
+}
+
+int salvar_clientes(lista_clientes *l)
+{
+    FILE *arquivo;
+    arquivo = fopen("arquivo_clientes.txt", "wb");
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+    no_clientes *no = l->inicio;
+    while (no != NULL)
+    {
+        // Escreve os dados do cliente
+        fwrite(&no->valor, sizeof(cliente), 1, arquivo);
+        // Escreve os dados dos produtos no carrinho
+        no_produtos *no2 = no->valor.carrinho_inicio;
+        while (no2 != NULL)
+        {
+            fwrite(&no2->produto, sizeof(produtos), 1, arquivo);
+            no2 = no2->prox;
+        }
+        // Escreve os dados dos produtos comprados
+        no2 = no->valor.comprados_inicio;
+        while (no2 != NULL)
+        {
+            fwrite(&no2->produto, sizeof(produtos), 1, arquivo);
+            no2 = no2->prox;
+        }
+        no = no->prox;
+    }
+    fclose(arquivo);
+    return 0;
+}
+
+lista_clientes *ler_clientes()
+{
+    FILE *arquivo;
+    arquivo = fopen("arquivo_clientes.txt", "rb");
+    lista_clientes *lista = (lista_clientes *)malloc(sizeof(lista_clientes));
+    lista->total_clientes = 0;
+    lista->inicio = NULL;
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo!\n");
+        return lista;
+    }
+    cliente cliente_lido;
+    while (fread(&cliente_lido, sizeof(cliente), 1, arquivo))
+    {
+        // Cria um novo cliente
+        no_clientes *novo_cliente = (no_clientes *)malloc(sizeof(no_clientes));
+        novo_cliente->valor = cliente_lido;
+        novo_cliente->prox = NULL;
+        novo_cliente->ant = NULL;
+        // Adiciona novo cliente na lista
+        if (lista->inicio == NULL)
+        {
+            lista->inicio = novo_cliente;
+        }
+        else
+        {
+            novo_cliente->prox = lista->inicio;
+            lista->inicio->ant = novo_cliente;
+            lista->inicio = novo_cliente;
+        }
+        lista->total_clientes++;
+        // Le os dados dos produtos no carrinho
+        no_produtos *no_carrinho = NULL;
+        for (int i = 0; i < cliente_lido.total_carrinho; i++)
+        {
+            no_produtos *novo_produto = (no_produtos *)malloc(sizeof(no_produtos));
+            fread(&novo_produto->produto, sizeof(produtos), 1, arquivo);
+            novo_produto->prox = NULL;
+            novo_produto->ant = NULL;
+            if (no_carrinho == NULL)
+            {
+                no_carrinho = novo_produto;
+                novo_cliente->valor.carrinho_inicio = no_carrinho;
+            }
+            else
+            {
+                no_carrinho->prox = novo_produto;
+                novo_produto->ant = no_carrinho;
+                no_carrinho = no_carrinho->prox;
+            }
+        }
+        // Le os dados dos produtos comprados
+        no_produtos *no_comprados = NULL;
+        for (int i = 0; i < cliente_lido.total_comprados; i++)
+        {
+            no_produtos *novo_produto = (no_produtos *)malloc(sizeof(no_produtos));
+            fread(&novo_produto->produto, sizeof(produtos), 1, arquivo);
+            novo_produto->prox = NULL;
+            novo_produto->ant = NULL;
+            if (no_comprados == NULL)
+            {
+                no_comprados = novo_produto;
+                novo_cliente->valor.comprados_inicio = no_comprados;
+            }
+            else
+            {
+                no_comprados->prox = novo_produto;
+                novo_produto->ant = no_comprados;
+                no_comprados = no_comprados->prox;
+            }
+        }
+    }
+    fclose(arquivo);
+    return lista;
 }
