@@ -760,7 +760,6 @@ int main()
                         printf(ANSI_COLOR_RESET);
                         printf(")");
                         printf(ANSI_COLOR_YELLOW);
-                        mostrar_lista_vendedores(l_vendedores);
                         printf("\n\n                            --- Digite seus DADOS ---\n\n");
                         printf(ANSI_COLOR_RESET);
                         printf("                            Digite seu nome:");
@@ -813,7 +812,6 @@ int main()
                     if (ret == 0 && opcao2 == 4)
                     {
                         verifica_vendedor_e_retorna(l_vendedores, &v);
-                        printf("Aqui\n");
                     }
 
                     if (num == 0)
@@ -844,11 +842,6 @@ int main()
                         imprimelento("CARREGANDO...", 200);
                         printf(ANSI_COLOR_RESET);
                     }
-                    printf("---------\n");
-                    printf("%s\n",v.cadastro.nome);
-                    printf("%s\n",v.cadastro.senha);
-                    printf("%s\n",v.nome_loja);
-                    system("pause");
                     do
                     {
                         system("cls");
@@ -1046,6 +1039,7 @@ int main()
                         /* SAIR */
                         v.inicio = NULL;
                         v.total_produtos = 0;
+                        //Zerando os campos para nao dar B.O
                         default:
                             break;
                         }
