@@ -644,7 +644,7 @@ int main()
                                                     printf(ANSI_COLOR_YELLOW);
                                                     scanf("%d", &num);
                                                     printf(ANSI_COLOR_RESET);
-                                                } while ((pos < 0 && pos > c->valor.total_comprados) || (num > 5 && num < 1));
+                                                } while ((pos < 0 || pos > c->valor.total_comprados) || (num > 5 || num < 1));
                                                 avaliar_produto(l_vendedores, l, it, pos, num);
                                                 printf(ANSI_COLOR_YELLOW);
                                                 printf("\n                              Obrigado por Avaliar!\n\n");
