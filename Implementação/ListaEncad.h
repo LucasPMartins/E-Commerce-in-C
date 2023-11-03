@@ -126,6 +126,10 @@ int produto_mais_vendido(lista_produtos *l, produtos *p);
 int produto_menos_vendido(lista_produtos *l, produtos *p);
 int categoria_mais_vendida(lista_produtos *l, int *categoria);
 
+int insere_relatorio(lista_produtos* l,produtos p);
+
+int verifica_produto_na_lista(lista_produtos *p, produtos it);
+
 //                              TAD VENDEDOR
 
 lista_vendedores *criar_lista_vendedores();

@@ -917,6 +917,42 @@ int inserir_decrescente_produtos(lista_produtos *l, produtos p)
     return inserirFim_produtos(l, p);
 }
 
+int insere_relatorio(lista_produtos* l,produtos p){
+    if(l == NULL) return 2;
+    if(verifica_produto_na_lista(l,p) == 3) //ele nao esta na lista
+        return inserir_decrescente_produtos(l,p);
+    //Caso contrario ele está na lista>
+    no_produtos* no = l->inicio;
+    int quant = p.QUANTIDADE;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, p.NOME) == 0 && strcmp(no->produto.nome_loja, p.nome_loja) == 0)
+        {
+            //achei o produto na lista
+            no->produto.QUANTIDADE += quant;
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
+int verifica_produto_na_lista(lista_produtos *p, produtos it)
+{
+    if (p == NULL)
+        return 1;
+    no_produtos* no = p->inicio;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, it.NOME) == 0 && strcmp(no->produto.nome_loja, it.nome_loja) == 0)
+        {
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
 int produto_mais_vendido(lista_produtos *l, produtos *p)
 {
     if (l == NULL)
