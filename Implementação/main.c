@@ -26,8 +26,8 @@ int main()
 {
     int opcao, opcao2, opcao3, categoria, num, pos, qtd, ret, sair, i = 0, indice;
     char tecla, *pesquisa = (char *)malloc(30 * sizeof(char));
-    char *senha = (char *)malloc(30 * sizeof(char));           // Usado para verificar a senha do it.senha
-    lista_clientes *l = ler_clientes();                // Lista dos Clientes
+    char *senha = (char *)malloc(30 * sizeof(char));       // Usado para verificar a senha do it.senha
+    lista_clientes *l = ler_clientes();                    // Lista dos Clientes
     lista_vendedores *l_vendedores = lerListaVendedores(); // Lista dos Vendedores
     cadastro it;
     no_clientes *c;
@@ -1130,8 +1130,27 @@ int main()
             printf("                               `._________`-.   `.   `.___\n");
             printf("                                                  `------'`\n");
             printf("\n\nVolte sempre!\n\n");
-            system("pause");
+            printf(ANSI_COLOR_YELLOW);
+            printf("Pressione Enter para gerar Relatorio de Vendas ou Esc para encerrar o programa...\n");
             printf(ANSI_COLOR_RESET);
+            while (1)
+            {
+                if (_kbhit())
+                {
+                    tecla = _getch();
+                    if (tecla == 13)
+                    {          // Verifica se a tecla pressionada é o código ASCII do "Enter"
+                        mostrar_relatorio(relatorio);
+                        printf("\n");
+                        system("pause");
+                        break; // Retorna ao menu anterior
+                    }
+                    if (tecla == 27)
+                    {          // Verifica se a tecla pressionada é o código ASCII do "Esc"
+                        break; // Retorna ao menu anterior
+                    }
+                }
+            }
             break;
         default:
             break;
@@ -1140,6 +1159,7 @@ int main()
     salvar_clientes(l);
     salvarListaVendedores(l_vendedores);
     limpa_lista_clientes(l);
+    limpar_vendedores(l_vendedores);
     return 0;
 }
 
@@ -1432,4 +1452,79 @@ void mostrar_conta_vendedor(vendedor v)
             temp = temp->prox;
         }
     }
+}
+
+void mostrar_relatorio(lista_produtos *l)
+{
+    if (l == NULL)
+        return;
+    if (listaVazia_produtos(l) == 0)
+    {
+        printf(ANSI_COLOR_YELLOW);
+        printf("NENHUM PRODUTO FOI VENDIDO!\n\n");
+        printf(ANSI_COLOR_RESET);
+        return;
+    }
+    produtos *p;
+    int cat;
+    print_logo();
+    printf(ANSI_COLOR_YELLOW);
+    printf("\n\n--------===================----RELATORIO DE VENDAS----===================--------\n\n");
+    printf("PRODUTO MAIS VENDIDO:\n");
+    produto_mais_vendido(l, &p);
+    printf("--------===========================+++++++++++===========================--------\n");
+    printf(ANSI_COLOR_RESET);
+    printf("Nome: %s | ", p->NOME);
+    printf("Quantidade: %d | ", p->QUANTIDADE);
+    printf("Valor: R$%.2f | ", p->VALOR);
+    printf("Categoria: %d\n", p->CATEGORIA);
+    printf("Quantidade de Avaliacoes: %d | ", p->QUANT_AVALIACAO);
+    printf("Nota de Avalicao: %d | ", p->NOTA_AVALIACAO);
+    printf("Fornecedor: %s\n", p->nome_loja);
+    printf("Descricao: %s\n", p->DESCRICAO);
+    printf(ANSI_COLOR_YELLOW);
+    printf("--------===========================+++++++++++===========================--------\n");
+    printf("PRODUTO MENOS VENDIDO:\n");
+    produto_menos_vendido(l, &p);
+    printf("--------===========================+++++++++++===========================--------\n");
+    printf(ANSI_COLOR_RESET);
+    printf("Nome: %s | ", p->NOME);
+    printf("Quantidade: %d | ", p->QUANTIDADE);
+    printf("Valor: R$%.2f | ", p->VALOR);
+    printf("Categoria: %d\n", p->CATEGORIA);
+    printf("Quantidade de Avaliacoes: %d | ", p->QUANT_AVALIACAO);
+    printf("Nota de Avalicao: %d | ", p->NOTA_AVALIACAO);
+    printf("Fornecedor: %s\n", p->nome_loja);
+    printf("Descricao: %s\n", p->DESCRICAO);
+    printf(ANSI_COLOR_YELLOW);
+    printf("--------===========================+++++++++++===========================--------\n");
+    categoria_mais_vendida(l,&cat);
+    printf("CATEGORIA DE PRODUTO MAIS VENDIDO: %d\n",cat);
+    printf(ANSI_COLOR_YELLOW);
+    printf("--------===========================+++++++++++===========================--------\n");
+    printf("TODOS OS PRODUTOS QUE FORAM VENDIDOS:\n");
+    printf(ANSI_COLOR_RESET);
+    int j = 0;
+    no_produtos *no = l->inicio;
+    while (no != NULL)
+    {
+        printf(ANSI_COLOR_YELLOW);
+        printf("--------===========================+++++++++++===========================--------\n");
+        printf(ANSI_COLOR_RESET);
+        printf("Produto %d: ", j);
+        printf("Nome: %s | ", no->produto.NOME);
+        printf("Quantidade: %d | ", no->produto.QUANTIDADE);
+        printf("Valor: R$%.2f | ", no->produto.VALOR);
+        printf("Categoria: %d\n", no->produto.CATEGORIA);
+        printf("Quantidade de Avaliacoes: %d | ", no->produto.QUANT_AVALIACAO);
+        printf("Nota de Avalicao: %d | ", no->produto.NOTA_AVALIACAO);
+        printf("Fornecedor: %s\n", no->produto.nome_loja);
+        printf("Descricao: %s\n", no->produto.DESCRICAO);
+        printf(ANSI_COLOR_YELLOW);
+        printf("--------===========================+++++++++++===========================--------\n");
+        printf(ANSI_COLOR_RESET);
+        j++;
+        no = no->prox;
+    }
+    return;
 }
