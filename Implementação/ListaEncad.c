@@ -358,7 +358,7 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
     return 3;
 }
 
-int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
+int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it, lista_produtos *relatorio)
 {
     if (l == NULL)
         return 1;
@@ -368,16 +368,14 @@ int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         no_produtos *no = search->valor.carrinho_inicio;
-        if (no != NULL)
+
+        while (no != NULL)
         {
-            while (no != NULL)
-            {
-                insere_nova_compra(l, it, no->produto);
-                no = no->prox;
-            }
-            limpa_carrinho(l, it);
-            return 0;
+            insere_nova_compra(l, it, no->produto);
+            insere_relatorio(relatorio, no->produto);
+            no = no->prox;
         }
+        limpa_carrinho(l, it);
         return 0;
     }
     return 3;
@@ -867,8 +865,6 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p)
     return 0;
 }
 
-// nova:
-
 int inserirFim_produtos(lista_produtos *l, produtos p)
 {
     if (l == NULL)
@@ -919,6 +915,42 @@ int inserir_decrescente_produtos(lista_produtos *l, produtos p)
         temp = temp->prox;
     }
     return inserirFim_produtos(l, p);
+}
+
+int insere_relatorio(lista_produtos* l,produtos p){
+    if(l == NULL) return 2;
+    if(verifica_produto_na_lista(l,p) == 3) //ele nao esta na lista
+        return inserir_decrescente_produtos(l,p);
+    //Caso contrario ele está na lista>
+    no_produtos* no = l->inicio;
+    int quant = p.QUANTIDADE;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, p.NOME) == 0 && strcmp(no->produto.nome_loja, p.nome_loja) == 0)
+        {
+            //achei o produto na lista
+            no->produto.QUANTIDADE += quant;
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
+}
+
+int verifica_produto_na_lista(lista_produtos *p, produtos it)
+{
+    if (p == NULL)
+        return 1;
+    no_produtos* no = p->inicio;
+    while (no != NULL)
+    {
+        if (strcmp(no->produto.NOME, it.NOME) == 0 && strcmp(no->produto.nome_loja, it.nome_loja) == 0)
+        {
+            return 0;
+        }
+        no = no->prox;
+    }
+    return 3;
 }
 
 int produto_mais_vendido(lista_produtos *l, produtos *p)
