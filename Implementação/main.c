@@ -535,7 +535,7 @@ int main()
                                                 }
                                             }
                                         }
-                                        insere_do_carrinho_para_comprados(l, it);
+                                        insere_do_carrinho_para_comprados(l, it,relatorio);
                                         // insere_relatorio(produto, relatorio);
                                     }
                                     else if (opcao2 == 2)
