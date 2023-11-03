@@ -339,13 +339,13 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
         if (search->valor.carrinho_inicio == NULL && search->valor.comprados_inicio == NULL)
             return 0; // Carrinho e comprados vazio
         int i = 0;
-        while (i != search->valor.total_carrinho) // Limpa carrinho
+        while (i != search->valor.total_carrinho-1) // Limpa carrinho
         {
             i++;
             remove_do_carrinho(l, it, 0);
         }
         i = 0;
-        while (i != search->valor.total_comprados) // Limpa comprados
+        while (i != search->valor.total_comprados-1) // Limpa comprados
         {
             remove_do_comprados(l, it, 0);
             i++;
