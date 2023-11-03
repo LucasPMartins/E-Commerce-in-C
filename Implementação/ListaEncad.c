@@ -358,7 +358,7 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
     return 3;
 }
 
-int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
+int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it, lista_produtos *relatorio)
 {
     if (l == NULL)
         return 1;
@@ -368,16 +368,14 @@ int insere_do_carrinho_para_comprados(lista_clientes *l, cadastro it)
     if (search != NULL)
     {
         no_produtos *no = search->valor.carrinho_inicio;
-        if (no != NULL)
+
+        while (no != NULL)
         {
-            while (no != NULL)
-            {
-                insere_nova_compra(l, it, no->produto);
-                no = no->prox;
-            }
-            limpa_carrinho(l, it);
-            return 0;
+            insere_nova_compra(l, it, no->produto);
+            insere_relatorio(relatorio, no->produto);
+            no = no->prox;
         }
+        limpa_carrinho(l, it);
         return 0;
     }
     return 3;
@@ -866,8 +864,6 @@ int produtos_registrados(lista_vendedores *v, lista_produtos *p)
     }
     return 0;
 }
-
-// nova:
 
 int inserirFim_produtos(lista_produtos *l, produtos p)
 {
