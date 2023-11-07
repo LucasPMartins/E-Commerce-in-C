@@ -3,7 +3,7 @@
 #include <string.h>
 #include <Windows.h>
 #include <conio.h> // Utilizado para usar teclas do teclado na seleção de opcões
-#include "ListaEncad.c"
+#include "ListaEncad.h"
 
 #define ANSI_COLOR_RED "\x1b[31m"     // Cor: Vermelho
 #define ANSI_COLOR_GREEN "\x1b[32m"   // Cor: Verde
