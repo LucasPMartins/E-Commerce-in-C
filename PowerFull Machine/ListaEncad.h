@@ -96,7 +96,8 @@ int devolve_produtos(lista_clientes *c, lista_vendedores *l, lista_produtos *p, 
 
 //                               TAD PRODUTOS
 
-lista_produtos *criar();
+lista_produtos *criar_lista_produtos();
+
 
 void limpar_lista_produtos(lista_produtos *l);
 int tamanho_lista_produtos(lista_produtos *l);
@@ -125,7 +126,7 @@ int inserirFim_produtos(lista_produtos *l, produtos p);
 int produto_mais_vendido(lista_produtos *l, produtos *p);
 int produto_menos_vendido(lista_produtos *l, produtos *p);
 int categoria_mais_vendida(lista_produtos *l, int *categoria);
-
+void zerar_produtos(lista_produtos *l);
 int insere_relatorio(lista_produtos* l,produtos p);
 
 int verifica_produto_na_lista(lista_produtos *p, produtos it);
