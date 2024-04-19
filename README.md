@@ -4,7 +4,7 @@
 
 ## ❔ About
 
-**Powerful Machine** is an e-commerce system, programmed in the C language for a course completion work (Algorithm and Data Structure 1). 
+**Powerful Machine** is an e-commerce system, programmed in the C language for a course completion project **(Algorithm and Data Structure 1)**. 
 
 In this project, we used the concepts learned in class about data structure and algorithms, such as linked lists, queues and stacks, dynamic memory allocation, abstract data types, among many others.
 
