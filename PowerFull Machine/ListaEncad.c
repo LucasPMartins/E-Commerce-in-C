@@ -96,6 +96,7 @@ int insere_novo_carrinho(lista_clientes *l, cadastro it, produtos p)
     if (search != NULL)
     {
         no_produtos *no = (no_produtos *)malloc(sizeof(no_produtos));
+        p.VALOR = p.VALOR * p.QUANTIDADE;
         no->produto = p;
         no->prox = search->valor.carrinho_inicio;
         no->ant = NULL;
@@ -339,13 +340,13 @@ int limpa_compra_carrinho(lista_clientes *l, cadastro it)
         if (search->valor.carrinho_inicio == NULL && search->valor.comprados_inicio == NULL)
             return 0; // Carrinho e comprados vazio
         int i = 0;
-        while (i != search->valor.total_carrinho-1) // Limpa carrinho
+        while (i != search->valor.total_carrinho - 1) // Limpa carrinho
         {
             i++;
             remove_do_carrinho(l, it, 0);
         }
         i = 0;
-        while (i != search->valor.total_comprados-1) // Limpa comprados
+        while (i != search->valor.total_comprados - 1) // Limpa comprados
         {
             remove_do_comprados(l, it, 0);
             i++;
@@ -475,7 +476,8 @@ int compra_produto(lista_clientes *c, lista_vendedores *l, lista_produtos *p, ca
         no1 = no1->prox;
     }
     produtos p1 = no1->produto;
-    if(no1->produto.QUANTIDADE == 0){
+    if (no1->produto.QUANTIDADE == 0)
+    {
         return 4;
     }
     p1.QUANTIDADE = qtd;
@@ -919,18 +921,20 @@ int inserir_decrescente_produtos(lista_produtos *l, produtos p)
     return inserirFim_produtos(l, p);
 }
 
-int insere_relatorio(lista_produtos* l,produtos p){
-    if(l == NULL) return 2;
-    if(verifica_produto_na_lista(l,p) == 3) //ele nao esta na lista
-        return inserir_decrescente_produtos(l,p);
-    //Caso contrario ele está na lista>
-    no_produtos* no = l->inicio;
+int insere_relatorio(lista_produtos *l, produtos p)
+{
+    if (l == NULL)
+        return 2;
+    if (verifica_produto_na_lista(l, p) == 3) // ele nao esta na lista
+        return inserir_decrescente_produtos(l, p);
+    // Caso contrario ele está na lista>
+    no_produtos *no = l->inicio;
     int quant = p.QUANTIDADE;
     while (no != NULL)
     {
         if (strcmp(no->produto.NOME, p.NOME) == 0 && strcmp(no->produto.nome_loja, p.nome_loja) == 0)
         {
-            //achei o produto na lista
+            // achei o produto na lista
             no->produto.QUANTIDADE += quant;
             return 0;
         }
@@ -943,7 +947,7 @@ int verifica_produto_na_lista(lista_produtos *p, produtos it)
 {
     if (p == NULL)
         return 1;
-    no_produtos* no = p->inicio;
+    no_produtos *no = p->inicio;
     while (no != NULL)
     {
         if (strcmp(no->produto.NOME, it.NOME) == 0 && strcmp(no->produto.nome_loja, it.nome_loja) == 0)
