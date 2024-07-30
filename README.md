@@ -33,7 +33,7 @@ The program registers sellers and products to be sold. Each product has a catego
     <img src="https://github.com/brenimcode/AED1/assets/127567616/1a9f2b02-0309-4c83-8977-446b50a61673" alt="Imagem 3" />
     </td>
     <td>
-     <img src="https://github.com/brenimcode/AED1/assets/127551374/567024a9-6ae2-4c59-8799-9acbcc321857)" alt="Imagem Maior 1" width="450" />
+     <img src="https://github.com/brenimcode/AED1/assets/127551374/567024a9-6ae2-4c59-8799-9acbcc321857" alt="Imagem Maior 1" width="450" />
      <img src="https://github.com/brenimcode/AED1/assets/127567616/112b3b91-a47e-4dd9-8ebc-fc7f8d6cdbd3" alt="Imagem Maior 2" width="450" />
     </td>
   </tr>
